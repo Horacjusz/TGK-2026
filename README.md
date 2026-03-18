@@ -2,21 +2,27 @@
 
 ## Gatunek
 
-Platformówka metroidvania
+Platformówka
 
 ## Inspiracje
 
-Ori and the blind forest, Castlevania, Hollow Knight, Ogień i woda, Bounce Tale
+Ogień i woda, Ori and the blind forest, Castlevania, Bounce Tale
 
-## Pomysł na grę
+## Mechanika
 
-W skrócie mamy postać postać może tworzyć klona. Wczasie obsługi klona (przez określony czas) wytyczam trasę klona którą on powtarza po powrocie do oryginalnego ciała klon działa jak blok kolizyjny więc możemy wykorzystać go do:
+Gracz wciela się w postać, która potrafi przywołać tymczasowego towarzysza (np. pomocnika, projekcję, drona lub magiczny byt).
 
-- Podsadzić się do niedostępnego miejsca
-- zasłonić się przed przeciwnikiem
-- odbić się od niej
-  
-  Trasa klona jest zapętlona i na przycisku możemy ją odpalić (zapauzować/ spowolnić do decyzji) lub ustawić nową.
-  Klon bo zdeżeniu z atakiem przeciwnika wchodzi na cooldown
-  Pomysł na mechanikę która polega na wytwarzaniu przez naszego klona światła.
-  Klon oświetla nam drogę przez poziom żeby móc go przejść lub ochronić nas przed potworami w ciemności wtedy idziemy razem z klonem lub się rozdzielamy.
+Gracz może wyznaczać trasę ruchu towarzysza, która zostaje odtworzona w pętli. Jest ona jednak ograniczona czasowo. Podczas ruchu towarzysz staje się fizycznym elementem świata gry, co pozwala wykorzystywać go na wiele sposobów, np.:
+- jako platformę umożliwiającą dotarcie do trudno dostępnych miejsc,
+- jako osłonę przed przeciwnikami lub pociskami,
+- do aktywacji płyt naciskowych itp.
+
+Odtwarzanie ścieżki można w dowolnym momencie aktywować, zatrzymywać lub spowalniać, co daje graczowi czas na podejmowanie decyzji. Istnieje także możliwość wyznaczenia nowej trasy.
+
+## Pomysły na poziomy
+
+Każdy kolejny poziom powinien przedstawiać nową mechanikę, jednocześnie korzystając z poprzednich (z nielicznymi wyjątkami jednorazowych mechanik).
+
+1. Poziom wprowadzający. Podstawowe mechaniki zręcznościowo-platformowe, odbijanie się od towarzysza itp.
+2. Poziom z przeciwnikami. Latające pociski, pułapki.
+3. Ciemny poziom. Towarzysz jest jedynym źródłem światła. Jednorazowa mechanika.
