@@ -6,9 +6,9 @@ extends Node
 @export var speed := 50.0
 @export var acceleration := 10.0
 @export var jump_speed := -160.0
-@export var up_gravity := 50
-@export var down_gravity := 100
-
+@export var up_gravity := 500
+@export var down_gravity := 1000
+var direction: int = 1
 
 func move_horizontal(delta: float, axis: float) -> void:
 	if axis == 0:
@@ -18,8 +18,10 @@ func move_horizontal(delta: float, axis: float) -> void:
 	
 	if sign(axis) > 0:
 		model.scale.x = 1
+		direction = 1
 	elif sign(axis) < 0:
 		model.scale.x = -1
+		direction = -1
 
 
 func apply_gravity(delta: float) -> void:

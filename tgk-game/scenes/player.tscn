@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bvxk1c0fnl4a"]
 
 [ext_resource type="Script" uid="uid://ckjs7ssi4anm2" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clanker.tscn" id="2_qlg0r"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/input_component.gd" id="3_dqkch"]
 [ext_resource type="Texture2D" uid="uid://bxv0bqtgmrg3h" path="res://assets/Tiny_Metroidvania_8x8_Free/Spartan_Character_Free.png" id="3_qlg0r"]
 [ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/movement_component.gd" id="4_qlg0r"]
@@ -90,6 +91,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" unique_id=723345871]
 script = ExtResource("1_g2els")
+clanker = ExtResource("2_qlg0r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1939696613]
 shape = SubResource("CapsuleShape2D_qlg0r")
@@ -113,8 +115,6 @@ unique_name_in_owner = true
 script = ExtResource("4_qlg0r")
 body = NodePath("..")
 model = NodePath("../Model")
-up_gravity = 500
-down_gravity = 1000
 metadata/_custom_type_script = "uid://yr041ldm08k"
 
 [node name="JumpBufferTimer" type="Timer" parent="." unique_id=650321100]
@@ -125,4 +125,9 @@ one_shot = true
 [node name="CoyoteTimer" type="Timer" parent="." unique_id=234553370]
 unique_name_in_owner = true
 wait_time = 0.1
+one_shot = true
+
+[node name="ClankerControlTimer" type="Timer" parent="." unique_id=1879192051]
+unique_name_in_owner = true
+wait_time = 5.0
 one_shot = true

@@ -1,4 +1,4 @@
-class_name Player
+class_name Clanker
 extends CharacterBody2D
 
 enum State {
@@ -6,7 +6,6 @@ enum State {
 	RUN,
 	JUMP,
 	FALL,
-	CLANKER,
 }
 
 @onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
@@ -16,11 +15,6 @@ enum State {
 @onready var coyote_timer: Timer = %CoyoteTimer
 
 var current_state: State = State.IDLE
-#=======================new============================
-@export var clanker: PackedScene
-@export var spawn_offset: int = 10
-@onready var clanker_timer: Timer = %ClankerControlTimer
-var current_clanker: Node2D = null
 
 func _physics_process(delta: float) -> void:
 	handle_input()
@@ -39,9 +33,6 @@ func update_state() -> void:
 	var move_axis = input_component.move_axis
 	var wants_jump = jump_buffer_timer.time_left > 0
 	var can_jump = is_on_floor() or coyote_timer.time_left > 0
-	var wants_spawn_clanker = input_component.clanker_pressed
-	# Placeholder later mb cooldown
-	var can_spawn_clanker = true
 	
 	match current_state:
 		State.IDLE:
@@ -55,11 +46,6 @@ func update_state() -> void:
 				coyote_timer.start()
 				current_state = State.FALL
 				animated_sprite.play("fall")
-			elif wants_spawn_clanker and can_jump and can_spawn_clanker:
-				clanker_timer.start()
-				spawn_clanker()
-				current_state = State.CLANKER
-				animated_sprite.play("idle")
 		State.RUN:
 			if wants_jump and can_jump:
 				current_state = State.JUMP
@@ -87,11 +73,6 @@ func update_state() -> void:
 				
 				current_state = State.JUMP
 				animated_sprite.play("jump")
-		State.CLANKER:
-			if not clanker_timer.time_left > 0:
-				current_state = State.IDLE
-				animated_sprite.play("idle")
-			
 
 
 func handle_state(delta: float) -> void:
@@ -116,21 +97,5 @@ func handle_state(delta: float) -> void:
 		State.FALL:
 			movement_component.move_horizontal(delta, axis)
 			movement_component.apply_gravity(delta)
-		State.CLANKER:
-			movement_component.move_horizontal(delta, 0)
-			movement_component.apply_gravity(delta)
 	
 	movement_component.move_and_slide()
-	
-func spawn_clanker() -> void:
-	despawn_clanker()
-	var new_clanker = clanker.instantiate()
-	var dir = movement_component.direction
-	new_clanker.global_position = global_position + Vector2(spawn_offset * dir, 0)
-	get_parent().add_child(new_clanker)
-	current_clanker = new_clanker
-	
-func despawn_clanker() -> void:
-	if current_clanker and is_instance_valid(current_clanker):
-		current_clanker.queue_free()
-		current_clanker = null
