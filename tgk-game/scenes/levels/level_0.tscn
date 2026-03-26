@@ -2,8 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://caskhlt55xxck" path="res://assets/Tiny_Metroidvania_8x8_Free/Grass_Tileset_Free.png" id="1_osc7o"]
 [ext_resource type="Texture2D" uid="uid://dvul1ktnb6q6g" path="res://assets/cavesofgallet/cavesofgallet_tiles_filled.png" id="1_wjk5u"]
+[ext_resource type="Script" uid="uid://daslrpqckwyau" path="res://scripts/levels/level_0.gd" id="1_xy1qu"]
 [ext_resource type="Texture2D" uid="uid://bvaecghwishky" path="res://assets/Tiny_Metroidvania_8x8_Free/Other_Decorations_Free.png" id="2_wjk5u"]
 [ext_resource type="Texture2D" uid="uid://bf3d8dq68f1b" path="res://assets/cavesofgallet/cavesofgallet_tiles.png" id="3_xy1qu"]
+[ext_resource type="PackedScene" uid="uid://dqfk5tawlcrp0" path="res://scenes/kill_zone.tscn" id="6_jjvta"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jjvta"]
 texture = ExtResource("1_wjk5u")
@@ -276,7 +278,10 @@ sources/0 = SubResource("TileSetAtlasSource_osc7o")
 sources/1 = SubResource("TileSetAtlasSource_wjk5u")
 sources/2 = SubResource("TileSetAtlasSource_xy1qu")
 
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3mnpy"]
+
 [node name="Level_0" type="Node2D" unique_id=827194334]
+script = ExtResource("1_xy1qu")
 
 [node name="Background" type="Node2D" parent="." unique_id=1337668183]
 
@@ -302,3 +307,11 @@ rendering_quadrant_size = 8
 [node name="Camera2D" type="Camera2D" parent="." unique_id=699057680]
 position = Vector2(96, 8)
 zoom = Vector2(4.5, 4.5)
+
+[node name="KillZone" parent="." unique_id=717295406 instance=ExtResource("6_jjvta")]
+position = Vector2(94, 57)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=537523309]
+shape = SubResource("WorldBoundaryShape2D_3mnpy")
+
+[connection signal="kill_zone_entered" from="KillZone" to="." method="_on_kill_zone_kill_zone_entered"]
