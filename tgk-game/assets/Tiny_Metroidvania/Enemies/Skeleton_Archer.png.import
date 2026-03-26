@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxv0bqtgmrg3h"
-path="res://.godot/imported/Spartan_Character_Free.png-213dd5b0c9bd8801627fe12c8e6473e3.ctex"
+uid="uid://03pc7ihcld7b"
+path="res://.godot/imported/Skeleton_Archer.png-68b3fc5aa570f63d8c1c545f3c09ebe4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tiny_Metroidvania_8x8_Free/Spartan_Character_Free.png"
-dest_files=["res://.godot/imported/Spartan_Character_Free.png-213dd5b0c9bd8801627fe12c8e6473e3.ctex"]
+source_file="res://assets/Tiny_Metroidvania/Enemies/Skeleton_Archer.png"
+dest_files=["res://.godot/imported/Skeleton_Archer.png-68b3fc5aa570f63d8c1c545f3c09ebe4.ctex"]
 
 [params]
 
