@@ -9,3 +9,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_level_0_reset_level() -> void:
+	print("asd")
+	get_tree().reload_current_scene()
