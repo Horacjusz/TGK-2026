@@ -15,12 +15,15 @@ enum State {
 @onready var coyote_timer: Timer = %CoyoteTimer
 @onready var input_playback: InputPlayback = %InputPlayback
 
+
+
 var input_recorder: InputRecorder = InputRecorder.new()
 var current_state: State = State.IDLE
 var active_input: InputSource = null
 var starting_position: Vector2
 var record_input: bool = true
 var owner_player: Player = null
+
 
 func init(pos: Vector2, player: Player) -> void:
 	starting_position = pos
@@ -117,7 +120,11 @@ func handle_state(delta: float) -> void:
 		State.FALL:
 			movement_component.move_horizontal(delta, axis)
 			movement_component.apply_gravity(delta)
+
 	movement_component.move_and_slide()
+
+
+
 
 func disable_control() -> void:
 	record_input = false
