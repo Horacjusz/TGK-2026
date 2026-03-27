@@ -14,7 +14,7 @@ enum State {
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var jump_buffer_timer: Timer = %JumpBufferTimer
 @onready var coyote_timer: Timer = %CoyoteTimer
-
+@onready var control_retur_timer = %ControlReturTimer
 var current_state: State = State.IDLE
 #=======================new============================
 @export var clanker: PackedScene
@@ -22,6 +22,18 @@ var current_state: State = State.IDLE
 @onready var clanker_timer: Timer = %ClankerControlTimer
 var current_clanker: Node2D = null
 
+
+func _ready() -> void:
+	clanker_timer.timeout.connect(_on_clanker_timer_timeout)
+	control_retur_timer.timeout.connect(_on_control_return_timer_timeout)
+
+func _on_clanker_timer_timeout() -> void:
+	if current_clanker and is_instance_valid(current_clanker):
+		current_clanker.disable_control()
+	control_retur_timer.start()
+func _on_control_return_timer_timeout() -> void:
+	current_state = State.IDLE
+	animated_sprite.play("idle")
 func _physics_process(delta: float) -> void:
 	handle_input()
 	update_state()
@@ -88,9 +100,7 @@ func update_state() -> void:
 				current_state = State.JUMP
 				animated_sprite.play("jump")
 		State.CLANKER:
-			if not clanker_timer.time_left > 0:
-				current_state = State.IDLE
-				animated_sprite.play("idle")
+			pass
 			
 
 
@@ -126,7 +136,8 @@ func spawn_clanker() -> void:
 	despawn_clanker()
 	var new_clanker = clanker.instantiate()
 	var dir = movement_component.direction
-	new_clanker.global_position = global_position + Vector2(spawn_offset * dir, 0)
+	var starting_position = global_position + Vector2(spawn_offset * dir, 0)
+	new_clanker.init(starting_position, self)
 	get_parent().add_child(new_clanker)
 	current_clanker = new_clanker
 	

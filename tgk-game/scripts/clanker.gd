@@ -13,27 +13,50 @@ enum State {
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var jump_buffer_timer: Timer = %JumpBufferTimer
 @onready var coyote_timer: Timer = %CoyoteTimer
+@onready var input_playback: InputPlayback = %InputPlayback
 
+var input_recorder: InputRecorder = InputRecorder.new()
 var current_state: State = State.IDLE
+var active_input: InputSource = null
+var starting_position: Vector2
+var record_input: bool = true
+var owner_player: Player = null
+
+func init(pos: Vector2, player: Player) -> void:
+	starting_position = pos
+	owner_player = player
+
+func _ready() -> void:
+	_reset_to_start()
+	active_input = input_component
+	input_playback.playback_finished.connect(_on_playback_finished)
+
+func _on_playback_finished() -> void:
+	input_playback.reset()
+	_reset_to_start()
+
+func _reset_to_start() -> void:
+	global_position = starting_position
+	velocity = Vector2.ZERO
+	current_state = State.IDLE
+	animated_sprite.play("idle")
 
 func _physics_process(delta: float) -> void:
 	handle_input()
 	update_state()
 	handle_state(delta)
 
-
 func handle_input() -> void:
-	input_component.update()
-	
-	if input_component.jump_pressed:
+	active_input.update()
+	if record_input:
+		input_recorder.record(active_input)
+	if active_input.jump_pressed:
 		jump_buffer_timer.start()
 
-
 func update_state() -> void:
-	var move_axis = input_component.move_axis
+	var move_axis = active_input.move_axis
 	var wants_jump = jump_buffer_timer.time_left > 0
 	var can_jump = is_on_floor() or coyote_timer.time_left > 0
-	
 	match current_state:
 		State.IDLE:
 			if wants_jump and can_jump:
@@ -70,16 +93,13 @@ func update_state() -> void:
 					current_state = State.IDLE
 					animated_sprite.play("idle")
 			elif wants_jump and can_jump:
-				
 				current_state = State.JUMP
 				animated_sprite.play("jump")
 
-
 func handle_state(delta: float) -> void:
-	var axis = input_component.move_axis
+	var axis = active_input.move_axis
 	var wants_jump = jump_buffer_timer.time_left > 0
 	var can_jump = is_on_floor() or coyote_timer.time_left > 0
-
 	match current_state:
 		State.IDLE:
 			movement_component.move_horizontal(delta, 0)
@@ -97,5 +117,13 @@ func handle_state(delta: float) -> void:
 		State.FALL:
 			movement_component.move_horizontal(delta, axis)
 			movement_component.apply_gravity(delta)
-	
 	movement_component.move_and_slide()
+
+func disable_control() -> void:
+	record_input = false
+	input_component.reset()
+	jump_buffer_timer.stop()
+	coyote_timer.stop()
+	input_playback.load_recording(input_recorder.get_recording())
+	_reset_to_start()
+	active_input = input_playback
