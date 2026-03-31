@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://bwl4hjmmab071" path="res://scripts/input_playback.gd" id="6_y2fjf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnsoo"]
-size = Vector2(12, 7.5)
+size = Vector2(12, 8.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0juto"]
 atlas = ExtResource("2_cnsoo")
@@ -142,12 +142,10 @@ animations = [{
 }]
 
 [node name="Clanker" type="CharacterBody2D" unique_id=330562409]
-collision_layer = 4
-collision_mask = 7
 script = ExtResource("1_an76x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=279740014]
-position = Vector2(0, 0.75)
+position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_cnsoo")
 
 [node name="Model" type="Node2D" parent="." unique_id=1533816276]
