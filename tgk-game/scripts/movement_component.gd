@@ -15,11 +15,11 @@ var direction: int = 1
 func move_horizontal(delta: float, axis: float) -> void:
 	if is_pushed:
 		if axis == 0 or sign(axis) != sign(external_velocity):
-			# Player stands still or moves against push — clanker controls movement
 			body.velocity.x = external_velocity
 		else:
-			# Player moves in same direction as push — boost speed
-			body.velocity.x = external_velocity*2 + speed*axis
+			pass
+			# TODO: Player moves in same direction as push — boost speed
+		
 	else:
 		if axis == 0:
 			body.velocity.x = move_toward(body.velocity.x, 0, acceleration)
