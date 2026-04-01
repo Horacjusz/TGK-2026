@@ -168,7 +168,6 @@ unique_name_in_owner = true
 script = ExtResource("2_w4lyt")
 body = NodePath("..")
 model = NodePath("../Model")
-weight = 2.0
 metadata/_custom_type_script = "uid://yr041ldm08k"
 
 [node name="JumpBufferTimer" type="Timer" parent="." unique_id=692900143]

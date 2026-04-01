@@ -14,7 +14,7 @@ enum State {
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var jump_buffer_timer: Timer = %JumpBufferTimer
 @onready var coyote_timer: Timer = %CoyoteTimer
-@onready var control_retur_timer = %ControlReturTimer
+@onready var control_return_timer = %ControlReturTimer
 var current_state: State = State.IDLE
 #=======================new============================
 @export var clanker: PackedScene
@@ -25,12 +25,12 @@ var current_clanker: Node2D = null
 
 func _ready() -> void:
 	clanker_timer.timeout.connect(_on_clanker_timer_timeout)
-	control_retur_timer.timeout.connect(_on_control_return_timer_timeout)
+	control_return_timer.timeout.connect(_on_control_return_timer_timeout)
 
 func _on_clanker_timer_timeout() -> void:
 	if current_clanker and is_instance_valid(current_clanker):
 		current_clanker.disable_control()
-	control_retur_timer.start()
+	control_return_timer.start()
 func _on_control_return_timer_timeout() -> void:
 	current_state = State.IDLE
 	animated_sprite.play("idle")
@@ -133,15 +133,18 @@ func handle_state(delta: float) -> void:
 	movement_component.move_and_slide()
 	
 func spawn_clanker() -> void:
-	despawn_clanker()
+	_despawn_clanker()
 	var new_clanker = clanker.instantiate()
 	var dir = movement_component.direction
 	var starting_position = global_position + Vector2(spawn_offset * dir, 0)
 	new_clanker.init(starting_position, self)
 	get_parent().add_child(new_clanker)
 	current_clanker = new_clanker
-	
-func despawn_clanker() -> void:
+func kill_clanker() -> void:
+	_despawn_clanker()
+	clanker_timer.stop()
+	control_return_timer.start()
+func _despawn_clanker() -> void:
 	if current_clanker and is_instance_valid(current_clanker):
-		current_clanker.queue_free()
-		current_clanker = null
+		current_clanker.kill()
+	current_clanker = null

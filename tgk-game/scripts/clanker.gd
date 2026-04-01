@@ -35,7 +35,6 @@ var starting_position: Vector2
 var record_input: bool = true
 var owner_player: Player = null
 var previous_position: Vector2 = Vector2.ZERO
-var is_playback: bool = false
 
 # ====================== Initialization ======================
 
@@ -146,19 +145,24 @@ func handle_state(delta: float) -> void:
 
 	movement_component.move_and_slide()
 
+func kill() -> void:
+	queue_free()
 # ====================== Player Interaction ======================
 
 ## Pushes or carries the player based on relative position.
 func _push_player(delta: float) -> void:
 	if not owner_player or not is_instance_valid(owner_player):
 		return
+	owner_player.movement_component.is_pushed = false
+	owner_player.movement_component.external_velocity = 0.0
 	var delta_pos = global_position - previous_position
 	if delta_pos == Vector2.ZERO:
 		return
 	var distance = owner_player.global_position - global_position
+	# Safe check for not teleporting player
 	if abs(delta_pos.x) > 10 or abs(delta_pos.y) > 10:
 		return
-	# Responsible for jumping mb later add it for player too
+	# Responsible for jumping mb later add it for player too player can boost clanker
 	# TODO: consult with team
 	if not get_collision_mask_value(2):
 		if distance.y > 0 or abs(distance.y) > COLLISION_RESTORE_RANGE_Y or abs(distance.x) > COLLISION_RESTORE_RANGE_X:
@@ -169,6 +173,8 @@ func _push_player(delta: float) -> void:
 	# Pushing player from side
 	elif abs(distance.x) < CARRY_RANGE_X and abs(distance.y) < SIDE_PUSH_RANGE_Y and sign(distance.x) == sign(delta_pos.x):
 		owner_player.global_position.x += delta_pos.x
+		owner_player.movement_component.is_pushed = true
+		owner_player.movement_component.external_velocity = velocity.x
 
 ## Disables collision mask for player layer so clanker can jump through.
 func _disable_player_collision() -> void:
@@ -201,4 +207,3 @@ func disable_control() -> void:
 	input_playback.load_recording(input_recorder.get_recording())
 	_reset_to_start()
 	active_input = input_playback
-	is_playback = true
