@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://de0mbgos2qgvu"]
+
+[ext_resource type="Script" uid="uid://bau6tkuv06uv7" path="res://scenes/death_effect.gd" id="1_516on"]
+[ext_resource type="Texture2D" uid="uid://cota412snxr64" path="res://assets/clanker/clanker_death.png" id="2_koetp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_516on"]
+atlas = ExtResource("2_koetp")
+region = Rect2(0, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_koetp"]
+atlas = ExtResource("2_koetp")
+region = Rect2(16, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yftb"]
+atlas = ExtResource("2_koetp")
+region = Rect2(32, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_db78l"]
+atlas = ExtResource("2_koetp")
+region = Rect2(48, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iw60t"]
+atlas = ExtResource("2_koetp")
+region = Rect2(64, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkby3"]
+atlas = ExtResource("2_koetp")
+region = Rect2(80, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vp0q4"]
+atlas = ExtResource("2_koetp")
+region = Rect2(96, 0, 16, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hejqx"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_516on")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_koetp")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_6yftb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_db78l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iw60t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pkby3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vp0q4")
+}],
+"loop": false,
+"name": &"clanker_death",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="DeathEffect" type="Node2D" unique_id=892668421]
+script = ExtResource("1_516on")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=395790704]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_hejqx")
+animation = &"clanker_death"
