@@ -104,7 +104,7 @@ unique_name_in_owner = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Model" unique_id=1636804668]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_dqkch")
-animation = &"idle"
+animation = &"jump"
 autoplay = "idle"
 
 [node name="InputComponent" type="Node" parent="." unique_id=1986764582]
@@ -137,4 +137,9 @@ one_shot = true
 [node name="ControlReturTimer" type="Timer" parent="." unique_id=1843514030]
 unique_name_in_owner = true
 wait_time = 0.3
+one_shot = true
+
+[node name="ClankerCooldownTimer" type="Timer" parent="." unique_id=355740234]
+unique_name_in_owner = true
+wait_time = 3.0
 one_shot = true

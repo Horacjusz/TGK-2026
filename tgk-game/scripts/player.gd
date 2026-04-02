@@ -20,6 +20,7 @@ var current_state: State = State.IDLE
 @export var clanker: PackedScene
 @export var spawn_offset: int = 10
 @onready var clanker_timer: Timer = %ClankerControlTimer
+@onready var clanker_cooldown_timer = %ClankerCooldownTimer
 var current_clanker: Node2D = null
 
 
@@ -48,7 +49,7 @@ func handle_input() -> void:
 	if input_component.reset_clanker_pressed and current_clanker and is_instance_valid(current_clanker):
 		if current_state == State.CLANKER:
 			# Was controlling clanker — despawn with cooldown
-			kill_clanker()
+			_reset_clanker()
 		else:
 			# Not controlling — just despawn instantly
 			_despawn_clanker()
@@ -60,7 +61,7 @@ func update_state() -> void:
 	var can_jump = is_on_floor() or coyote_timer.time_left > 0
 	var wants_spawn_clanker = input_component.clanker_pressed
 	# Placeholder later mb cooldown
-	var can_spawn_clanker = true
+	var can_spawn_clanker = clanker_cooldown_timer.time_left <= 0
 	
 	match current_state:
 		State.IDLE:
@@ -143,14 +144,17 @@ func spawn_clanker() -> void:
 	_despawn_clanker()
 	var new_clanker = clanker.instantiate()
 	var dir = movement_component.direction
-	var starting_position = global_position + Vector2(spawn_offset * dir, 0)
+	var starting_position = global_position + Vector2(spawn_offset * dir, -0.5)
 	new_clanker.init(starting_position, self)
 	get_parent().add_child(new_clanker)
 	current_clanker = new_clanker
-func kill_clanker() -> void:
+func _reset_clanker() -> void:
 	_despawn_clanker()
 	clanker_timer.stop()
 	control_return_timer.start()
+func kill_clanker() -> void:
+	_reset_clanker()
+	clanker_cooldown_timer.start()
 func _despawn_clanker() -> void:
 	if current_clanker and is_instance_valid(current_clanker):
 		current_clanker.kill()

@@ -27,6 +27,7 @@ const COLLISION_RESTORE_RANGE_Y: float = 15.0
 @onready var jump_buffer_timer: Timer = %JumpBufferTimer
 @onready var coyote_timer: Timer = %CoyoteTimer
 @onready var input_playback: InputPlayback = %InputPlayback
+@export var death_effect: PackedScene
 
 var input_recorder: InputRecorder = InputRecorder.new()
 var current_state: State = State.IDLE
@@ -45,17 +46,25 @@ func init(pos: Vector2, player: Player) -> void:
 
 ## Initializes clanker state and connects playback signal.
 func _ready() -> void:
-	_reset_to_start()
+	await _reset_to_start(true)
 	active_input = input_component
 	input_playback.playback_finished.connect(_on_playback_finished)
 
 ## Resets clanker to its starting position and clears velocity.
-func _reset_to_start() -> void:
+func _reset_to_start(on_ready: bool = false) -> void:
+	set_physics_process(false)
+	set_collision_layer_value(3, false)
+	if not on_ready:
+		animated_sprite.play("despawn")
+		await animated_sprite.animation_finished
 	global_position = starting_position
 	previous_position = starting_position
 	velocity = Vector2.ZERO
 	current_state = State.IDLE
-	animated_sprite.play("idle")
+	animated_sprite.play("spawn")
+	await animated_sprite.animation_finished
+	set_collision_layer_value(3, true)
+	set_physics_process(true)
 
 # ====================== Main Loop ======================
 
@@ -146,7 +155,13 @@ func handle_state(delta: float) -> void:
 	movement_component.move_and_slide()
 
 func kill() -> void:
+	if death_effect:
+		var effect = death_effect.instantiate()
+		effect.global_position = global_position
+		effect.anim_name = "clanker_death"
+		get_parent().add_child(effect)
 	queue_free()
+
 # ====================== Player Interaction ======================
 
 ## Pushes or carries the player based on relative position.
@@ -162,8 +177,6 @@ func _push_player(delta: float) -> void:
 	# Safe check for not teleporting player
 	if abs(delta_pos.x) > 10 or abs(delta_pos.y) > 10:
 		return
-	# Responsible for jumping mb later add it for player too player can boost clanker
-	# TODO: consult with team
 	if not get_collision_mask_value(2):
 		if distance.y > 0 or abs(distance.y) > COLLISION_RESTORE_RANGE_Y or abs(distance.x) > COLLISION_RESTORE_RANGE_X:
 			_enable_player_collision()
@@ -192,11 +205,8 @@ func _enable_player_collision() -> void:
 
 ## Called when playback loop finishes — resets clanker and briefly disables player collision.
 func _on_playback_finished() -> void:
-	owner_player.set_collision_mask_value(3, false)
 	input_playback.reset()
-	_reset_to_start()
-	owner_player.move_and_slide()
-	owner_player.set_collision_mask_value(3, true)
+	await _reset_to_start()
 
 ## Stops recording, loads recorded input into playback, and switches to playback mode.
 func disable_control() -> void:
@@ -205,5 +215,5 @@ func disable_control() -> void:
 	jump_buffer_timer.stop()
 	coyote_timer.stop()
 	input_playback.load_recording(input_recorder.get_recording())
-	_reset_to_start()
-	active_input = input_playback
+	await _reset_to_start()
+	active_input = input_playback	
