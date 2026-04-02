@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bvxk1c0fnl4a"]
 
 [ext_resource type="Script" uid="uid://ckjs7ssi4anm2" path="res://scripts/player.gd" id="1_g2els"]
-[ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clanker.tscn" id="2_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://beu5r8yokfcpu" path="res://assets/Tiny_Metroidvania/Character/Spartan_Character.png" id="2_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clanker.tscn" id="2_tuyoq"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/input_component.gd" id="3_dqkch"]
 [ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/movement_component.gd" id="4_qlg0r"]
 
@@ -93,7 +93,7 @@ animations = [{
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_g2els")
-clanker = ExtResource("2_qlg0r")
+clanker = ExtResource("2_tuyoq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1939696613]
 shape = SubResource("CapsuleShape2D_qlg0r")
@@ -104,9 +104,8 @@ unique_name_in_owner = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Model" unique_id=1636804668]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_dqkch")
-animation = &"jump"
-autoplay = "idle"
 animation = &"run"
+autoplay = "idle"
 
 [node name="InputComponent" type="Node" parent="." unique_id=1986764582]
 unique_name_in_owner = true

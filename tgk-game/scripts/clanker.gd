@@ -184,6 +184,7 @@ func _push_player(delta: float) -> void:
 	if abs(distance.x) < CARRY_RANGE_X and abs(distance.y) < CARRY_RANGE_Y and distance.y < 0:
 		owner_player.global_position.y += delta_pos.y * delta
 	# Pushing player from side
+	# It doesnt working but i leav it here for future fixes
 	elif abs(distance.x) < CARRY_RANGE_X and abs(distance.y) < SIDE_PUSH_RANGE_Y and sign(distance.x) == sign(delta_pos.x):
 		owner_player.global_position.x += delta_pos.x
 		owner_player.movement_component.is_pushed = true
