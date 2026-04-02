@@ -45,6 +45,13 @@ func handle_input() -> void:
 	
 	if input_component.jump_pressed:
 		jump_buffer_timer.start()
+	if input_component.reset_clanker_pressed and current_clanker and is_instance_valid(current_clanker):
+		if current_state == State.CLANKER:
+			# Was controlling clanker — despawn with cooldown
+			kill_clanker()
+		else:
+			# Not controlling — just despawn instantly
+			_despawn_clanker()
 
 
 func update_state() -> void:
