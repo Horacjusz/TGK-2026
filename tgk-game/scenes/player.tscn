@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://beu5r8yokfcpu" path="res://assets/Tiny_Metroidvania/Character/Spartan_Character.png" id="2_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clanker.tscn" id="2_tuyoq"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/input_component.gd" id="3_dqkch"]
-[ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/movement_component.gd" id="4_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://di4nktdesjkc0" path="res://scenes/components/movement_component.tscn" id="4_dqkch"]
+[ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="5_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="5_tuyoq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qlg0r"]
 radius = 2.0
@@ -112,22 +114,19 @@ unique_name_in_owner = true
 script = ExtResource("3_dqkch")
 metadata/_custom_type_script = "uid://blxv03fvxeqw8"
 
-[node name="MovementComponent" type="Node" parent="." unique_id=109292795 node_paths=PackedStringArray("body", "model")]
+[node name="MovementComponent" parent="." unique_id=1371815624 node_paths=PackedStringArray("body", "model") instance=ExtResource("4_dqkch")]
 unique_name_in_owner = true
-script = ExtResource("4_qlg0r")
 body = NodePath("..")
 model = NodePath("../Model")
 metadata/_custom_type_script = "uid://yr041ldm08k"
 
-[node name="JumpBufferTimer" type="Timer" parent="." unique_id=650321100]
+[node name="JumpComponent" parent="." unique_id=796923914 node_paths=PackedStringArray("body") instance=ExtResource("5_tuyoq")]
 unique_name_in_owner = true
-wait_time = 0.1
-one_shot = true
+body = NodePath("..")
 
-[node name="CoyoteTimer" type="Timer" parent="." unique_id=234553370]
+[node name="GravityComponent" parent="." unique_id=218598828 node_paths=PackedStringArray("body") instance=ExtResource("5_qlg0r")]
 unique_name_in_owner = true
-wait_time = 0.1
-one_shot = true
+body = NodePath("..")
 
 [node name="ClankerControlTimer" type="Timer" parent="." unique_id=1879192051]
 unique_name_in_owner = true
