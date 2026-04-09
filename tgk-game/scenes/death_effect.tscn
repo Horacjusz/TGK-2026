@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bau6tkuv06uv7" path="res://scenes/death_effect.gd" id="1_516on"]
 [ext_resource type="Texture2D" uid="uid://cota412snxr64" path="res://assets/clanker/clanker_death.png" id="2_koetp"]
+[ext_resource type="Texture2D" uid="uid://ew5pn7dol3ui" path="res://assets/clanker_light/clanker_light_death.png" id="3_koetp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_516on"]
 atlas = ExtResource("2_koetp")
@@ -29,6 +30,34 @@ region = Rect2(80, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vp0q4"]
 atlas = ExtResource("2_koetp")
+region = Rect2(96, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p85cq"]
+atlas = ExtResource("3_koetp")
+region = Rect2(0, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7e6vu"]
+atlas = ExtResource("3_koetp")
+region = Rect2(16, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgrdn"]
+atlas = ExtResource("3_koetp")
+region = Rect2(32, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tioym"]
+atlas = ExtResource("3_koetp")
+region = Rect2(48, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kh7q0"]
+atlas = ExtResource("3_koetp")
+region = Rect2(64, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1po5h"]
+atlas = ExtResource("3_koetp")
+region = Rect2(80, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w23pw"]
+atlas = ExtResource("3_koetp")
 region = Rect2(96, 0, 16, 9)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hejqx"]
@@ -59,6 +88,32 @@ animations = [{
 "name": &"clanker_death",
 "speed": 10.0
 }, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p85cq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7e6vu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgrdn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tioym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kh7q0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1po5h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w23pw")
+}],
+"loop": false,
+"name": &"clanker_light_death",
+"speed": 10.0
+}, {
 "frames": [],
 "loop": false,
 "name": &"default",
@@ -71,4 +126,4 @@ script = ExtResource("1_516on")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=395790704]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_hejqx")
-animation = &"clanker_death"
+animation = &"clanker_light_death"
