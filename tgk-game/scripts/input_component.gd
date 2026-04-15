@@ -2,8 +2,6 @@ class_name InputComponent
 extends InputSource
 
 
-var move_axis: float = 0.0
-var jump_pressed: bool = false
 var jump_released: bool = false
 var clanker_pressed: bool = false
 var reset_clanker_pressed: bool = false

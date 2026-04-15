@@ -1,15 +1,7 @@
 class_name Clanker
 extends CharacterBody2D
 
-enum State {
-	IDLE,
-	RUN,
-	JUMP,
-	FALL,
-}
-
-## Collision distances for detecting player position relative to clanker.
-## Adjust these values when changing clanker model/sprite size.
+signal died
 
 # Max horizontal distance where player is considered "on" or "beside" clanker
 const CARRY_RANGE_X: float = 9.0
@@ -21,21 +13,23 @@ const SIDE_PUSH_RANGE_Y: float = 3.0
 const COLLISION_RESTORE_RANGE_X: float = 12.0
 const COLLISION_RESTORE_RANGE_Y: float = 15.0
 
-@onready var animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
+@onready var animation_tree: AnimationTree = $AnimationTree
 @onready var input_component: InputComponent = $InputComponent
 @onready var movement_component: MovementComponent = $MovementComponent
-@onready var jump_buffer_timer: Timer = %JumpBufferTimer
-@onready var coyote_timer: Timer = %CoyoteTimer
+@onready var gravity_component: GravityComponent = %GravityComponent
+@onready var jump_component: JumpComponent = %JumpComponent
 @onready var input_playback: InputPlayback = %InputPlayback
 @export var death_effect: PackedScene
 
 var input_recorder: InputRecorder = InputRecorder.new()
-var current_state: State = State.IDLE
 var active_input: InputSource = null
 var starting_position: Vector2
 var record_input: bool = true
 var owner_player: Player = null
 var previous_position: Vector2 = Vector2.ZERO
+
+var is_spawning: bool = false
+var is_despawning: bool = false
 
 # ====================== Initialization ======================
 
@@ -46,23 +40,24 @@ func init(pos: Vector2, player: Player) -> void:
 
 ## Initializes clanker state and connects playback signal.
 func _ready() -> void:
+	animation_tree.active = true
 	await _reset_to_start(true)
 	active_input = input_component
-	input_playback.playback_finished.connect(_on_playback_finished)
 
 ## Resets clanker to its starting position and clears velocity.
 func _reset_to_start(on_ready: bool = false) -> void:
 	set_physics_process(false)
 	set_collision_layer_value(3, false)
 	if not on_ready:
-		animated_sprite.play("despawn")
-		await animated_sprite.animation_finished
+		is_despawning = true
+		await animation_tree.animation_finished
+		is_despawning = false
 	global_position = starting_position
 	previous_position = starting_position
 	velocity = Vector2.ZERO
-	current_state = State.IDLE
-	animated_sprite.play("spawn")
-	await animated_sprite.animation_finished
+	is_spawning = true
+	await animation_tree.animation_finished
+	is_spawning = false
 	set_collision_layer_value(3, true)
 	set_physics_process(true)
 
@@ -72,8 +67,10 @@ func _reset_to_start(on_ready: bool = false) -> void:
 func _physics_process(delta: float) -> void:
 	previous_position = global_position
 	handle_input()
-	update_state()
-	handle_state(delta)
+	movement_component.handle_movement(active_input.move_axis, delta)
+	jump_component.handle_jump(active_input.jump_pressed, false)
+	gravity_component.handle_gravity(delta)
+	move_and_slide()
 	_push_player(delta)
 
 ## Reads input from active source and starts jump buffer if needed.
@@ -81,79 +78,9 @@ func handle_input() -> void:
 	active_input.update()
 	if record_input:
 		input_recorder.record(active_input)
-	if active_input.jump_pressed:
-		jump_buffer_timer.start()
 
-## Determines current state based on input and physics conditions.
-func update_state() -> void:
-	var move_axis = active_input.move_axis
-	var wants_jump = jump_buffer_timer.time_left > 0
-	var can_jump = is_on_floor() or coyote_timer.time_left > 0
-	match current_state:
-		State.IDLE:
-			if wants_jump and can_jump:
-				current_state = State.JUMP
-				animated_sprite.play("jump")
-			elif abs(move_axis) > 0:
-				current_state = State.RUN
-				animated_sprite.play("run")
-			elif not is_on_floor():
-				coyote_timer.start()
-				current_state = State.FALL
-				animated_sprite.play("fall")
-		State.RUN:
-			if wants_jump and can_jump:
-				current_state = State.JUMP
-				animated_sprite.play("jump")
-			elif abs(move_axis) == 0:
-				current_state = State.IDLE
-				animated_sprite.play("idle")
-			elif not is_on_floor():
-				coyote_timer.start()
-				current_state = State.FALL
-				animated_sprite.play("fall")
-		State.JUMP:
-			if velocity.y > 0:
-				current_state = State.FALL
-				animated_sprite.play("fall")
-		State.FALL:
-			if is_on_floor():
-				if abs(move_axis) > 0:
-					current_state = State.RUN
-					animated_sprite.play("run")
-				else:
-					current_state = State.IDLE
-					animated_sprite.play("idle")
-			elif wants_jump and can_jump:
-				current_state = State.JUMP
-				animated_sprite.play("jump")
 
-## Executes movement logic based on current state.
-func handle_state(delta: float) -> void:
-	var axis = active_input.move_axis
-	var wants_jump = jump_buffer_timer.time_left > 0
-	var can_jump = is_on_floor() or coyote_timer.time_left > 0
-	match current_state:
-		State.IDLE:
-			movement_component.move_horizontal(delta, 0)
-			movement_component.apply_gravity(delta)
-		State.RUN:
-			movement_component.move_horizontal(delta, axis)
-			movement_component.apply_gravity(delta)
-		State.JUMP:
-			if wants_jump and can_jump:
-				jump_buffer_timer.stop()
-				coyote_timer.stop()
-				_disable_player_collision()
-				movement_component.jump()
-			movement_component.move_horizontal(delta, axis)
-			movement_component.apply_gravity(delta)
-		State.FALL:
-			movement_component.move_horizontal(delta, axis)
-			movement_component.apply_gravity(delta)
-
-	movement_component.move_and_slide()
-
+# TODO: move this to die, handle death effect with animation player
 func kill() -> void:
 	if death_effect:
 		var effect = death_effect.instantiate()
@@ -213,8 +140,11 @@ func _on_playback_finished() -> void:
 func disable_control() -> void:
 	record_input = false
 	input_component.reset()
-	jump_buffer_timer.stop()
-	coyote_timer.stop()
 	input_playback.load_recording(input_recorder.get_recording())
 	await _reset_to_start()
 	active_input = input_playback	
+
+
+func die():
+	died.emit()
+	queue_free()
