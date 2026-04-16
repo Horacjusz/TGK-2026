@@ -15,9 +15,6 @@ signal died
 
 var is_controlling_clanker: bool = false
 
-func _ready() -> void:
-	clanker_manager_component.control_started.connect(_on_clanker_control_started)
-	clanker_manager_component.control_ended.connect(_on_clanker_control_ended)
 
 func _on_clanker_control_started() -> void:
 	is_controlling_clanker = true

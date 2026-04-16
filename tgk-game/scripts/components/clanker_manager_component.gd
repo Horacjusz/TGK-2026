@@ -35,6 +35,7 @@ func handle_clanker_input(wants_spawn: bool, wants_reset: bool, selected_slot: i
 	var can_spawn = actor.is_on_floor() and cooldown_timers[clanker_index].time_left <= 0
 	var wants_chanege_clanker_slot = selected_slot != -1 and selected_slot != clanker_index
 	if wants_chanege_clanker_slot:
+		print(selected_slot)
 		clanker_index = selected_slot
 	# Logic for Spawning/Controlling
 	if wants_spawn and can_spawn and not is_controlling_clanker:

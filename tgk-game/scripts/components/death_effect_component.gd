@@ -1,5 +1,5 @@
 # death_effect.gd
-class_name DeathEffect
+class_name DeathEffectComponent
 extends Node2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D

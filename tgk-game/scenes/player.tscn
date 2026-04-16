@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="5_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="5_tuyoq"]
 [ext_resource type="PackedScene" uid="uid://lsm54j4ixp64" path="res://scenes/components/clanker_manager_component.tscn" id="8_smehm"]
+[ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clanker.tscn" id="8_y4r1p"]
+[ext_resource type="PackedScene" uid="uid://cn2g5x1kcg6mn" path="res://scenes/mocks/light_clanker_mock.tscn" id="9_d2wvv"]
+[ext_resource type="PackedScene" uid="uid://c6odnbmf0xuy1" path="res://scenes/mocks/defender_clanker_mock.tscn" id="10_3v2ag"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qlg0r"]
 radius = 2.0
@@ -352,6 +355,10 @@ body = NodePath("..")
 
 [node name="ClankerManagerComponent" parent="." unique_id=1527828290 node_paths=PackedStringArray("actor", "movement_component") instance=ExtResource("8_smehm")]
 unique_name_in_owner = true
+clanker_scenes = Array[PackedScene]([ExtResource("8_y4r1p"), ExtResource("9_d2wvv"), ExtResource("10_3v2ag")])
 clanker_cooldown_durations = Array[float]([3.0, 3.0, 3.0])
 actor = NodePath("..")
 movement_component = NodePath("../MovementComponent")
+
+[connection signal="control_ended" from="ClankerManagerComponent" to="." method="_on_clanker_control_ended"]
+[connection signal="control_started" from="ClankerManagerComponent" to="." method="_on_clanker_control_started"]
