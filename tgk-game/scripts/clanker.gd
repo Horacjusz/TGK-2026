@@ -19,8 +19,9 @@ const COLLISION_RESTORE_RANGE_Y: float = 15.0
 @onready var gravity_component: GravityComponent = %GravityComponent
 @onready var jump_component: JumpComponent = %JumpComponent
 @onready var input_playback: InputPlayback = %InputPlayback
+@export_group("Death Effect Settings")
 @export var death_effect: PackedScene
-
+@export var death_anim_name: String = "clanker_death"
 var input_recorder: InputRecorder = InputRecorder.new()
 var active_input: InputSource = null
 var starting_position: Vector2
@@ -85,7 +86,7 @@ func kill() -> void:
 	if death_effect:
 		var effect = death_effect.instantiate()
 		effect.global_position = global_position
-		effect.anim_name = "clanker_death"
+		effect.anim_name = death_anim_name
 		get_parent().add_child(effect)
 	queue_free()
 

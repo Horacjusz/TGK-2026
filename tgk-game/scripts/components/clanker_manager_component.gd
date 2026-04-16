@@ -1,4 +1,4 @@
-class_name ClankerSpawnerComponent
+class_name ClankerManagerComponent
 extends Node
 
 
@@ -16,15 +16,26 @@ signal control_ended
 
 var current_clanker: Node2D = null
 var is_controlling_clanker: bool = false
+var spawned_clanker_index: int
+var clanker_index: int = 0
 
 @onready var control_timer: Timer = %ControlTimer
 @onready var control_return_timer: Timer = %ControlReturnTimer
-@onready var cooldown_timer: Timer = %CooldownTimer
+@onready var cooldown_timers: Array[Timer]
 
+func _ready() -> void:
+	for i in clanker_scenes.size():
+		var timer = Timer.new()
+		timer.one_shot = true
+		timer.wait_time = clanker_cooldown_durations[i]
+		cooldown_timers.append(timer) 
+		add_child(timer)
 
-func handle_clanker_input(wants_spawn: bool, wants_reset: bool) -> void:
-	var can_spawn = actor.is_on_floor() and cooldown_timer.time_left <= 0
-
+func handle_clanker_input(wants_spawn: bool, wants_reset: bool, selected_slot: int) -> void:
+	var can_spawn = actor.is_on_floor() and cooldown_timers[clanker_index].time_left <= 0
+	var wants_chanege_clanker_slot = selected_slot != -1 and selected_slot != clanker_index
+	if wants_chanege_clanker_slot:
+		clanker_index = selected_slot
 	# Logic for Spawning/Controlling
 	if wants_spawn and can_spawn and not is_controlling_clanker:
 		spawn_clanker()
@@ -38,13 +49,14 @@ func handle_clanker_input(wants_spawn: bool, wants_reset: bool) -> void:
 			# Not controlling — just despawn instantly
 			despawn_clanker()
 
-
 func spawn_clanker() -> void:
 	despawn_clanker()
 	
-	var new_clanker = clanker_scene.instantiate()
+	spawned_clanker_index = clanker_index
+	
+	var new_clanker = clanker_scenes[clanker_index].instantiate()
 	var dir = movement_component.direction
-	var starting_position = actor.global_position + Vector2(spawn_offset * dir, -0.5)
+	var starting_position = actor.global_position + Vector2(spawn_offset.x * dir, spawn_offset.y)
 	
 	new_clanker.init(starting_position, actor)
 	actor.get_parent().add_child(new_clanker)
@@ -82,4 +94,4 @@ func _on_control_return_timer_timeout() -> void:
 
 func _on_clanker_died() -> void:
 	reset_clanker()
-	cooldown_timer.start()
+	cooldown_timers[spawned_clanker_index].start()

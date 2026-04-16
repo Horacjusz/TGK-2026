@@ -2,12 +2,11 @@
 
 [ext_resource type="Script" uid="uid://ckjs7ssi4anm2" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://beu5r8yokfcpu" path="res://assets/Tiny_Metroidvania/Character/Spartan_Character.png" id="2_qlg0r"]
-[ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clanker.tscn" id="2_tuyoq"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/input_component.gd" id="3_dqkch"]
 [ext_resource type="PackedScene" uid="uid://di4nktdesjkc0" path="res://scenes/components/movement_component.tscn" id="4_dqkch"]
 [ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="5_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="5_tuyoq"]
-[ext_resource type="PackedScene" uid="uid://lsm54j4ixp64" path="res://scenes/components/clanker_spawner_component.tscn" id="8_smehm"]
+[ext_resource type="PackedScene" uid="uid://lsm54j4ixp64" path="res://scenes/components/clanker_manager_component.tscn" id="8_smehm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qlg0r"]
 radius = 2.0
@@ -351,8 +350,8 @@ body = NodePath("..")
 unique_name_in_owner = true
 body = NodePath("..")
 
-[node name="ClankerSpawnerComponent" parent="." unique_id=1527828290 node_paths=PackedStringArray("actor", "movement_component") instance=ExtResource("8_smehm")]
+[node name="ClankerManagerComponent" parent="." unique_id=1527828290 node_paths=PackedStringArray("actor", "movement_component") instance=ExtResource("8_smehm")]
 unique_name_in_owner = true
-clanker_scene = ExtResource("2_tuyoq")
+clanker_cooldown_durations = Array[float]([3.0, 3.0, 3.0])
 actor = NodePath("..")
 movement_component = NodePath("../MovementComponent")

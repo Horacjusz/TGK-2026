@@ -1,4 +1,4 @@
-class_name ClankerManager
+class_name ClankerManagerOld
 extends Node
 
 signal control_ended
