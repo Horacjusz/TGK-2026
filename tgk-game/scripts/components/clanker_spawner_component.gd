@@ -6,8 +6,9 @@ signal control_started
 signal control_ended
 
 @export_group("Settings")
-@export var clanker_scene: PackedScene
-@export var spawn_offset: int = 10
+@export var clanker_scenes: Array[PackedScene]
+@export var clanker_cooldown_durations: Array[float]
+@export var spawn_offset: Vector2 = Vector2(10, -0.5)
 
 @export_group("Required References")
 @export var actor: CharacterBody2D
