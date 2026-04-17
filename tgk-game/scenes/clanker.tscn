@@ -15,7 +15,17 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0g1f"]
 size = Vector2(11, 6)
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_evqai"]
+animation = &"jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k4ei7"]
+animation = &"fall"
+
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_gxeql"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_evqai")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_k4ei7")
+blend_point_1/pos = 1.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tv17w"]
 animation = &"idle"

@@ -71,6 +71,8 @@ func _physics_process(delta: float) -> void:
 	movement_component.handle_movement(active_input.move_axis, delta)
 	jump_component.handle_jump(active_input.jump_pressed, false)
 	gravity_component.handle_gravity(delta)
+	
+	animation_tree.set("parameters/Moving/Airborne/blend_position", velocity.y)
 	move_and_slide()
 	_push_player(delta)
 
