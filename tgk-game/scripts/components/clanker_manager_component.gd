@@ -22,7 +22,9 @@ var selected_clanker_type: String = "clanker"
 var cooldown_timers: Dictionary[String, Timer] = {}
 
 func _ready() -> void:
-	for clanker_name in clankers_data.clanker_available:
+	# for developing purposes
+	clankers_data.unlock_all(["clanker", "light_clanker", "defender_clanker"])
+	for clanker_name in clankers_data.clankers_available:
 		_register_clanker_timer(clanker_name)
 
 func _register_clanker_timer(clanker_name: String) -> void:
@@ -30,7 +32,7 @@ func _register_clanker_timer(clanker_name: String) -> void:
 		return
 	var timer = Timer.new()
 	timer.one_shot = true
-	timer.wait_time = clankers_data.clanker_cooldown_durations.get(clanker_name, 3.0)
+	timer.wait_time = clankers_data.clankers_cooldown_durations.get(clanker_name, 3.0)
 	add_child(timer)
 	cooldown_timers[clanker_name] = timer
 
