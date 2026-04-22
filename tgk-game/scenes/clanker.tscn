@@ -11,9 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://dmiru35cb4orr" path="res://assets/clanker/clanker_despawn.png" id="5_i0g1f"]
 [ext_resource type="Texture2D" uid="uid://brdhnkusedqou" path="res://assets/clanker_light/clanker_light_idle_short.png" id="6_gxeql"]
 [ext_resource type="Script" uid="uid://bwl4hjmmab071" path="res://scripts/input_playback.gd" id="6_y2fjf"]
+[ext_resource type="Texture2D" uid="uid://ds7p1wr17ceyd" path="res://assets/clanker_light/clanker_light_run.png" id="7_tv17w"]
 [ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="10_gxeql"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="11_tv17w"]
-[ext_resource type="Texture2D" uid="uid://ds7p1wr17ceyd" path="res://assets/clanker_light/clanker_light_run.png" id="7_tv17w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0g1f"]
 size = Vector2(11, 6)
@@ -738,13 +738,14 @@ animations = [{
 
 [node name="Clanker" type="CharacterBody2D" unique_id=330562409]
 collision_layer = 4
-collision_mask = 3
+collision_priority = 0.5
 script = ExtResource("1_an76x")
 death_effect = ExtResource("2_ebm1b")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=279740014]
 position = Vector2(-0.5, 1.5)
 shape = SubResource("RectangleShape2D_i0g1f")
+one_way_collision = true
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=701938687]
 active = false

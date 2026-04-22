@@ -71,7 +71,7 @@ func _physics_process(delta: float) -> void:
 	jump_component.handle_jump(active_input.jump_pressed, false)
 	gravity_component.handle_gravity(delta)
 	move_and_slide()
-	_push_player(delta)
+	#_push_player(delta)
 
 ## Reads input from active source and starts jump buffer if needed.
 func handle_input() -> void:
