@@ -11,19 +11,28 @@ signal died
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var jump_component: JumpComponent = %JumpComponent
 @onready var gravity_component: GravityComponent = %GravityComponent
-@onready var clanker_spawner_component: ClankerSpawnerComponent = %ClankerSpawnerComponent
+@onready var clanker_manager_component: ClankerManagerComponent = %ClankerManagerComponent
 
+var is_controlling_clanker: bool = false
+
+
+func _on_clanker_control_started() -> void:
+	is_controlling_clanker = true
+
+func _on_clanker_control_ended() -> void:
+	is_controlling_clanker = false
 
 func _physics_process(delta: float) -> void:
 	input_component.update()
 	gravity_component.handle_gravity(delta)
 	
-	clanker_spawner_component.handle_clanker_input(
+	clanker_manager_component.handle_clanker_input(
 		input_component.clanker_pressed, 
-		input_component.reset_clanker_pressed
+		input_component.reset_clanker_pressed,
+		input_component.selected_slot
 	)
 	
-	if clanker_spawner_component.is_controlling_clanker:
+	if is_controlling_clanker:
 		movement_component.handle_movement(0, delta)
 	else:
 		movement_component.handle_movement(input_component.move_axis, delta)

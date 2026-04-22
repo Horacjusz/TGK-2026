@@ -1,63 +1,92 @@
 [gd_scene format=3 uid="uid://de0mbgos2qgvu"]
 
-[ext_resource type="Script" uid="uid://bau6tkuv06uv7" path="res://scenes/death_effect.gd" id="1_516on"]
-[ext_resource type="Texture2D" uid="uid://cota412snxr64" path="res://assets/clanker/clanker_death.png" id="2_koetp"]
-[ext_resource type="Texture2D" uid="uid://ew5pn7dol3ui" path="res://assets/clanker_light/clanker_light_death.png" id="3_koetp"]
+[ext_resource type="Script" uid="uid://bau6tkuv06uv7" path="res://scripts/components/death_effect_component.gd" id="1_oqo1a"]
+[ext_resource type="Texture2D" uid="uid://cota412snxr64" path="res://assets/clanker/clanker_death.png" id="2_5nm3m"]
+[ext_resource type="Texture2D" uid="uid://0r5nwcs0osg5" path="res://assets/clanker_defender/clanker_deff_death.png" id="3_5nm3m"]
+[ext_resource type="Texture2D" uid="uid://ew5pn7dol3ui" path="res://assets/clanker_light/clanker_light_death.png" id="3_rgok5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_516on"]
-atlas = ExtResource("2_koetp")
+atlas = ExtResource("2_5nm3m")
 region = Rect2(0, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_koetp"]
-atlas = ExtResource("2_koetp")
+atlas = ExtResource("2_5nm3m")
 region = Rect2(16, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6yftb"]
-atlas = ExtResource("2_koetp")
+atlas = ExtResource("2_5nm3m")
 region = Rect2(32, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_db78l"]
-atlas = ExtResource("2_koetp")
+atlas = ExtResource("2_5nm3m")
 region = Rect2(48, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw60t"]
-atlas = ExtResource("2_koetp")
+atlas = ExtResource("2_5nm3m")
 region = Rect2(64, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pkby3"]
-atlas = ExtResource("2_koetp")
+atlas = ExtResource("2_5nm3m")
 region = Rect2(80, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vp0q4"]
-atlas = ExtResource("2_koetp")
+atlas = ExtResource("2_5nm3m")
+region = Rect2(96, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgok5"]
+atlas = ExtResource("3_5nm3m")
+region = Rect2(0, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t80if"]
+atlas = ExtResource("3_5nm3m")
+region = Rect2(16, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xk7dd"]
+atlas = ExtResource("3_5nm3m")
+region = Rect2(32, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fik8c"]
+atlas = ExtResource("3_5nm3m")
+region = Rect2(48, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uy2xe"]
+atlas = ExtResource("3_5nm3m")
+region = Rect2(64, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cuny"]
+atlas = ExtResource("3_5nm3m")
+region = Rect2(80, 0, 16, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r53y8"]
+atlas = ExtResource("3_5nm3m")
 region = Rect2(96, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p85cq"]
-atlas = ExtResource("3_koetp")
+atlas = ExtResource("3_rgok5")
 region = Rect2(0, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7e6vu"]
-atlas = ExtResource("3_koetp")
+atlas = ExtResource("3_rgok5")
 region = Rect2(16, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pgrdn"]
-atlas = ExtResource("3_koetp")
+atlas = ExtResource("3_rgok5")
 region = Rect2(32, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tioym"]
-atlas = ExtResource("3_koetp")
+atlas = ExtResource("3_rgok5")
 region = Rect2(48, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kh7q0"]
-atlas = ExtResource("3_koetp")
+atlas = ExtResource("3_rgok5")
 region = Rect2(64, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1po5h"]
-atlas = ExtResource("3_koetp")
+atlas = ExtResource("3_rgok5")
 region = Rect2(80, 0, 16, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w23pw"]
-atlas = ExtResource("3_koetp")
+atlas = ExtResource("3_rgok5")
 region = Rect2(96, 0, 16, 9)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hejqx"]
@@ -88,6 +117,37 @@ animations = [{
 "name": &"clanker_death",
 "speed": 10.0
 }, {
+"frames": [],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rgok5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t80if")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xk7dd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fik8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy2xe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cuny")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r53y8")
+}],
+"loop": false,
+"name": &"defender_clanker_death",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p85cq")
@@ -111,19 +171,14 @@ animations = [{
 "texture": SubResource("AtlasTexture_w23pw")
 }],
 "loop": false,
-"name": &"clanker_light_death",
-"speed": 10.0
-}, {
-"frames": [],
-"loop": false,
-"name": &"default",
+"name": &"light_clanker_death",
 "speed": 10.0
 }]
 
-[node name="DeathEffect" type="Node2D" unique_id=892668421]
-script = ExtResource("1_516on")
+[node name="DeathEffectComponent" type="Node2D" unique_id=892668421]
+script = ExtResource("1_oqo1a")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=395790704]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_hejqx")
-animation = &"clanker_light_death"
+animation = &"light_clanker_death"
