@@ -1,7 +1,6 @@
 class_name InputComponent
 extends InputSource
 
-var jump_released: bool = false
 var clanker_pressed: bool = false
 var reset_clanker_pressed: bool = false
 var selected_slot: String = ""
