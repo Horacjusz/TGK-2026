@@ -3,15 +3,19 @@ extends CharacterBody2D
 
 signal died
 
+@export_category("Colision setup")
 @export var collision_layer_index: int
+@export_category("Components")
+@export var gravity_component: GravityComponent
+@export var jump_component: JumpComponent
+@export var fly_component: FlyComponent
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var input_component: InputComponent = $InputComponent
 @onready var movement_component: MovementComponent = $MovementComponent
-@onready var gravity_component: GravityComponent = %GravityComponent
-@onready var jump_component: JumpComponent = %JumpComponent
 @onready var input_playback: InputPlayback = %InputPlayback
+@onready var input_recorder: InputRecorder = %InputRecorder
 
-var input_recorder: InputRecorder = InputRecorder.new()
+const AIRBORN_PATH: String = "parameters/Moving/Airborne/blend_position"
 var active_input: InputSource = null
 var starting_position: Vector2
 var record_input: bool = true
@@ -58,12 +62,21 @@ func _physics_process(delta: float) -> void:
 	previous_position = global_position
 	handle_input()
 	movement_component.handle_movement(active_input.move_axis, delta)
-	jump_component.handle_jump(active_input.jump_pressed, active_input.jump_released)
-	gravity_component.handle_gravity(delta)
-	
-	animation_tree.set("parameters/Moving/Airborne/blend_position", velocity.y)
+	if jump_component:
+		jump_component.handle_jump(active_input.jump_pressed, active_input.jump_released)
+	if gravity_component:
+		gravity_component.handle_gravity(delta)
+	if fly_component:
+		fly_component.handle_movement(active_input.move_yaxis, delta)
+	_update_animation(Vector2(sign(velocity.x), sign(velocity.y)))
 	move_and_slide()
 
+func _update_animation(vel: Vector2) -> void:
+	if fly_component:
+		print(vel)
+		animation_tree.set(AIRBORN_PATH, vel)
+	else:
+		animation_tree.set(AIRBORN_PATH, vel.y)
 ## Reads input from active source and starts jump buffer if needed.
 func handle_input() -> void:
 	active_input.update()

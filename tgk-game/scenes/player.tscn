@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckjs7ssi4anm2" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://beu5r8yokfcpu" path="res://assets/Tiny_Metroidvania/Character/Spartan_Character.png" id="2_qlg0r"]
-[ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/input_component.gd" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/inputs/input_component.gd" id="3_dqkch"]
 [ext_resource type="PackedScene" uid="uid://di4nktdesjkc0" path="res://scenes/components/movement_component.tscn" id="4_dqkch"]
 [ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="5_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="5_tuyoq"]

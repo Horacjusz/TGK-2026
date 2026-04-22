@@ -6,11 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://cota412snxr64" path="res://assets/clanker/clanker_death.png" id="4_ygya5"]
 [ext_resource type="Texture2D" uid="uid://bps76eqiiosv" path="res://assets/clanker/clanker_idle.png" id="5_pae8r"]
 [ext_resource type="Texture2D" uid="uid://c2geaaj70plcu" path="res://assets/clanker/clanker_run.png" id="6_1ynna"]
-[ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/input_component.gd" id="7_apr1i"]
-[ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/movement_component.gd" id="8_w0ohy"]
-[ext_resource type="Script" uid="uid://bwl4hjmmab071" path="res://scripts/input_playback.gd" id="9_ebobk"]
+[ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/inputs/input_component.gd" id="7_apr1i"]
+[ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/components/movement_component.gd" id="8_w0ohy"]
+[ext_resource type="Script" uid="uid://bwl4hjmmab071" path="res://scripts/inputs/input_playback.gd" id="9_ebobk"]
 [ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="10_q4lcl"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="11_tb6jh"]
+[ext_resource type="Script" uid="uid://dxfgidd5f025s" path="res://scripts/inputs/input_recorder.gd" id="12_ygya5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0g1f"]
 size = Vector2(12, 5)
@@ -686,11 +687,13 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Clanker" type="CharacterBody2D" unique_id=330562409]
+[node name="Clanker" type="CharacterBody2D" unique_id=330562409 node_paths=PackedStringArray("gravity_component", "jump_component")]
 collision_layer = 4
 collision_priority = 0.5
 script = ExtResource("1_3m55q")
 collision_layer_index = 3
+gravity_component = NodePath("GravityComponent")
+jump_component = NodePath("JumpComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=279740014]
 position = Vector2(0, 2)
@@ -739,5 +742,11 @@ body = NodePath("..")
 [node name="JumpComponent" parent="." unique_id=796923914 node_paths=PackedStringArray("body") instance=ExtResource("11_tb6jh")]
 unique_name_in_owner = true
 body = NodePath("..")
+
+[node name="InputRecorder" type="Node" parent="." unique_id=979768595]
+unique_name_in_owner = true
+script = ExtResource("12_ygya5")
+record_move_yaxis = false
+metadata/_custom_type_script = "uid://dxfgidd5f025s"
 
 [connection signal="playback_finished" from="InputPlayback" to="." method="_on_playback_finished"]

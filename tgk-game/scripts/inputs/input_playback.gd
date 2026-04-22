@@ -31,9 +31,9 @@ func update() -> void:
 	
 	var frame = recording[current_index]
 	move_axis = frame["move_axis"]
-	move_yaxis = frame["move_yaxis"]
-	jump_pressed = frame["jump_pressed"]
-	jump_released = frame["jump_released"]
+	jump_pressed = frame.get("jump_pressed", false)
+	jump_released = frame.get("jump_released", false)
+	move_yaxis = frame.get("move_yaxis", 0.0)
 	
 	remaining_ticks -= 1
 	if remaining_ticks <= 0:
