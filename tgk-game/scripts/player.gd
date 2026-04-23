@@ -42,6 +42,10 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+func get_camera_target() -> Vector2:
+	if is_controlling_clanker and clanker_manager_component.current_clanker and is_instance_valid(clanker_manager_component.current_clanker):
+		return clanker_manager_component.current_clanker.global_position
+	return global_position
 
 func die() -> void:
 	collision_shape.set_deferred("disabled", true) # Use set_deferred for physics
