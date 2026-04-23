@@ -9,6 +9,8 @@ signal died
 @export var gravity_component: GravityComponent
 @export var jump_component: JumpComponent
 @export var fly_component: FlyComponent
+
+
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var input_component: InputComponent = $InputComponent
 @onready var movement_component: MovementComponent = $MovementComponent
@@ -73,7 +75,6 @@ func _physics_process(delta: float) -> void:
 
 func _update_animation(vel: Vector2) -> void:
 	if fly_component:
-		print(vel)
 		animation_tree.set(AIRBORN_PATH, vel)
 	else:
 		animation_tree.set(AIRBORN_PATH, vel.y)
