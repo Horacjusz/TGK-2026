@@ -2,11 +2,18 @@ extends Node2D
 
 
 @onready var reload_level_timer: Timer = %ReloadLevelTimer
-
+# in future replace with Level interface
+@onready var active_level: Node2D = %Level_0
+@onready var camera: Camera2D = %Camera2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	_setup_level()
+
+func _setup_level() -> void:
+	var tilemap = active_level.get_background_tilemap()
+	camera.setup_camera_limits(tilemap)
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
