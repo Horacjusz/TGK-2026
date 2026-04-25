@@ -889,6 +889,7 @@ metadata/_custom_type_script = "uid://ctf4pq7c3ge31"
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1111896371]
 color = Color(1, 0.9529412, 0.83137256, 1)
+shadow_enabled = true
 texture = SubResource("GradientTexture2D_0510v")
 
 [connection signal="playback_finished" from="InputPlayback" to="." method="_on_playback_finished"]
