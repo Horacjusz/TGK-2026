@@ -818,9 +818,19 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_ayi0a"]
+offsets = PackedFloat32Array(0.08663366, 0.10891089, 0.69554454)
+colors = PackedColorArray(0, 0, 0, 1, 0.99607843, 0.8, 0.2784314, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0510v"]
+gradient = SubResource("Gradient_ayi0a")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="LightClanker" type="CharacterBody2D" unique_id=1677849010 node_paths=PackedStringArray("fly_component")]
 collision_layer = 8
 script = ExtResource("1_j1wut")
+collision_layer_index = 4
 fly_component = NodePath("FlyComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1120267766]
@@ -845,8 +855,7 @@ unique_name_in_owner = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Model" unique_id=357850836]
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_nvk4l")
-animation = &"die"
-frame = 3
+animation = &"despawn"
 
 [node name="InputComponent" type="Node" parent="." unique_id=502327767]
 unique_name_in_owner = true
@@ -877,5 +886,9 @@ body = NodePath("..")
 model = NodePath("../Model")
 use_deceleration = true
 metadata/_custom_type_script = "uid://ctf4pq7c3ge31"
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1111896371]
+color = Color(1, 0.9529412, 0.83137256, 1)
+texture = SubResource("GradientTexture2D_0510v")
 
 [connection signal="playback_finished" from="InputPlayback" to="." method="_on_playback_finished"]
