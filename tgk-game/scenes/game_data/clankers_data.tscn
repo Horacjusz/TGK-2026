@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://r4nbqoi48tgh"]
 
 [ext_resource type="Script" uid="uid://bnmme1bd5hldw" path="res://scripts/game_data/clankers_data.gd" id="1_suxjf"]
-[ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clanker.tscn" id="2_rr2tt"]
+[ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clankers/clanker.tscn" id="2_rr2tt"]
 [ext_resource type="PackedScene" uid="uid://c6odnbmf0xuy1" path="res://scenes/mocks/defender_clanker_mock.tscn" id="3_jv32b"]
 [ext_resource type="PackedScene" uid="uid://cn2g5x1kcg6mn" path="res://scenes/mocks/light_clanker_mock.tscn" id="4_vk1h5"]
 

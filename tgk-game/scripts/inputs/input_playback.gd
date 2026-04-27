@@ -22,14 +22,18 @@ func reset() -> void:
 
 func update() -> void:
 	jump_pressed = false
+	jump_released = false
 	if current_index >= recording.size():
 		move_axis = 0.0
+		move_yaxis = 0.0
 		playback_finished.emit()
 		return
 	
 	var frame = recording[current_index]
 	move_axis = frame["move_axis"]
-	jump_pressed = frame["jump_pressed"]
+	jump_pressed = frame.get("jump_pressed", false)
+	jump_released = frame.get("jump_released", false)
+	move_yaxis = frame.get("move_yaxis", 0.0)
 	
 	remaining_ticks -= 1
 	if remaining_ticks <= 0:

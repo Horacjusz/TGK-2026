@@ -55,7 +55,7 @@ func handle_clanker_input(wants_spawn: bool, wants_reset: bool, selected_slot: S
 	if wants_reset and current_clanker and is_instance_valid(current_clanker):
 		if is_controlling_clanker:
 			# Was controlling clanker — despawn with cooldown
-			reset_clanker()
+			current_clanker.die()
 		else:
 			# Not controlling — just despawn instantly
 			despawn_clanker()
@@ -79,16 +79,9 @@ func spawn_clanker() -> void:
 	control_timer.start()
 	control_started.emit()
 
-
-func reset_clanker() -> void:
-	despawn_clanker()
-	control_timer.stop()
-	control_return_timer.start()
-
-
 func despawn_clanker() -> void:
 	if current_clanker and is_instance_valid(current_clanker):
-		current_clanker.kill()
+		current_clanker.despawn()
 	current_clanker = null
 
 
@@ -104,5 +97,6 @@ func _on_control_return_timer_timeout() -> void:
 
 
 func _on_clanker_died() -> void:
-	reset_clanker()
+	control_timer.stop()
+	control_return_timer.start()
 	cooldown_timers[spawned_clanker_type].start()
