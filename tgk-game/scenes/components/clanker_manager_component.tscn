@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://d81x0g1fabuw" path="res://scripts/components/clanker_manager_component.gd" id="1_b1ypu"]
 [ext_resource type="PackedScene" uid="uid://r4nbqoi48tgh" path="res://scenes/game_data/clankers_data.tscn" id="2_ivvps"]
 [ext_resource type="PackedScene" uid="uid://ciiousl5pp38q" path="res://scenes/clankers/clanker.tscn" id="3_e1ni8"]
-[ext_resource type="PackedScene" uid="uid://dsshqbsi0vvpv" path="res://scenes/clankers/light-clanker.tscn" id="5_e1ni8"]
-[ext_resource type="PackedScene" uid="uid://c6odnbmf0xuy1" path="res://scenes/mocks/defender_clanker_mock.tscn" id="5_qdpa0"]
+[ext_resource type="PackedScene" uid="uid://dsshqbsi0vvpv" path="res://scenes/clankers/light_clanker.tscn" id="5_e1ni8"]
+[ext_resource type="PackedScene" uid="uid://d33mpg05yacgl" path="res://scenes/clankers/defender_clanker.tscn" id="5_sdwlb"]
 
 [node name="ClankerManagerComponent" type="Node" unique_id=1527828290]
 script = ExtResource("1_b1ypu")
@@ -22,8 +22,9 @@ one_shot = true
 [node name="ClankersData" parent="." unique_id=888826302 instance=ExtResource("2_ivvps")]
 unique_name_in_owner = true
 clankers_scenes = Dictionary[String, PackedScene]({
+"": null,
 "clanker": ExtResource("3_e1ni8"),
-"defender_clanker": ExtResource("5_qdpa0"),
+"defender_clanker": ExtResource("5_sdwlb"),
 "light_clanker": ExtResource("5_e1ni8")
 })
 clankers_cooldown_durations = Dictionary[String, float]({

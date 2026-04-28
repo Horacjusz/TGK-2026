@@ -1,9 +1,22 @@
-[gd_scene format=3 uid="uid://de0mbgos2qgvu"]
+[gd_scene format=3 uid="uid://cnmqj2stsrv6"]
 
-[ext_resource type="Script" uid="uid://bau6tkuv06uv7" path="res://scripts/components/death_effect_component.gd" id="1_oqo1a"]
 [ext_resource type="Texture2D" uid="uid://cota412snxr64" path="res://assets/clanker/clanker_death.png" id="2_5nm3m"]
 [ext_resource type="Texture2D" uid="uid://0r5nwcs0osg5" path="res://assets/clanker_defender/clanker_deff_death.png" id="3_5nm3m"]
 [ext_resource type="Texture2D" uid="uid://ew5pn7dol3ui" path="res://assets/clanker_light/clanker_light_death.png" id="3_rgok5"]
+
+[sub_resource type="GDScript" id="GDScript_oqo1a"]
+script/source = "# death_effect.gd
+class_name DeathEffectComponent
+extends Node2D
+
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+var anim_name: String = \"default\"
+
+func _ready() -> void:
+	animated_sprite.play(anim_name)
+	animated_sprite.animation_finished.connect(queue_free)
+"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_516on"]
 atlas = ExtResource("2_5nm3m")
@@ -176,7 +189,7 @@ animations = [{
 }]
 
 [node name="DeathEffectComponent" type="Node2D" unique_id=892668421]
-script = ExtResource("1_oqo1a")
+script = SubResource("GDScript_oqo1a")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=395790704]
 unique_name_in_owner = true
