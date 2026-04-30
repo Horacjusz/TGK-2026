@@ -10,7 +10,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qlg0r"]
 radius = 2.0
-height = 8.0
+height = 7.9
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3v2ag"]
 animation = &"jump"
