@@ -770,7 +770,7 @@ unique_name_in_owner = true
 script = ExtResource("8_gtt3n")
 body = NodePath("..")
 model = NodePath("../Model")
-speed = 30.0
+speed = 25.0
 metadata/_custom_type_script = "uid://yr041ldm08k"
 
 [node name="InputComponent" type="Node" parent="." unique_id=1186172587]
