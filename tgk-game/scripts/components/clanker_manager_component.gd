@@ -40,9 +40,11 @@ func unlock_clanker(clanker_name: String) -> void:
 	clankers_data.unlock(clanker_name)
 	_register_clanker_timer(clanker_name)
 
-func handle_clanker_input(wants_spawn: bool, wants_reset: bool, selected_slot: String) -> void:
-	var can_spawn = actor.is_on_floor() and cooldown_timers[selected_clanker_type].time_left <= 0
-	can_spawn = can_spawn and clankers_data.is_unlocked(selected_clanker_type)
+func handle_clanker_input(wants_spawn: bool, ray_is_coliding: bool, wants_reset: bool, selected_slot: String) -> void:
+	var can_spawn = !ray_is_coliding \
+	and actor.is_on_floor() \
+	and cooldown_timers[selected_clanker_type].time_left <= 0 \
+	and clankers_data.is_unlocked(selected_clanker_type) 
 	var wants_chanege_clanker_slot = selected_slot and selected_slot != selected_clanker_type
 	if wants_chanege_clanker_slot:
 		print(selected_slot)
