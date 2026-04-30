@@ -335,6 +335,12 @@ unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_dqkch")
 animation = &"idle"
 
+[node name="RayCast2D" type="RayCast2D" parent="Model" unique_id=1373515956]
+unique_name_in_owner = true
+target_position = Vector2(10, 0)
+collision_mask = 3
+collide_with_areas = true
+
 [node name="InputComponent" type="Node" parent="." unique_id=1986764582]
 unique_name_in_owner = true
 script = ExtResource("3_dqkch")
