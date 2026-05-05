@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://die5kyg2f6ncu"]
+
+[sub_resource type="Gradient" id="Gradient_nt14h"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_suays"]
+gradient = SubResource("Gradient_nt14h")
+width = 20
+height = 20
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Menu" type="Control" unique_id=604384628]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1398238734]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_suays")
