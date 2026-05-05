@@ -2,20 +2,19 @@
 
 [ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clanker.gd" id="1_vfs6m"]
 [ext_resource type="Texture2D" uid="uid://duymnf2ffkyut" path="res://assets/clanker_defender/clanker_deff_despawn.png" id="2_2m60w"]
+[ext_resource type="Script" uid="uid://b0ufljnbbkkvt" path="res://scripts/components/hurt_box.gd" id="2_isfh2"]
 [ext_resource type="Texture2D" uid="uid://0r5nwcs0osg5" path="res://assets/clanker_defender/clanker_deff_death.png" id="3_2m60w"]
 [ext_resource type="Texture2D" uid="uid://1dhlw7uhfuqv" path="res://assets/clanker_defender/clanker_def_fall.png" id="3_isfh2"]
 [ext_resource type="Texture2D" uid="uid://cpbcsc70klscm" path="res://assets/clanker_defender/clanker_def_idle_2.png" id="4_vedjf"]
 [ext_resource type="Texture2D" uid="uid://kob5qb7mcmeu" path="res://assets/clanker_defender/clanker_def_jump.png" id="5_kohh4"]
 [ext_resource type="Texture2D" uid="uid://dfiq8ewwxk625" path="res://assets/clanker_defender/clanker_deff_run_2.png" id="6_o7qso"]
 [ext_resource type="Script" uid="uid://cdrifmcfrt234" path="res://scripts/components/gravity_component.gd" id="7_2ryvv"]
-[ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/components/movement_component.gd" id="8_gtt3n"]
+[ext_resource type="Script" path="res://scripts/components/movement_component.gd" id="8_gtt3n"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/inputs/input_component.gd" id="9_isgxq"]
 [ext_resource type="Script" uid="uid://bwl4hjmmab071" path="res://scripts/inputs/input_playback.gd" id="10_hvcj3"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="11_2pyje"]
 [ext_resource type="Script" uid="uid://dxfgidd5f025s" path="res://scripts/inputs/input_recorder.gd" id="12_2frak"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_y8lks"]
-size = Vector2(12, 7)
+[ext_resource type="Script" uid="uid://d23iorh40e7rl" path="res://scripts/components/health_component.gd" id="15_vedjf"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vfs6m"]
 animation = &"jump"
@@ -369,6 +368,12 @@ _data = {
 &"run": SubResource("Animation_k4ei7"),
 &"spawn": SubResource("Animation_bl8qr")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y8lks"]
+size = Vector2(12, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vedjf"]
+size = Vector2(12, 7)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bo0c4"]
 atlas = ExtResource("2_2m60w")
@@ -731,15 +736,11 @@ animations = [{
 }]
 
 [node name="DefenderClanker" type="CharacterBody2D" unique_id=785391986 node_paths=PackedStringArray("gravity_component", "jump_component")]
-collision_layer = 16
+collision_layer = 4
 script = ExtResource("1_vfs6m")
 collision_layer_index = 5
 gravity_component = NodePath("GravityComponent")
 jump_component = NodePath("JumpComponent")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=570641573]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_y8lks")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1555424924]
 active = false
@@ -751,6 +752,18 @@ parameters/Moving/Airborne/blend_position = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1189300339]
 libraries/ = SubResource("AnimationLibrary_vuvs8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=570641573]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_y8lks")
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=1560826901]
+position = Vector2(0, 1)
+script = ExtResource("2_isfh2")
+metadata/_custom_type_script = "uid://b0ufljnbbkkvt"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1229524719]
+shape = SubResource("RectangleShape2D_vedjf")
 
 [node name="Model" type="Node2D" parent="." unique_id=1790427788]
 unique_name_in_owner = true
@@ -771,7 +784,6 @@ script = ExtResource("8_gtt3n")
 body = NodePath("..")
 model = NodePath("../Model")
 speed = 25.0
-metadata/_custom_type_script = "uid://yr041ldm08k"
 
 [node name="InputComponent" type="Node" parent="." unique_id=1186172587]
 unique_name_in_owner = true
@@ -791,4 +803,10 @@ unique_name_in_owner = true
 script = ExtResource("12_2frak")
 metadata/_custom_type_script = "uid://dxfgidd5f025s"
 
+[node name="HealthComponent" type="Node" parent="." unique_id=838398069]
+unique_name_in_owner = true
+script = ExtResource("15_vedjf")
+metadata/_custom_type_script = "uid://d23iorh40e7rl"
+
 [connection signal="playback_finished" from="InputPlayback" to="." method="_on_playback_finished"]
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]

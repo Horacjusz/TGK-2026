@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://1hdiqq08b323"]
+
+[ext_resource type="Script" uid="uid://cqre3ql783stm" path="res://scripts/arrow.gd" id="1_c8fcr"]
+[ext_resource type="Script" uid="uid://cy0elgafwwect" path="res://scripts/components/hit_box.gd" id="2_q3m7n"]
+[ext_resource type="Texture2D" uid="uid://cmp0nsutqh74w" path="res://assets/Tiny_Metroidvania/Tiles/Other_Decorations.png" id="2_softn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6q2a6"]
+atlas = ExtResource("2_softn")
+region = Rect2(39, 98, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_softn"]
+size = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6q2a6"]
+size = Vector2(1, 1)
+
+[node name="Arrow" type="Area2D" unique_id=90431377]
+script = ExtResource("1_c8fcr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1655503097]
+texture = SubResource("AtlasTexture_6q2a6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1177985487]
+shape = SubResource("RectangleShape2D_softn")
+
+[node name="HitBox" type="Area2D" parent="." unique_id=311789180]
+script = ExtResource("2_q3m7n")
+metadata/_custom_type_script = "uid://cy0elgafwwect"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=348706025]
+shape = SubResource("RectangleShape2D_6q2a6")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1305085657]
+rect = Rect2(-1, -1, 2, 2)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="damaged_hurt_box" from="HitBox" to="." method="_on_hit_box_damaged_hurt_box"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

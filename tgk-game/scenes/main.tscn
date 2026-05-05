@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bx65xbe0b84kw" path="res://scenes/levels/level_0.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bvxk1c0fnl4a" path="res://scenes/player.tscn" id="2_sugp2"]
 [ext_resource type="Script" path="res://scripts/camera_2d.gd" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://berxid4k2s0pa" path="res://scenes/projectile_trap.tscn" id="5_tbgi4"]
 
 [node name="Main" type="Node2D" unique_id=1749019626]
 script = ExtResource("1_o5qli")
@@ -12,7 +13,7 @@ script = ExtResource("1_o5qli")
 unique_name_in_owner = true
 
 [node name="Player" parent="." unique_id=723345871 instance=ExtResource("2_sugp2")]
-position = Vector2(70, -15)
+position = Vector2(72, 4)
 
 [node name="ReloadLevelTimer" type="Timer" parent="." unique_id=1333278215]
 unique_name_in_owner = true
@@ -28,6 +29,9 @@ position_smoothing_speed = 10.0
 script = ExtResource("4_jyhfs")
 player = NodePath("../Player")
 smoothing_enable = true
+
+[node name="ProjectileTrap" parent="." unique_id=1316327780 instance=ExtResource("5_tbgi4")]
+position = Vector2(13, -4)
 
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="timeout" from="ReloadLevelTimer" to="." method="_on_reload_level_timer_timeout"]
