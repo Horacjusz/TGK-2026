@@ -1,20 +1,30 @@
 [gd_scene format=3 uid="uid://die5kyg2f6ncu"]
 
-[sub_resource type="Gradient" id="Gradient_nt14h"]
+[ext_resource type="Script" uid="uid://wtpmxhsrlf15" path="res://scripts/UI/ui.gd" id="1_suays"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_suays"]
+[sub_resource type="Gradient" id="Gradient_nt14h"]
+offsets = PackedFloat32Array(0.40361446, 0.70481926)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_suays"]
 gradient = SubResource("Gradient_nt14h")
-width = 20
-height = 20
-fill = 1
-fill_from = Vector2(0.5, 0.5)
+width = 1
 
 [node name="Menu" type="Control" unique_id=604384628]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_suays")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1398238734]
-layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = SubResource("GradientTexture2D_suays")
+[node name="Background" type="CanvasLayer" parent="." unique_id=1191844986]
+
+[node name="Gradient" type="TextureRect" parent="Background" unique_id=1398238734]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_suays")
