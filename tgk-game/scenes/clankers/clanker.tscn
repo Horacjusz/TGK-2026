@@ -1,20 +1,19 @@
 [gd_scene format=3 uid="uid://ciiousl5pp38q"]
 
 [ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clanker.gd" id="1_3m55q"]
+[ext_resource type="Script" uid="uid://b0ufljnbbkkvt" path="res://scripts/components/hurt_box.gd" id="2_beile"]
 [ext_resource type="Texture2D" uid="uid://dmiru35cb4orr" path="res://assets/clanker/clanker_despawn.png" id="3_7v60u"]
 [ext_resource type="Texture2D" uid="uid://c8t0hrdce7k0p" path="res://assets/clanker/clanker_jump.png" id="4_beile"]
 [ext_resource type="Texture2D" uid="uid://cota412snxr64" path="res://assets/clanker/clanker_death.png" id="4_ygya5"]
 [ext_resource type="Texture2D" uid="uid://bps76eqiiosv" path="res://assets/clanker/clanker_idle.png" id="5_pae8r"]
 [ext_resource type="Texture2D" uid="uid://c2geaaj70plcu" path="res://assets/clanker/clanker_run.png" id="6_1ynna"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/inputs/input_component.gd" id="7_apr1i"]
-[ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/components/movement_component.gd" id="8_w0ohy"]
+[ext_resource type="Script" path="res://scripts/components/movement_component.gd" id="8_w0ohy"]
 [ext_resource type="Script" uid="uid://bwl4hjmmab071" path="res://scripts/inputs/input_playback.gd" id="9_ebobk"]
 [ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="10_q4lcl"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="11_tb6jh"]
 [ext_resource type="Script" uid="uid://dxfgidd5f025s" path="res://scripts/inputs/input_recorder.gd" id="12_ygya5"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0g1f"]
-size = Vector2(12, 5)
+[ext_resource type="Script" uid="uid://d23iorh40e7rl" path="res://scripts/components/health_component.gd" id="14_pae8r"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t3urn"]
 animation = &"jump"
@@ -70,7 +69,7 @@ states/idle/position = Vector2(378.5, 98.5)
 states/run/node = SubResource("AnimationNodeAnimation_4k3mq")
 states/run/position = Vector2(716, 104)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_t7yle"), "idle", "Airborne", SubResource("AnimationNodeStateMachineTransition_vadkn"), "Airborne", "idle", SubResource("AnimationNodeStateMachineTransition_8u27d"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_bmscy"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_fypc2"), "run", "Airborne", SubResource("AnimationNodeStateMachineTransition_0juto"), "Airborne", "run", SubResource("AnimationNodeStateMachineTransition_akl6t")]
-graph_offset = Vector2(-6, -126)
+graph_offset = Vector2(52, -58)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vadkn"]
 animation = &"despawn"
@@ -123,7 +122,7 @@ states/die/position = Vector2(566, 206)
 states/spawn/node = SubResource("AnimationNodeAnimation_bl8qr")
 states/spawn/position = Vector2(343, 98.25)
 transitions = ["Start", "spawn", SubResource("AnimationNodeStateMachineTransition_4k3mq"), "spawn", "Moving", SubResource("AnimationNodeStateMachineTransition_66yi2"), "Moving", "despawn", SubResource("AnimationNodeStateMachineTransition_hqkr7"), "despawn", "spawn", SubResource("AnimationNodeStateMachineTransition_l1v8l"), "Moving", "die", SubResource("AnimationNodeStateMachineTransition_ygya5"), "despawn", "die", SubResource("AnimationNodeStateMachineTransition_7v60u"), "die", "End", SubResource("AnimationNodeStateMachineTransition_beile"), "spawn", "die", SubResource("AnimationNodeStateMachineTransition_3m55q")]
-graph_offset = Vector2(37, -27)
+graph_offset = Vector2(57, -99)
 
 [sub_resource type="Animation" id="Animation_gxeql"]
 length = 0.001
@@ -368,6 +367,15 @@ _data = {
 &"run": SubResource("Animation_8u27d"),
 &"spawn": SubResource("Animation_bl8qr")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beile"]
+size = Vector2(12, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ynna"]
+size = Vector2(12, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0g1f"]
+size = Vector2(12, 5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ibh2b"]
 atlas = ExtResource("3_7v60u")
@@ -689,16 +697,10 @@ animations = [{
 
 [node name="Clanker" type="CharacterBody2D" unique_id=330562409 node_paths=PackedStringArray("gravity_component", "jump_component")]
 collision_layer = 4
-collision_priority = 0.5
 script = ExtResource("1_3m55q")
 collision_layer_index = 3
 gravity_component = NodePath("GravityComponent")
 jump_component = NodePath("JumpComponent")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=279740014]
-position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_i0g1f")
-one_way_collision = true
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=701938687]
 active = false
@@ -710,6 +712,31 @@ parameters/Moving/Airborne/blend_position = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1377772260]
 libraries/ = SubResource("AnimationLibrary_bl8qr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1443958217]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_beile")
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=649030836]
+script = ExtResource("2_beile")
+metadata/_custom_type_script = "uid://b0ufljnbbkkvt"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=959113642]
+visible = false
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_1ynna")
+
+[node name="Platform" type="AnimatableBody2D" parent="." unique_id=241223301]
+collision_mask = 0
+collision_priority = 0.5
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform" unique_id=279740014]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_i0g1f")
+one_way_collision = true
+debug_color = Color(0.90557736, 0.14474091, 0.66046923, 0.41960785)
 
 [node name="Model" type="Node2D" parent="." unique_id=1533816276]
 unique_name_in_owner = true
@@ -729,7 +756,6 @@ unique_name_in_owner = true
 script = ExtResource("8_w0ohy")
 body = NodePath("..")
 model = NodePath("../Model")
-metadata/_custom_type_script = "uid://yr041ldm08k"
 
 [node name="InputPlayback" type="Node" parent="." unique_id=543272355]
 unique_name_in_owner = true
@@ -749,4 +775,11 @@ script = ExtResource("12_ygya5")
 record_move_yaxis = false
 metadata/_custom_type_script = "uid://dxfgidd5f025s"
 
+[node name="HealthComponent" type="Node" parent="." unique_id=2016431333]
+unique_name_in_owner = true
+script = ExtResource("14_pae8r")
+metadata/_custom_type_script = "uid://d23iorh40e7rl"
+
+[connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]
 [connection signal="playback_finished" from="InputPlayback" to="." method="_on_playback_finished"]
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
