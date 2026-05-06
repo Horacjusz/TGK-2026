@@ -1,9 +1,15 @@
 extends Node
 
-var rendering_resolution = null
+var PAUSED = false
 
-func rescale_window() :
-	if rendering_resolution == null :
-		rendering_resolution = DisplayServer.window_get_size()
-	print(rendering_resolution)
-	pass
+var menu = null
+
+func pause_game() :
+	PAUSED = true
+	get_tree().paused = PAUSED
+	menu.display()
+	
+func resume_game() :
+	menu.retract()
+	PAUSED = false
+	get_tree().paused = PAUSED

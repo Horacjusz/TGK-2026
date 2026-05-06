@@ -14,7 +14,11 @@ func _setup_level() -> void:
 	var tilemap = active_level.get_background_tilemap()
 	camera.setup_camera_limits(tilemap)
 
+func pause_game() :
+	self.process_mode = Node.PROCESS_MODE_DISABLED
 
+func resume_game() :
+	self.process_mode = Node.PROCESS_MODE_INHERIT
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
