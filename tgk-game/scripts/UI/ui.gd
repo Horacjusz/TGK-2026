@@ -2,12 +2,42 @@ extends Control
 @onready var gradient: TextureRect = $Background/Gradient
 @onready var reference_rect: ReferenceRect = $Buttons/ReferenceRect
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var main_menu: Control = $Buttons/ReferenceRect/ReferenceRect/MainMenu
+@onready var buttons: Control = $Buttons
+@onready var menus_level: ReferenceRect = $Buttons/ReferenceRect/ReferenceRect
+
+signal animation_breakpoint
 
 const gradient_offsets = [0.0, 0.4, 0.7]
+
+var current_menu
+var start_menu
+
+func _animation_breakpoint() :
+	animation_player.pause()
+	animation_breakpoint.emit()
+
+func set_menu(new_menu) :
+	animation_player.play("toggle_menu")
+	await animation_breakpoint
+	
+	self.current_menu.hide()
+	self.current_menu = new_menu
+	self.current_menu.show()
+	
+	animation_player.play()
+	await animation_player.animation_finished
+
+func hide_menus() :
+	for child in menus_level.get_children() :
+		child.hide()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	animation_player.speed_scale = 4
+	hide_menus()
+	current_menu = main_menu
+	current_menu.show()
 	pass # Replace with function body.
 
 func setup_ui() :
@@ -18,11 +48,23 @@ func setup_ui() :
 	reference_rect.anchor_top = 0
 	reference_rect.anchor_right = 1
 	reference_rect.anchor_bottom = 1
+	
 	queue_redraw()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func _process(delta : float) -> void:
+	if Input.is_action_just_pressed("pause") :
+		print("Pressed esc")
+		toggle_pause()
+
+
+func toggle_pause() :
+	print(start_menu)
+	if start_menu : return
+	if Globals.PAUSED :
+		Globals.resume_game()
+	else :
+		Globals.pause_game()
 
 func display() :
 	setup_ui()
@@ -35,9 +77,3 @@ func retract() :
 	animation_player.play('fade_away')
 	await animation_player.animation_finished
 	hide()
-
-
-func _on_start_button_down() -> void:
-	print("Pressed button")
-	Globals.resume_game()
-	pass # Replace with function body.

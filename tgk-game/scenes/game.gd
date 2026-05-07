@@ -4,8 +4,4 @@ extends Control
 
 func _ready() -> void:
 	Globals.menu = menu
-	Globals.pause_game()
-
-func _process(delta : float) -> void:
-	if Input.is_action_just_pressed("pause") :
-		Globals.pause_game()
+	Globals.init_game()

@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://die5kyg2f6ncu"]
 
 [ext_resource type="Script" uid="uid://wtpmxhsrlf15" path="res://scripts/UI/ui.gd" id="1_0wsoe"]
-[ext_resource type="Texture2D" uid="uid://shpviaqx34je" path="res://assets/icon.svg" id="2_2tfbb"]
+[ext_resource type="PackedScene" uid="uid://df43kcb421e7u" path="res://scenes/UI/options.tscn" id="3_iysyy"]
+[ext_resource type="PackedScene" uid="uid://bymdd8grj472m" path="res://scenes/UI/credits.tscn" id="4_ny0ke"]
+[ext_resource type="PackedScene" uid="uid://c41joevsiqll5" path="res://scenes/UI/main_menu.tscn" id="5_78n2u"]
 
 [sub_resource type="Gradient" id="Gradient_nt14h"]
 offsets = PackedFloat32Array(0, 0.40361446, 0.7)
@@ -20,6 +22,18 @@ tracks/0/path = NodePath(".:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Buttons:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -56,11 +70,41 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ny0ke"]
+resource_name = "toggle_menu"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Buttons:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_animation_breakpoint"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iysyy"]
 _data = {
 &"RESET": SubResource("Animation_2tfbb"),
 &"appear": SubResource("Animation_iysyy"),
-&"fade_away": SubResource("Animation_2un8v")
+&"fade_away": SubResource("Animation_2un8v"),
+&"toggle_menu": SubResource("Animation_ny0ke")
 }
 
 [node name="Menu" type="Control" unique_id=604384628]
@@ -107,71 +151,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Buttons/ReferenceRect" unique_id=2080055702]
+[node name="ReferenceRect" type="ReferenceRect" parent="Buttons/ReferenceRect" unique_id=1328115909]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -262.0
-offset_right = 64.0
-offset_bottom = 262.0
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 34
 
-[node name="Start" type="TextureButton" parent="Buttons/ReferenceRect/VBoxContainer" unique_id=1345062487]
-layout_mode = 2
-size_flags_horizontal = 4
-texture_normal = ExtResource("2_2tfbb")
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="Buttons/ReferenceRect/VBoxContainer/Start" unique_id=1676344805]
+[node name="MainMenu" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=1843713868 instance=ExtResource("5_78n2u")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Start"
 
-[node name="Options" type="TextureButton" parent="Buttons/ReferenceRect/VBoxContainer" unique_id=1098380418]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture_normal = ExtResource("2_2tfbb")
+[node name="OptionsMenu" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=694180540 instance=ExtResource("3_iysyy")]
+visible = false
+layout_mode = 1
 
-[node name="Label" type="Label" parent="Buttons/ReferenceRect/VBoxContainer/Options" unique_id=299685641]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Options"
-
-[node name="Credits" type="TextureButton" parent="Buttons/ReferenceRect/VBoxContainer" unique_id=186264640]
-layout_mode = 2
-size_flags_horizontal = 4
-texture_normal = ExtResource("2_2tfbb")
-
-[node name="Label" type="Label" parent="Buttons/ReferenceRect/VBoxContainer/Credits" unique_id=1975182538]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Credits"
-
-[node name="Exit" type="TextureButton" parent="Buttons/ReferenceRect/VBoxContainer" unique_id=698174965]
-layout_mode = 2
-size_flags_horizontal = 4
-texture_normal = ExtResource("2_2tfbb")
-
-[node name="Label" type="Label" parent="Buttons/ReferenceRect/VBoxContainer/Exit" unique_id=875080288]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Exit"
+[node name="Credits" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=949003110 instance=ExtResource("4_ny0ke")]
+visible = false
+layout_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=491061149]
 libraries/ = SubResource("AnimationLibrary_iysyy")
-
-[connection signal="button_down" from="Buttons/ReferenceRect/VBoxContainer/Start" to="." method="_on_start_button_down"]

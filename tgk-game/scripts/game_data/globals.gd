@@ -4,6 +4,12 @@ var PAUSED = false
 
 var menu = null
 
+func init_game() :
+	PAUSED = true
+	get_tree().paused = PAUSED
+	menu.show()
+	
+
 func pause_game() :
 	PAUSED = true
 	get_tree().paused = PAUSED
