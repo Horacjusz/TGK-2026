@@ -20,7 +20,6 @@ unique_name_in_owner = true
 position = Vector2(3.5, 0.5)
 
 [node name="ProjectileSpawnTimer" type="Timer" parent="." unique_id=28256271]
-wait_time = 0.5
 autostart = true
 
 [connection signal="timeout" from="ProjectileSpawnTimer" to="." method="_on_projectile_spawn_timer_timeout"]

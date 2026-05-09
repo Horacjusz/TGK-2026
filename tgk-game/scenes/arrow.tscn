@@ -16,6 +16,7 @@ size = Vector2(1, 1)
 
 [node name="Arrow" type="Area2D" unique_id=90431377]
 script = ExtResource("1_c8fcr")
+default_speed = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1655503097]
 texture = SubResource("AtlasTexture_6q2a6")
