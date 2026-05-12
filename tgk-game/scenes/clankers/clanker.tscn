@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bps76eqiiosv" path="res://assets/clanker/clanker_idle.png" id="5_pae8r"]
 [ext_resource type="Texture2D" uid="uid://c2geaaj70plcu" path="res://assets/clanker/clanker_run.png" id="6_1ynna"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/inputs/input_component.gd" id="7_apr1i"]
-[ext_resource type="Script" path="res://scripts/components/movement_component.gd" id="8_w0ohy"]
+[ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/components/movement_component.gd" id="8_w0ohy"]
 [ext_resource type="Script" uid="uid://bwl4hjmmab071" path="res://scripts/inputs/input_playback.gd" id="9_ebobk"]
 [ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="10_q4lcl"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="11_tb6jh"]
@@ -697,6 +697,7 @@ animations = [{
 
 [node name="Clanker" type="CharacterBody2D" unique_id=330562409 node_paths=PackedStringArray("gravity_component", "jump_component")]
 collision_layer = 4
+platform_on_leave = 2
 script = ExtResource("1_3m55q")
 collision_layer_index = 3
 gravity_component = NodePath("GravityComponent")
