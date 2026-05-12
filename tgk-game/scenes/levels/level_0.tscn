@@ -4,7 +4,6 @@
 [ext_resource type="TileSet" uid="uid://bjrb1flt7hmpr" path="res://assets/tile_sets/Background_tile_set.tres" id="2_jjvta"]
 [ext_resource type="TileSet" uid="uid://pu1u5si5uivx" path="res://assets/tile_sets/level_body_fill_tile_set.tres" id="3_3mnpy"]
 [ext_resource type="TileSet" uid="uid://0gy8vpcvwlty" path="res://assets/tile_sets/other_Decorations_tile_set.tres" id="5_3mnpy"]
-[ext_resource type="TileSet" uid="uid://cp6srmqux26vl" path="res://assets/tile_sets/Crystal_Cave_tile_set.tres" id="6_6ayib"]
 [ext_resource type="PackedScene" uid="uid://dqfk5tawlcrp0" path="res://scenes/kill_zone.tscn" id="6_jjvta"]
 [ext_resource type="Script" uid="uid://ybdpyjm3hm4g" path="res://scripts/components/projectile_container.gd" id="7_3mnpy"]
 [ext_resource type="TileSet" uid="uid://bh1cl37waief1" path="res://assets/tile_sets/Grass_tile_set.tres" id="7_65guy"]
@@ -54,7 +53,7 @@ tile_map_data = PackedByteArray("AAACAPn/CgAAABEAAAADAPn/CgAAABMAAAAEAPn/CgADAA8
 tile_set = ExtResource("5_3mnpy")
 
 [node name="TileMapLayer3" type="TileMapLayer" parent="Player_layer" unique_id=887361246]
-tile_set = ExtResource("6_6ayib")
+tile_set = ExtResource("3_3mnpy")
 
 [node name="Foreground" type="Node2D" parent="." unique_id=1372616814]
 
