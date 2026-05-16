@@ -368,6 +368,7 @@ body = NodePath("..")
 [node name="GravityComponent" parent="." unique_id=218598828 node_paths=PackedStringArray("body") instance=ExtResource("5_qlg0r")]
 unique_name_in_owner = true
 body = NodePath("..")
+down_gravity = 750.0
 
 [node name="HealthComponent" parent="." unique_id=871925022 instance=ExtResource("8_ur7pv")]
 unique_name_in_owner = true
@@ -378,7 +379,6 @@ actor = NodePath("..")
 movement_component = NodePath("../MovementComponent")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=301777337]
-visible = false
 occluder = SubResource("OccluderPolygon2D_fjrip")
 
 [connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]

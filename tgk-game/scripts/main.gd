@@ -3,7 +3,7 @@ extends Node2D
 
 @onready var reload_level_timer: Timer = %ReloadLevelTimer
 # in future replace with Level interface
-@onready var active_level: Node2D = %Level_0
+@export var active_level: Node2D
 @onready var camera: Camera2D = %Camera2D
 
 # Called when the node enters the scene tree for the first time.
