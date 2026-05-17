@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://0plprq34hh5f"]
+
+[ext_resource type="Script" uid="uid://c4fodhs2ip6rn" path="res://scripts/levels/utils/interactive_object.gd" id="1_a4hyk"]
+[ext_resource type="Texture2D" uid="uid://cxabody531rf7" path="res://assets/keys/e_key.png" id="2_a4hyk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_toye8"]
+radius = 15.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki31a"]
+atlas = ExtResource("2_a4hyk")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_toye8"]
+atlas = ExtResource("2_a4hyk")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bb1e2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ki31a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_toye8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="IneractiveObject2D" type="Area2D" unique_id=875527561]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_a4hyk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=747567945]
+shape = SubResource("CircleShape2D_toye8")
+
+[node name="InteractPrompt" type="Node2D" parent="." unique_id=984890169]
+unique_name_in_owner = true
+position = Vector2(0.5, -1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="InteractPrompt" unique_id=266891775]
+sprite_frames = SubResource("SpriteFrames_bb1e2")
+autoplay = "default"
+
+[node name="CooldownTimer" type="Timer" parent="." unique_id=1212475603]
+unique_name_in_owner = true

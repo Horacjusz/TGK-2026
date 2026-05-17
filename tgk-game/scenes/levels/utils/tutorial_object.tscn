@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://b7rfmxm0gua51"]
+
+[ext_resource type="Script" uid="uid://csni4y8exepa5" path="res://scripts/levels/utils/tutorial_object.gd" id="1_hngj1"]
+[ext_resource type="FontFile" uid="uid://d3e2bg4iy0dbd" path="res://assets/fonts/Ultrapixel.ttf" id="2_m8pu0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_o5k2b"]
+line_spacing = -6.0
+font = ExtResource("2_m8pu0")
+stacked_shadow_count = 1
+stacked_shadow_0/offset = Vector2(1, 1)
+stacked_shadow_0/color = Color(0.22670749, 0.22670749, 0.22670746, 1)
+stacked_shadow_0/outline_size = 1
+
+[node name="TutorialObject" type="Node2D" unique_id=1810793651]
+script = ExtResource("1_hngj1")
+
+[node name="TutorialPrompt" type="Node2D" parent="." unique_id=18103792]
+unique_name_in_owner = true
+z_index = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="TutorialPrompt" unique_id=888013842]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="TutorialPrompt/PanelContainer" unique_id=245165944]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_m8pu0")
+theme_override_font_sizes/font_size = 16
+text = "sdffs"
+label_settings = SubResource("LabelSettings_o5k2b")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

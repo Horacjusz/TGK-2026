@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b58kwtwmo6hvp"]
+
+[ext_resource type="PackedScene" uid="uid://b7rfmxm0gua51" path="res://scenes/levels/utils/tutorial_object.tscn" id="2_kxgtv"]
+[ext_resource type="PackedScene" uid="uid://0plprq34hh5f" path="res://scenes/levels/utils/interactive_object.tscn" id="2_msren"]
+
+[node name="Tutorial_1" type="Node2D" unique_id=554015823]
+
+[node name="IneractiveObject2D" parent="." unique_id=875527561 instance=ExtResource("2_msren")]
+can_reinteract = true
+
+[node name="TutorialStep" parent="." unique_id=1810793651 node_paths=PackedStringArray("next_tutorial", "trigger") instance=ExtResource("2_kxgtv")]
+text = "Step 1 "
+next_tutorial = NodePath("../TutorialStep2")
+trigger = NodePath("../IneractiveObject2D")
+
+[node name="TutorialStep2" parent="." unique_id=372408835 instance=ExtResource("2_kxgtv")]
+text = "Step 2"
+
+[connection signal="interacted" from="IneractiveObject2D" to="TutorialStep" method="show_tutorial"]
+[connection signal="player_exited" from="IneractiveObject2D" to="TutorialStep" method="_on_player_exited"]
+[connection signal="tutorial_end" from="TutorialStep2" to="IneractiveObject2D" method="_on_interaction_end"]
+[connection signal="tutorial_end" from="TutorialStep2" to="IneractiveObject2D" method="_on_interacton_end"]
