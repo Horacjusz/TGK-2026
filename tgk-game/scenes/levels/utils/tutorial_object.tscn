@@ -4,7 +4,8 @@
 [ext_resource type="FontFile" uid="uid://d3e2bg4iy0dbd" path="res://assets/fonts/Ultrapixel.ttf" id="2_m8pu0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_o5k2b"]
-line_spacing = -6.0
+line_spacing = -5.0
+paragraph_spacing = 1.0
 font = ExtResource("2_m8pu0")
 stacked_shadow_count = 1
 stacked_shadow_0/offset = Vector2(1, 1)
