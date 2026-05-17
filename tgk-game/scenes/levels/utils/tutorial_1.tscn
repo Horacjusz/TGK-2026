@@ -19,4 +19,3 @@ text = "Step 2"
 [connection signal="interacted" from="IneractiveObject2D" to="TutorialStep" method="show_tutorial"]
 [connection signal="player_exited" from="IneractiveObject2D" to="TutorialStep" method="_on_player_exited"]
 [connection signal="tutorial_end" from="TutorialStep2" to="IneractiveObject2D" method="_on_interaction_end"]
-[connection signal="tutorial_end" from="TutorialStep2" to="IneractiveObject2D" method="_on_interacton_end"]

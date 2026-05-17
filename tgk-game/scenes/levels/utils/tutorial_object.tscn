@@ -12,6 +12,12 @@ stacked_shadow_0/color = Color(0.22670749, 0.22670749, 0.22670746, 1)
 stacked_shadow_0/outline_size = 1
 
 [node name="TutorialObject" type="Node2D" unique_id=1810793651]
+editor_description = "Represents a single step in a tutorial sequence.
+
+Setup:
+- On the first TutorialObject only: set 'trigger' export to the InteractiveObject2D that starts this tutorial.
+- Chain subsequent steps using the 'next_tutorial' export.
+- The last step in the chain should have 'next_tutorial' left empty — it will emit 'tutorial_end' automatically."
 script = ExtResource("1_hngj1")
 
 [node name="TutorialPrompt" type="Node2D" parent="." unique_id=18103792]

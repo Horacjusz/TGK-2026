@@ -29,6 +29,15 @@ animations = [{
 }]
 
 [node name="IneractiveObject2D" type="Area2D" unique_id=875527561]
+editor_description = "Emits 'interacted' signal when the player presses the interact key inside the trigger area.
+
+Setup:
+- Connect 'interacted' signal to the first step of your tutorial or any interactable target (e.g. show_tutorial()).
+- Connect the end-of-interaction signal from your target (e.g. tutorial_end) back to '_on_interaction_end()' on this node to properly disable the interaction.
+
+Optional:
+- Enable 'can_reinteract' to allow repeated interactions after a cooldown.
+"
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_a4hyk")
