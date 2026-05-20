@@ -16,6 +16,8 @@ signal died
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var input_playback: InputPlayback = %InputPlayback
 @onready var input_recorder: InputRecorder = %InputRecorder
+@onready var health_component: HealthComponent = %HealthComponent
+@onready var platform_collision_shape: CollisionShape2D = $Platform/CollisionShape2D
 
 const AIRBORN_PATH: String = "parameters/Moving/Airborne/blend_position"
 var active_input: InputSource = null
@@ -34,16 +36,19 @@ func init(pos: Vector2, player: Player) -> void:
 	starting_position = pos
 	owner_player = player
 
+
 ## Initializes clanker state and connects playback signal.
 func _ready() -> void:
 	animation_tree.active = true
 	await _reset_to_start(true)
 	active_input = input_component
 
+
 ## Resets clanker to its starting position and clears velocity.
 func _reset_to_start(on_ready: bool = false) -> void:
 	set_physics_process(false)
-	set_collision_layer_value(collision_layer_index, false)
+	if platform_collision_shape:
+		platform_collision_shape.disabled = true
 	if not on_ready:
 		is_despawning = true
 		await animation_tree.animation_finished
@@ -54,7 +59,8 @@ func _reset_to_start(on_ready: bool = false) -> void:
 	is_spawning = true
 	await animation_tree.animation_finished
 	is_spawning = false
-	set_collision_layer_value(collision_layer_index, true)
+	if platform_collision_shape:
+		platform_collision_shape.disabled = false
 	set_physics_process(true)
 
 # ====================== Main Loop ======================
@@ -73,20 +79,19 @@ func _physics_process(delta: float) -> void:
 	_update_animation(Vector2(sign(velocity.x), sign(velocity.y)))
 	move_and_slide()
 
+
 func _update_animation(vel: Vector2) -> void:
 	if fly_component:
 		animation_tree.set(AIRBORN_PATH, vel)
 	else:
 		animation_tree.set(AIRBORN_PATH, vel.y)
+
+
 ## Reads input from active source and starts jump buffer if needed.
 func handle_input() -> void:
 	active_input.update()
 	if record_input:
 		input_recorder.record(active_input)
-
-
-
-
 
 
 ## Called when playback loop finishes — resets clanker and briefly disables player collision.
@@ -104,7 +109,8 @@ func disable_control() -> void:
 
 func die() -> void:
 	set_physics_process(false)
-	set_collision_layer_value(3, false)
+	if platform_collision_shape:
+		platform_collision_shape.disabled = true
 	died.emit()
 	animation_tree.set("parameters/conditions/is_dead", true)
 	await animation_tree.animation_finished
@@ -112,7 +118,16 @@ func die() -> void:
 
 func despawn() -> void:
 	set_physics_process(false)
-	set_collision_layer_value(3, false)
+	if platform_collision_shape:
+		platform_collision_shape.disabled = true
 	animation_tree.set("parameters/conditions/is_dead", true)
 	await animation_tree.animation_finished
 	queue_free()
+
+
+func _on_hurt_box_received_damage(amount: int) -> void:
+	health_component.damage(amount)
+
+
+func _on_health_component_died() -> void:
+	die()

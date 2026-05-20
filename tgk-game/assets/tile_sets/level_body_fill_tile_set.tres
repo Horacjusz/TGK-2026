@@ -1,0 +1,42 @@
+[gd_resource type="TileSet" format=3 uid="uid://pu1u5si5uivx"]
+
+[ext_resource type="Texture2D" uid="uid://c3mm7egqy4ncj" path="res://assets/Tiny_Metroidvania/Tiles/backgoround_tile_merged.png" id="1_4qn4u"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_65guy"]
+texture = ExtResource("1_4qn4u")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrain = 0
+0:0/0/terrains_peering_bit/right_side = 0
+0:0/0/terrains_peering_bit/bottom_right_corner = 0
+0:0/0/terrains_peering_bit/bottom_side = 0
+0:0/0/terrains_peering_bit/bottom_left_corner = 0
+0:0/0/terrains_peering_bit/left_side = 0
+0:0/0/terrains_peering_bit/top_left_corner = 0
+0:0/0/terrains_peering_bit/top_side = 0
+0:0/0/terrains_peering_bit/top_right_corner = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrain = 0
+1:0/0/terrains_peering_bit/bottom_left_corner = 0
+1:0/0/terrains_peering_bit/left_side = 0
+1:0/0/terrains_peering_bit/top_left_corner = 0
+1:0/0/terrains_peering_bit/top_side = 0
+1:0/0/terrains_peering_bit/top_right_corner = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrain = 0
+2:0/0/terrains_peering_bit/right_side = 0
+2:0/0/terrains_peering_bit/bottom_right_corner = 0
+2:0/0/terrains_peering_bit/top_left_corner = 0
+2:0/0/terrains_peering_bit/top_side = 0
+2:0/0/terrains_peering_bit/top_right_corner = 0
+
+[resource]
+tile_size = Vector2i(8, 8)
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Terrain 0"
+terrain_set_0/terrain_0/color = Color(0.68267125, 0.014788847, 0.45837235, 1)
+sources/5 = SubResource("TileSetAtlasSource_65guy")
+tile_proxies/coords_level = [[1, Vector2i(0, 0)], [5, Vector2i(0, 0)], [3, Vector2i(0, 0)], [5, Vector2i(1, 0)], [4, Vector2i(0, 0)], [5, Vector2i(2, 0)]]

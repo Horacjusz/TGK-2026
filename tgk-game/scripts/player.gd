@@ -11,7 +11,9 @@ signal died
 @onready var movement_component: MovementComponent = %MovementComponent
 @onready var jump_component: JumpComponent = %JumpComponent
 @onready var gravity_component: GravityComponent = %GravityComponent
+@onready var health_component: HealthComponent = %HealthComponent
 @onready var clanker_manager_component: ClankerManagerComponent = %ClankerManagerComponent
+@onready var spawn_ray: RayCast2D = %RayCast2D
 
 var is_controlling_clanker: bool = false
 
@@ -24,10 +26,11 @@ func _on_clanker_control_ended() -> void:
 
 func _physics_process(delta: float) -> void:
 	input_component.update()
+	spawn_ray.force_raycast_update()
 	gravity_component.handle_gravity(delta)
-	
 	clanker_manager_component.handle_clanker_input(
 		input_component.clanker_pressed, 
+		spawn_ray.is_colliding(),
 		input_component.reset_clanker_pressed,
 		input_component.selected_slot
 	)
@@ -50,3 +53,15 @@ func get_camera_target() -> Vector2:
 func die() -> void:
 	collision_shape.set_deferred("disabled", true) # Use set_deferred for physics
 	died.emit()
+
+
+func _on_hurt_box_received_damage(amount) -> void:
+	health_component.damage(amount)
+
+
+func _on_health_component_health_changed(current_health: int) -> void:
+	pass
+
+
+func _on_health_component_died() -> void:
+	die()

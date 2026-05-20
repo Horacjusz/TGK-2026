@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://berxid4k2s0pa"]
+
+[ext_resource type="Script" uid="uid://coj015kqgnmic" path="res://scripts/projectile_trap.gd" id="1_65n4c"]
+[ext_resource type="PackedScene" uid="uid://1hdiqq08b323" path="res://scenes/arrow.tscn" id="2_w4n37"]
+[ext_resource type="Texture2D" uid="uid://03pc7ihcld7b" path="res://assets/Tiny_Metroidvania/Enemies/Skeleton_Archer.png" id="3_ct1md"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s11m4"]
+atlas = ExtResource("3_ct1md")
+region = Rect2(38, 36, 8, 8)
+
+[node name="ProjectileTrap" type="Node2D" unique_id=1316327780]
+script = ExtResource("1_65n4c")
+projectile_scene = ExtResource("2_w4n37")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1898221386]
+texture = SubResource("AtlasTexture_s11m4")
+
+[node name="ProjectileSpawnMarker" type="Marker2D" parent="." unique_id=793936720]
+unique_name_in_owner = true
+position = Vector2(3.5, 0.5)
+
+[node name="ProjectileSpawnTimer" type="Timer" parent="." unique_id=28256271]
+autostart = true
+
+[connection signal="timeout" from="ProjectileSpawnTimer" to="." method="_on_projectile_spawn_timer_timeout"]
