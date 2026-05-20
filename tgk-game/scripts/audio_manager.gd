@@ -65,6 +65,13 @@ func _set_bus_volume(bus_name: String, value: float) -> void:
 		AudioServer.set_bus_volume_db(bus_index, linear_to_db(linear))
 
 
+func loop_music(path: String, volume: float = 100.0) -> void :
+	play_music(
+		path,
+		volume,
+		-1
+	)
+
 func play_music(path: String, volume: float = 100.0, loop_count: int = 1) -> void:
 	_play_audio(
 		path,
@@ -75,6 +82,13 @@ func play_music(path: String, volume: float = 100.0, loop_count: int = 1) -> voi
 		loop_count
 	)
 
+func loop_music_at(path: String, position: Vector2, volume: float = 100.0) -> void :
+	play_music_at(
+		path,
+		position,
+		volume,
+		-1
+	)
 
 func play_music_at(path: String, position: Vector2, volume: float = 100.0, loop_count: int = 1) -> void:
 	_play_audio(
@@ -86,6 +100,12 @@ func play_music_at(path: String, position: Vector2, volume: float = 100.0, loop_
 		loop_count
 	)
 
+func loop_sound(path: String, volume: float = 100.0) -> void :
+	play_sound(
+		path,
+		volume,
+		-1
+	)
 
 func play_sound(path: String, volume: float = 100.0, loop_count: int = 1) -> void:
 	_play_audio(
@@ -97,6 +117,13 @@ func play_sound(path: String, volume: float = 100.0, loop_count: int = 1) -> voi
 		loop_count
 	)
 
+func loop_sound_at(path: String, position: Vector2, volume: float = 100.0) -> void :
+	play_sound_at(
+		path,
+		position,
+		volume,
+		-1
+	)
 
 func play_sound_at(path: String, position: Vector2, volume: float = 100.0, loop_count: int = 1) -> void:
 	_play_audio(

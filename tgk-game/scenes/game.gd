@@ -7,6 +7,6 @@ func _ready() -> void:
 	Globals.audio = audio_manager
 	Globals.menu = menu
 	Globals.init_game()
-	#Globals.audio.play_sfx("res://assets/sounds/Girl from Petaluma_short.mp3", 100, 500)
-	Globals.audio.play_music("res://assets/sounds/Girl from Petaluma.mp3")
-	
+	Globals.audio.loop_music(
+		"res://assets/sounds/Girl from Petaluma.mp3"
+	)
