@@ -21,9 +21,9 @@ func set_menu(new_menu) :
 	animation_player.play("toggle_menu")
 	await animation_breakpoint
 	
-	self.current_menu.hide()
+	self.current_menu.turn_off()
 	self.current_menu = new_menu
-	self.current_menu.show()
+	self.current_menu.turn_on()
 	
 	animation_player.play()
 	await animation_player.animation_finished
@@ -56,7 +56,11 @@ func _process(delta : float) -> void:
 	if Input.is_action_just_pressed("pause") :
 		print("Pressed esc")
 		toggle_pause()
-
+		
+	
+	print(Globals.audio.master_volume)
+	print(Globals.audio.music_volume)
+	print(Globals.audio.sfx_volume)
 
 func toggle_pause() :
 	print(start_menu)

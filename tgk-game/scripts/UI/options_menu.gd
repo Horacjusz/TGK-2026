@@ -1,11 +1,19 @@
-extends Control
+extends UI
 
-var parent_menu = null
+@onready var audio: VBoxContainer = $Menu/Audio
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
+
+func turn_on() :
+	self.audio.set_sliders()
+	super.turn_on()
+	
+func turn_off() :
+	super.turn_off()
+	self.audio.set_sliders()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -13,5 +21,5 @@ func _process(delta: float) -> void:
 
 
 func _on_return_pressed() -> void:
-	self.get_parent().get_owner().set_menu(self.parent_menu)
+	return_to_parent_menu()
 	pass # Replace with function body.
