@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://beu5r8yokfcpu" path="res://assets/Tiny_Metroidvania/Character/Spartan_Character.png" id="2_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://ddlc2tpeku8gh" path="res://scenes/components/hurt_box.tscn" id="2_smehm"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/inputs/input_component.gd" id="3_dqkch"]
+[ext_resource type="PackedScene" uid="uid://bew6sm7vao27u" path="res://scenes/components/interactor.tscn" id="3_y4r1p"]
 [ext_resource type="PackedScene" uid="uid://di4nktdesjkc0" path="res://scenes/components/movement_component.tscn" id="4_dqkch"]
 [ext_resource type="PackedScene" uid="uid://cr0t2010o3daq" path="res://scenes/components/gravity_component.tscn" id="5_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="5_tuyoq"]
@@ -17,6 +18,8 @@ height = 7.9
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_smehm"]
 radius = 2.0
 height = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y4r1p"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3v2ag"]
 animation = &"jump"
@@ -325,6 +328,12 @@ shape = SubResource("CapsuleShape2D_qlg0r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=631204785]
 shape = SubResource("CapsuleShape2D_smehm")
+
+[node name="Interactor" parent="." unique_id=1912861964 instance=ExtResource("3_y4r1p")]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactor" unique_id=1156980098]
+shape = SubResource("CircleShape2D_y4r1p")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=2040026981]
 unique_name_in_owner = true

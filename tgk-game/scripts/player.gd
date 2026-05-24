@@ -14,15 +14,18 @@ signal died
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var clanker_manager_component: ClankerManagerComponent = %ClankerManagerComponent
 @onready var spawn_ray: RayCast2D = %RayCast2D
+@onready var interactor: Interactor = %Interactor
 
 var is_controlling_clanker: bool = false
 
 
 func _on_clanker_control_started() -> void:
 	is_controlling_clanker = true
+	interactor.set_can_interact(false)
 
 func _on_clanker_control_ended() -> void:
 	is_controlling_clanker = false
+	interactor.set_can_interact(true)
 
 func _physics_process(delta: float) -> void:
 	input_component.update()
@@ -32,7 +35,6 @@ func _physics_process(delta: float) -> void:
 		input_component.clanker_pressed, 
 		spawn_ray.is_colliding(),
 		input_component.reset_clanker_pressed,
-		input_component.selected_slot
 	)
 	
 	if is_controlling_clanker:

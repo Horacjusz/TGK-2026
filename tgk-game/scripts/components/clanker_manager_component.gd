@@ -26,29 +26,38 @@ func _ready() -> void:
 	clankers_data.unlock_all(["clanker", "light_clanker", "defender_clanker"])
 	for clanker_name in clankers_data.clankers_available:
 		_register_clanker_timer(clanker_name)
+	GlobalSignalBus.clanker_change_requested.connect(_on_clanker_change_requested)
+	GlobalSignalBus.clanker_changed.emit(selected_clanker_type)
+
 
 func _register_clanker_timer(clanker_name: String) -> void:
 	if clanker_name in cooldown_timers:
 		return
+	
 	var timer = Timer.new()
 	timer.one_shot = true
 	timer.wait_time = clankers_data.clankers_cooldown_durations.get(clanker_name, 3.0)
-	add_child(timer)
+	timer.timeout.connect(_on_cooldown_timer_timeout.bind(clanker_name))
 	cooldown_timers[clanker_name] = timer
+	add_child(timer)
+
 
 func unlock_clanker(clanker_name: String) -> void:
 	clankers_data.unlock(clanker_name)
 	_register_clanker_timer(clanker_name)
 
-func handle_clanker_input(wants_spawn: bool, ray_is_coliding: bool, wants_reset: bool, selected_slot: String) -> void:
-	var can_spawn = !ray_is_coliding \
-	and actor.is_on_floor() \
-	and cooldown_timers[selected_clanker_type].time_left <= 0 \
-	and clankers_data.is_unlocked(selected_clanker_type) 
-	var wants_chanege_clanker_slot = selected_slot and selected_slot != selected_clanker_type
-	if wants_chanege_clanker_slot:
-		print(selected_slot)
-		selected_clanker_type = selected_slot
+func handle_clanker_input(
+	wants_spawn: bool, 
+	ray_is_coliding: bool,
+	wants_reset: bool,
+	#selected_slot: String
+) -> void:
+	var can_spawn = (
+		!ray_is_coliding
+		and actor.is_on_floor()
+		and cooldown_timers[selected_clanker_type].time_left <= 0
+		and clankers_data.is_unlocked(selected_clanker_type)
+	)
 	# Logic for Spawning/Controlling
 	if wants_spawn and can_spawn and not is_controlling_clanker:
 		spawn_clanker()
@@ -87,6 +96,19 @@ func despawn_clanker() -> void:
 	current_clanker = null
 
 
+func _on_clanker_change_requested(type: String):
+	if type != selected_clanker_type:
+		selected_clanker_type = type
+		var cooldown_timer = cooldown_timers.get(type)
+		GlobalSignalBus.clanker_changed.emit(type)
+		GlobalSignalBus.clanker_cooldown_changed.emit(
+			type,
+			!cooldown_timer.is_stopped(),
+			cooldown_timer.wait_time,
+			cooldown_timer.time_left,
+		)
+
+
 func _on_control_timer_timeout() -> void:
 	if current_clanker and is_instance_valid(current_clanker):
 		current_clanker.disable_control()
@@ -98,7 +120,17 @@ func _on_control_return_timer_timeout() -> void:
 	control_ended.emit()
 
 
+func _on_cooldown_timer_timeout(type: String) -> void:
+	GlobalSignalBus.clanker_cooldown_changed.emit(type, false)
+
+
 func _on_clanker_died() -> void:
 	control_timer.stop()
 	control_return_timer.start()
 	cooldown_timers[spawned_clanker_type].start()
+	GlobalSignalBus.clanker_cooldown_changed.emit(
+		spawned_clanker_type,
+		true,
+		cooldown_timers[spawned_clanker_type].wait_time,
+		cooldown_timers[spawned_clanker_type].time_left,
+	)

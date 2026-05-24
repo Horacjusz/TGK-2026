@@ -24,6 +24,7 @@ buses/default_bus_layout="uid://djtah0bh26sfr"
 Config="*uid://dy7j7hekkkqhg"
 Globals="*uid://bpljbrvgjbgcc"
 ProjectileManager="*uid://c40w47owlnbfg"
+GlobalSignalBus="*uid://da4pwvnntjv1"
 
 [display]
 

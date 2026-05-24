@@ -1,0 +1,24 @@
+[gd_resource type="Theme" format=3 uid="uid://cv5b4s1jupelq"]
+
+[ext_resource type="StyleBox" uid="uid://cac0pnt4ryf4q" path="res://assets/themes/default/background_style_box_flat.tres" id="1_q23dy"]
+[ext_resource type="FontVariation" uid="uid://bgniolsoc0ije" path="res://assets/fonts/Ultrapixel.tres" id="1_utmmq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66f4g"]
+bg_color = Color(1, 1, 1, 0.2)
+
+[resource]
+Label/colors/font_shadow_color = Color(0.22745098, 0.22745098, 0.22745098, 1)
+Label/constants/shadow_offset_x = 4
+Label/constants/shadow_offset_y = 4
+Label/fonts/font = ExtResource("1_utmmq")
+PanelContainer/styles/panel = ExtResource("1_q23dy")
+ProgressBar/styles/background = ExtResource("1_q23dy")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_66f4g")
+RichTextLabel/colors/font_shadow_color = Color(0.22745098, 0.22745098, 0.22745098, 1)
+RichTextLabel/constants/shadow_offset_x = 4
+RichTextLabel/constants/shadow_offset_y = 4
+RichTextLabel/fonts/bold_font = ExtResource("1_utmmq")
+RichTextLabel/fonts/bold_italics_font = ExtResource("1_utmmq")
+RichTextLabel/fonts/italics_font = ExtResource("1_utmmq")
+RichTextLabel/fonts/mono_font = ExtResource("1_utmmq")
+RichTextLabel/fonts/normal_font = ExtResource("1_utmmq")
