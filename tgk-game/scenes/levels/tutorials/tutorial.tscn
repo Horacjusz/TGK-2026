@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://ddslmphbub2rv"]
+
+[ext_resource type="Script" uid="uid://hx4hbt7hc166" path="res://scripts/levels/utils/tutorial.gd" id="1_76pr5"]
+[ext_resource type="PackedScene" uid="uid://0plprq34hh5f" path="res://scenes/components/interactable.tscn" id="2_p8vg8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xasyf"]
+
+[node name="Tutorial" type="Node2D" unique_id=65102079]
+script = ExtResource("1_76pr5")
+
+[node name="Interactable" parent="." unique_id=875527561 instance=ExtResource("2_p8vg8")]
+unique_name_in_owner = true
+reinteract_cooldown = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable" unique_id=1551151344]
+shape = SubResource("CircleShape2D_xasyf")
+
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]

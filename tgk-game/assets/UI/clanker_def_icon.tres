@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://ct88nri0yeylc"]
+
+[ext_resource type="Texture2D" uid="uid://cpbcsc70klscm" path="res://assets/clanker_defender/clanker_def_idle_2.png" id="1_hoapc"]
+
+[resource]
+atlas = ExtResource("1_hoapc")
+region = Rect2(4, 0, 8, 8)

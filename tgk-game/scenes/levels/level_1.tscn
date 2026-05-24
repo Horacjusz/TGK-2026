@@ -6,7 +6,8 @@
 [ext_resource type="TileSet" uid="uid://cp6srmqux26vl" path="res://assets/tile_sets/Crystal_Cave_tile_set.tres" id="3_dga24"]
 [ext_resource type="TileSet" uid="uid://0gy8vpcvwlty" path="res://assets/tile_sets/other_Decorations_tile_set.tres" id="6_oc4kc"]
 [ext_resource type="TileSet" uid="uid://bh1cl37waief1" path="res://assets/tile_sets/Grass_tile_set.tres" id="7_dnkej"]
-[ext_resource type="PackedScene" uid="uid://ddslmphbub2rv" path="res://scenes/levels/tutorials/tutorial_jump.tscn" id="7_oc4kc"]
+[ext_resource type="PackedScene" uid="uid://ddslmphbub2rv" path="res://scenes/levels/tutorials/tutorial.tscn" id="7_oc4kc"]
+[ext_resource type="Resource" uid="uid://btgchdq4jenss" path="res://assets/tutorials/tutorial_jump_1.tres" id="8_s8va5"]
 
 [sub_resource type="Environment" id="Environment_s8va5"]
 background_mode = 3
@@ -82,3 +83,4 @@ environment = SubResource("Environment_s8va5")
 
 [node name="TutorialJump" parent="Tutorials" unique_id=65102079 instance=ExtResource("7_oc4kc")]
 position = Vector2(484, -11)
+tutorial = ExtResource("8_s8va5")

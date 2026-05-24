@@ -56,11 +56,7 @@ func _process(delta : float) -> void:
 	if Input.is_action_just_pressed("pause") :
 		print("Pressed esc")
 		toggle_pause()
-		
-	
-	print(Globals.audio.master_volume)
-	print(Globals.audio.music_volume)
-	print(Globals.audio.sfx_volume)
+
 
 func toggle_pause() :
 	print(start_menu)
