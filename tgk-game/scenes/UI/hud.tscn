@@ -115,6 +115,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("5_xh8q5")
 theme_override_font_sizes/normal_font_size = 96
+visible_characters_behavior = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TutorialPopup/MarginContainer/VBoxContainer" unique_id=718654233]
 layout_mode = 2
