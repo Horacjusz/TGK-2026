@@ -16,7 +16,6 @@ func save_settings() :
 		
 
 func load_settings() :
-	print("loading settings")
 	var config = ConfigFile.new()
 	var err = config.load(filename)
 

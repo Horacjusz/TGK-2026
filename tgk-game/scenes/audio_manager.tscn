@@ -5,10 +5,4 @@
 [node name="AudioManager" type="Node" unique_id=680991268]
 script = ExtResource("1_8qd8g")
 
-[node name="GlobalMusic" type="Node" parent="." unique_id=1410779107]
-
-[node name="GlobalSFX" type="Node" parent="." unique_id=1345821359]
-
-[node name="SpatialMusic" type="Node" parent="." unique_id=662482552]
-
-[node name="SpatialSFX" type="Node" parent="." unique_id=878213782]
+[node name="OwnedAudioPlayers" type="Node" parent="." unique_id=1269480015]

@@ -19,7 +19,6 @@ func _animation_breakpoint() :
 
 func set_menu(new_menu) :
 	self.current_menu = new_menu
-	print("Menu set to ", new_menu)
 	hide_menus()
 	self.current_menu.show()
 
