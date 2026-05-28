@@ -17,6 +17,7 @@ offset_right = 79.0
 offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
+stretch_mode = 5
 script = ExtResource("1_bi87h")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1859885371]
