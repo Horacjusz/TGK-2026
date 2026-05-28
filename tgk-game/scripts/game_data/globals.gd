@@ -5,15 +5,10 @@ var PAUSED = false
 var menu = null
 var audio = null
 
-func init_game() :
+func pause_game(no_animation = false) :
 	PAUSED = true
 	get_tree().paused = PAUSED
-	menu.show()
-
-func pause_game() :
-	PAUSED = true
-	get_tree().paused = PAUSED
-	menu.display()
+	menu.display(no_animation)
 	
 func resume_game() :
 	menu.retract()

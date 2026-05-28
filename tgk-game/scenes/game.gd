@@ -6,7 +6,7 @@ extends Control
 func _ready() -> void:
 	Globals.audio = audio_manager
 	Globals.menu = menu
-	Globals.init_game()
+	Globals.pause_game(true)
 	Globals.audio.loop_music(
 		"res://assets/sounds/Girl from Petaluma.mp3"
 	)

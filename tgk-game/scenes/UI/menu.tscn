@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://die5kyg2f6ncu"]
 
 [ext_resource type="Script" uid="uid://wtpmxhsrlf15" path="res://scripts/UI/menu.gd" id="1_0wsoe"]
+[ext_resource type="Texture2D" uid="uid://cy4row7dw12hm" path="res://assets/UI/basic_background.png" id="2_78n2u"]
+[ext_resource type="PackedScene" uid="uid://3dnfvtwasq7t" path="res://scenes/UI/start_menu.tscn" id="2_ny0ke"]
 [ext_resource type="PackedScene" uid="uid://df43kcb421e7u" path="res://scenes/UI/options.tscn" id="3_iysyy"]
 [ext_resource type="PackedScene" uid="uid://bymdd8grj472m" path="res://scenes/UI/credits.tscn" id="4_ny0ke"]
 [ext_resource type="PackedScene" uid="uid://c41joevsiqll5" path="res://scenes/UI/main_menu.tscn" id="5_78n2u"]
@@ -125,6 +127,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="EntryImage" type="TextureRect" parent="Background" unique_id=1948762935]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_78n2u")
+expand_mode = 1
+
 [node name="Gradient" type="TextureRect" parent="Background" unique_id=1398238734]
 layout_mode = 1
 anchors_preset = 15
@@ -161,7 +173,11 @@ anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="StartMenu" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=1769964224 instance=ExtResource("2_ny0ke")]
+layout_mode = 1
+
 [node name="MainMenu" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=1843713868 instance=ExtResource("5_78n2u")]
+visible = false
 layout_mode = 1
 
 [node name="OptionsMenu" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=694180540 instance=ExtResource("3_iysyy")]
