@@ -73,7 +73,7 @@ func display(no_animation = false) :
 	Config.load_settings()
 	setup_ui()
 	show()
-	if no_animation : return
+	#if no_animation : return
 	animation_player.play('appear')
 	await animation_player.animation_finished
 

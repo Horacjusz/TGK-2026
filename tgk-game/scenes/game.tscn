@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dhjly1gut4mfj" path="res://scenes/main.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://0bkav56pbx85" path="res://scenes/UI/hud.tscn" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://b6xx3af0qq3um" path="res://scenes/audio_manager.tscn" id="4_lbhrr"]
-[ext_resource type="PackedScene" uid="uid://du3uaan0cb5dg" path="res://scenes/UI/menu.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" uid="uid://die5kyg2f6ncu" path="res://scenes/UI/menu.tscn" id="5_iywne"]
 
 [node name="Game" type="Control" unique_id=14838684]
 layout_mode = 3
