@@ -6,14 +6,4 @@ extends Control
 func _ready() -> void:
 	Globals.audio = audio_manager
 	Globals.menu = menu
-	Globals.show_menu(true)
-	
-	#var music = Globals.audio.loop_music(
-		#self, # parent
-		#"res://assets/sounds/Girl from Petaluma.mp3", # path to sound
-		#100.0, # volume
-		#-1, # loop count (-1 means infinite)
-		#false, # smooth start
-		#false, # smooth loop
-		#0.05 # smooth factor
-	#)
+	Globals.pause_game()

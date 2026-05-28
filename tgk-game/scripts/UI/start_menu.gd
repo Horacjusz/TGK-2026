@@ -8,9 +8,6 @@ extends UI
 func turn_on() :
 	self.entry_image.show()
 	super.turn_on()
-	
-func turn_off() :
-	super.turn_off()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,9 +24,9 @@ func _on_new_game_pressed() -> void:
 
 func _on_continue_pressed() -> void:
 	self.entry_image.hide()
-	Globals.resume_game()
 	main_menu.parent_menu = self
 	get_owner().set_menu(main_menu)
+	Globals.resume_game()
 	pass # Replace with function body.
 
 func _on_options_pressed() -> void:

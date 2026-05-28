@@ -6,9 +6,7 @@ const MASTER_BUS = "Master"
 const MUSIC_BUS = "Music"
 const SFX_BUS = "SFX"
 
-
 const audio_player_scene = preload("res://scenes/UI/audio_player.tscn")
-
 
 @onready var owned_audio_players: Node = $OwnedAudioPlayers
 

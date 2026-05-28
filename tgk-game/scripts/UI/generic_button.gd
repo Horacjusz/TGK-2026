@@ -16,5 +16,5 @@ func _process(delta: float) -> void:
 
 
 func _on_pressed() -> void:
-	print("Button pressed")
+	print(label.text, " pressed")
 	pass # Replace with function body.

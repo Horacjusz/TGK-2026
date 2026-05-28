@@ -13,12 +13,15 @@ const gradient_offsets = [0.0, 0.4, 0.7]
 
 var current_menu
 
+var music = null
+
 func _animation_breakpoint() :
 	animation_player.pause()
 	animation_breakpoint.emit()
 
 func set_menu(new_menu) :
 	self.current_menu = new_menu
+	print("Menu set to ", new_menu)
 	hide_menus()
 	self.current_menu.show()
 
@@ -69,16 +72,29 @@ func toggle_pause() :
 	else :
 		Globals.pause_game()
 
-func display(no_animation = false) :
+func display() :
 	Config.load_settings()
 	setup_ui()
 	show()
-	#if no_animation : return
+	if music == null :
+		music = Globals.audio.loop_music(
+			self,                                           # parent
+			"res://assets/sounds/Girl from Petaluma.mp3",   # resource path
+			100,                                            # volume
+			-1,                                             # loop count (-1 means infinite)
+			false,                                          # smooth start
+			false,                                          # smooth_loop
+			0.05                                            # smooth_factor
+		)
+		return
+	music.set_volume(100, Globals.MENU_MUSIC_FADE_TIME)
 	animation_player.play('appear')
 	await animation_player.animation_finished
 
 
 func retract() :
-	animation_player.play('fade_away')
+	if not self.visible : return
+	music.set_volume(0, Globals.MENU_MUSIC_FADE_TIME)
+	animation_player.play('disappear')
 	await animation_player.animation_finished
 	hide()
