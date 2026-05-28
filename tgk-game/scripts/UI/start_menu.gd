@@ -21,16 +21,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func _on_new_game_pressed() -> void:
+	_on_continue_pressed()
+	pass # Replace with function body.
 
 func _on_continue_pressed() -> void:
 	self.entry_image.hide()
 	Globals.resume_game()
 	main_menu.parent_menu = self
 	get_owner().set_menu(main_menu)
-	pass # Replace with function body.
-
-func _on_new_game_pressed() -> void:
-	_on_continue_pressed()
 	pass # Replace with function body.
 
 func _on_options_pressed() -> void:

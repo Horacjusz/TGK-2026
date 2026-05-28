@@ -21,10 +21,8 @@ func set_sliders() :
 func _on_master_value_changed(value: float) -> void:
 	Globals.audio.master_volume = value
 
-
 func _on_music_value_changed(value: float) -> void:
 	Globals.audio.music_volume = value
-
 
 func _on_sfx_value_changed(value: float) -> void:
 	Globals.audio.sfx_volume = value

@@ -26,29 +26,16 @@ grow_vertical = 2
 
 [node name="Resume" parent="Menu" unique_id=2061334766 instance=ExtResource("2_yonvy")]
 layout_mode = 2
-size_flags_vertical = 3
 text = "Resume"
 
-[node name="Options" parent="Menu" unique_id=1895644189 instance=ExtResource("2_yonvy")]
+[node name="Options" parent="Menu" unique_id=1734723574 instance=ExtResource("2_yonvy")]
 layout_mode = 2
-size_flags_vertical = 3
 text = "Options"
 
-[node name="Credits" parent="Menu" unique_id=1307993341 instance=ExtResource("2_yonvy")]
+[node name="SaveExit" parent="Menu" unique_id=364353945 instance=ExtResource("2_yonvy")]
 layout_mode = 2
-size_flags_vertical = 3
-text = "Credits"
-
-[node name="SaveExit" parent="Menu" unique_id=2030167355 instance=ExtResource("2_yonvy")]
-layout_mode = 2
-size_flags_vertical = 3
 text = "Save & Exit"
 
 [connection signal="pressed" from="Menu/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="Menu/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Menu/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="Menu/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="Menu/Credits" to="." method="_on_credits_pressed"]
-[connection signal="pressed" from="Menu/Credits" to="." method="_on_credits_pressed"]
-[connection signal="pressed" from="Menu/SaveExit" to="." method="_on_save_exit_pressed"]
 [connection signal="pressed" from="Menu/SaveExit" to="." method="_on_save_exit_pressed"]

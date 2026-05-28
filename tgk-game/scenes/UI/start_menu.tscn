@@ -24,34 +24,28 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="NewGame" parent="Menu" unique_id=2061334766 instance=ExtResource("3_201h0")]
+[node name="NewGame" parent="Menu" unique_id=1626772678 instance=ExtResource("3_201h0")]
 layout_mode = 2
-stretch_mode = 4
 text = "New Game"
 
-[node name="Continue" parent="Menu" unique_id=1492400351 instance=ExtResource("3_201h0")]
+[node name="Continue" parent="Menu" unique_id=2061334766 instance=ExtResource("3_201h0")]
 layout_mode = 2
 text = "Continue"
 
-[node name="Options" parent="Menu" unique_id=839126004 instance=ExtResource("3_201h0")]
+[node name="Options" parent="Menu" unique_id=2012062800 instance=ExtResource("3_201h0")]
 layout_mode = 2
 text = "Options"
 
-[node name="Credits" parent="Menu" unique_id=1861614175 instance=ExtResource("3_201h0")]
+[node name="Credits" parent="Menu" unique_id=46940753 instance=ExtResource("3_201h0")]
 layout_mode = 2
 text = "Credits"
 
-[node name="Exit" parent="Menu" unique_id=642551577 instance=ExtResource("3_201h0")]
+[node name="Exit" parent="Menu" unique_id=2023954850 instance=ExtResource("3_201h0")]
 layout_mode = 2
 text = "Exit"
 
 [connection signal="pressed" from="Menu/NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="Menu/NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="Menu/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="Menu/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="Menu/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="Menu/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Menu/Credits" to="." method="_on_credits_pressed"]
-[connection signal="pressed" from="Menu/Credits" to="." method="_on_credits_pressed"]
-[connection signal="pressed" from="Menu/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Menu/Exit" to="." method="_on_exit_pressed"]

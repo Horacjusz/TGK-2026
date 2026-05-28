@@ -93,4 +93,3 @@ layout_mode = 2
 text = "Return"
 
 [connection signal="pressed" from="Menu/Return" to="." method="_on_return_pressed"]
-[connection signal="pressed" from="Menu/Return" to="." method="_on_return_pressed"]

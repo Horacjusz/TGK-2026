@@ -23,12 +23,6 @@ func _on_options_pressed() -> void:
 	pass # Replace with function body.
 
 
-func _on_credits_pressed() -> void:
-	credits_menu.parent_menu = self
-	get_owner().change_menu(credits_menu)
-	pass # Replace with function body.
-
-
 func _on_save_exit_pressed() -> void:
 	if parent_menu == null :
 		Globals.resume_game()
