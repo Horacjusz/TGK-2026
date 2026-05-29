@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cw73q1gmkcni6" path="res://scripts/UI/options_menu.gd" id="1_xgdkv"]
 [ext_resource type="Script" uid="uid://ql5rx5jagkmf" path="res://scripts/UI/audio.gd" id="2_nf7d7"]
+[ext_resource type="FontFile" uid="uid://ch855c0bwj6q1" path="res://assets/fonts/Essentle4.otf" id="3_2txy7"]
 [ext_resource type="PackedScene" uid="uid://kjpkvt3rg21k" path="res://scenes/UI/generic_button.tscn" id="3_m70mf"]
+[ext_resource type="PackedScene" uid="uid://xwuphdli8ef5" path="res://scenes/UI/generic_slider.tscn" id="3_nf7d7"]
 
 [node name="OptionsMenu" type="Control" unique_id=694180540]
 layout_mode = 3
@@ -27,66 +29,27 @@ theme_override_constants/separation = 30
 
 [node name="Audio" type="VBoxContainer" parent="Menu" unique_id=1597886617]
 layout_mode = 2
+theme_override_constants/separation = 16
 script = ExtResource("2_nf7d7")
 
-[node name="Label" type="Label" parent="Menu/Audio" unique_id=1077753423]
+[node name="Label" type="Label" parent="Menu/Audio" unique_id=1449092838]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_2txy7")
+theme_override_font_sizes/font_size = 40
 text = "Audio"
 
-[node name="Master" type="HSlider" parent="Menu/Audio" unique_id=347955935]
+[node name="Master" parent="Menu/Audio" unique_id=814400050 instance=ExtResource("3_nf7d7")]
 layout_mode = 2
+text = "Master Volume"
 
-[node name="Label" type="Label" parent="Menu/Audio/Master" unique_id=45183844]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -11.5
-offset_right = 23.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Master"
-
-[node name="Music" type="HSlider" parent="Menu/Audio" unique_id=1586648981]
+[node name="Music" parent="Menu/Audio" unique_id=1676915254 instance=ExtResource("3_nf7d7")]
 layout_mode = 2
+text = "Music Volume"
 
-[node name="Label" type="Label" parent="Menu/Audio/Music" unique_id=770994156]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = -11.5
-offset_right = 23.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Music"
-
-[node name="SFX" type="HSlider" parent="Menu/Audio" unique_id=976093042]
+[node name="SFX" parent="Menu/Audio" unique_id=1564360440 instance=ExtResource("3_nf7d7")]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="Menu/Audio/SFX" unique_id=350568980]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -14.0
-offset_top = -11.5
-offset_right = 14.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "SFX"
+text = "SFX Volume"
 
 [node name="Return" parent="Menu" unique_id=2061334766 instance=ExtResource("3_m70mf")]
 layout_mode = 2

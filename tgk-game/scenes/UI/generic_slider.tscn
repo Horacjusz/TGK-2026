@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://xwuphdli8ef5"]
+
+[ext_resource type="FontFile" uid="uid://ch855c0bwj6q1" path="res://assets/fonts/Essentle4.otf" id="1_ge4yc"]
+[ext_resource type="Theme" uid="uid://ctb0dkdag81lm" path="res://assets/UI/slider_theme.tres" id="1_tp5pi"]
+[ext_resource type="Script" uid="uid://bf7dwlsyye7i4" path="res://scripts/UI/generic_slider.gd" id="1_vnbtx"]
+
+[node name="Slider" type="VBoxContainer" unique_id=814400050]
+anchors_preset = -1
+anchor_top = 0.46300003
+anchor_right = 1.0
+anchor_bottom = 0.537
+offset_top = 0.45996094
+offset_bottom = -0.46002197
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vnbtx")
+
+[node name="Label" type="Label" parent="." unique_id=974874580]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_ge4yc")
+theme_override_font_sizes/font_size = 20
+text = "TEST"
+
+[node name="Slider" type="HSlider" parent="." unique_id=261048102]
+layout_mode = 2
+theme = ExtResource("1_tp5pi")
+value = 50.0
+
+[connection signal="value_changed" from="Slider" to="." method="_on_slider_value_changed"]
