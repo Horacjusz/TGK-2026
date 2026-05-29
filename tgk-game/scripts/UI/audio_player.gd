@@ -279,6 +279,7 @@ func _on_active_player_finished() -> void:
 		return
 
 	active_player = null
+	queue_free()
 
 
 func _get_inactive_player() -> Node:
