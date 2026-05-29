@@ -39,7 +39,6 @@ func play(
 	new_smooth_factor: float = 0.05,
 	position = null
 ) -> void:
-	print("Initiating playing audio")
 	if active_player != null:
 		return
 

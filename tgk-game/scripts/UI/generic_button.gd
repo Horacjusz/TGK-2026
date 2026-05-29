@@ -4,9 +4,9 @@ extends Control
 
 @export var text := "TEST"
 
-var hover_sound_filepath = "res://assets/sounds/hover/hover.mp3"
-var unhover_sound_filepath = "res://assets/sounds/hover/unhover.mp3"
-var click_sound_filepath = "res://assets/sounds/noice.mp3"
+const hover_sound_filepath = "res://assets/sounds/hover/hover.mp3"
+const unhover_sound_filepath = "res://assets/sounds/hover/unhover.mp3"
+const click_sound_filepath = "res://assets/sounds/noice.mp3"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,7 +35,6 @@ func _process(delta: float) -> void:
 
 
 func _on_pressed() -> void:
-	print(label.text, " pressed (this message will be removed once sound is added)")
 	Globals.audio.play_sound(
 		self,
 		click_sound_filepath,
