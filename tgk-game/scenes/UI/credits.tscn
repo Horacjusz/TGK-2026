@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bymdd8grj472m"]
 
 [ext_resource type="Script" uid="uid://b2td5ildwxngx" path="res://scripts/UI/credits.gd" id="1_228wp"]
-[ext_resource type="Texture2D" uid="uid://shpviaqx34je" path="res://assets/icon.svg" id="2_21wcu"]
+[ext_resource type="PackedScene" uid="uid://kjpkvt3rg21k" path="res://scenes/UI/generic_button.tscn" id="2_228wp"]
 
 [node name="Credits" type="Control" unique_id=949003110]
 layout_mode = 3
@@ -26,15 +26,8 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Return" type="TextureButton" parent="Credits" unique_id=469920645]
+[node name="Return" parent="Credits" unique_id=2061334766 instance=ExtResource("2_228wp")]
 layout_mode = 2
-size_flags_horizontal = 4
-texture_normal = ExtResource("2_21wcu")
-
-[node name="Label" type="Label" parent="Credits/Return" unique_id=278146096]
-layout_mode = 0
-offset_right = 54.0
-offset_bottom = 23.0
 text = "Return"
 
 [connection signal="pressed" from="Credits/Return" to="." method="_on_return_pressed"]

@@ -12,4 +12,4 @@ func turn_off() :
 	Config.save_settings()
 
 func return_to_parent_menu() :
-	self.get_parent().get_owner().set_menu(self.parent_menu)
+	self.get_parent().get_owner().change_menu(self.parent_menu)

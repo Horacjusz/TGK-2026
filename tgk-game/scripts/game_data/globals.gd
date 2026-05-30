@@ -1,20 +1,20 @@
 extends Node
 
+const MENU_MUSIC_FADE_TIME = 1 # seconds
+
 var PAUSED = false
 
 var menu = null
 var audio = null
 
-func init_game() :
-	PAUSED = true
-	get_tree().paused = PAUSED
-	menu.show()
 
-func pause_game() :
+func pause_game(show_menu = true) :
 	PAUSED = true
 	get_tree().paused = PAUSED
-	menu.display()
+	if show_menu :
+		menu.display()
 	
+
 func resume_game() :
 	menu.retract()
 	PAUSED = false
