@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://kjpkvt3rg21k"]
 
-[ext_resource type="Texture2D" uid="uid://x668dhollyqr" path="res://assets/UI/button.png" id="1_020ut"]
+[ext_resource type="Texture2D" uid="uid://thsf1wcalp4c" path="res://assets/UI/button.png" id="1_020ut"]
 [ext_resource type="Script" uid="uid://o226bh73fevf" path="res://scripts/UI/generic_button.gd" id="1_bi87h"]
 [ext_resource type="Texture2D" uid="uid://b1r6cviyatb12" path="res://assets/UI/button_hover.png" id="2_hepnj"]
-[ext_resource type="FontFile" uid="uid://ch855c0bwj6q1" path="res://assets/fonts/Essentle4.otf" id="4_hepnj"]
+[ext_resource type="PackedScene" uid="uid://dp6y03260kx6s" path="res://scenes/UI/generic_label.tscn" id="5_hepnj"]
 
 [node name="Button" type="TextureButton" unique_id=2061334766]
 custom_minimum_size = Vector2(158, 32)
@@ -23,22 +23,16 @@ texture_hover = ExtResource("2_hepnj")
 stretch_mode = 5
 script = ExtResource("1_bi87h")
 
-[node name="Label" type="Label" parent="." unique_id=1902702094]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 30)
+[node name="Label" parent="." unique_id=1818590793 instance=ExtResource("5_hepnj")]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -3.0
+offset_top = 7.0
+offset_right = 0.0
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_vertical = 0
-theme_override_fonts/font = ExtResource("4_hepnj")
 theme_override_font_sizes/font_size = 40
-text = "Save & Exit"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

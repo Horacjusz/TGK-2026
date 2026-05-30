@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c41joevsiqll5" path="res://scenes/UI/main_menu.tscn" id="4_svcqa"]
 [ext_resource type="PackedScene" uid="uid://df43kcb421e7u" path="res://scenes/UI/options.tscn" id="5_ofy2k"]
 [ext_resource type="PackedScene" uid="uid://bymdd8grj472m" path="res://scenes/UI/credits.tscn" id="6_ypw4e"]
+[ext_resource type="Script" uid="uid://bnwjtmnlqoo1f" path="res://scripts/UI/hover_blocker.gd" id="7_svcqa"]
 
 [sub_resource type="Gradient" id="Gradient_2tfbb"]
 offsets = PackedFloat32Array(0, 0.40361446, 0.6626506)
@@ -190,6 +191,15 @@ layout_mode = 1
 [node name="Credits" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=949003110 instance=ExtResource("6_ypw4e")]
 visible = false
 layout_mode = 1
+
+[node name="HoverBlocker" type="Control" parent="." unique_id=2048974085]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_svcqa")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1458278778]
 libraries/ = SubResource("AnimationLibrary_ofy2k")

@@ -29,7 +29,7 @@ func _on_continue_pressed() -> void:
 	SaveManager.load_game()
 	self.entry_image.hide()
 	main_menu.parent_menu = self
-	get_owner().set_menu(main_menu)
+	get_owner().set_menu(main_menu, false)
 	Globals.resume_game()
 	pass # Replace with function body.
 

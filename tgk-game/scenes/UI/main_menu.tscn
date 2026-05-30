@@ -32,10 +32,10 @@ text = "Resume"
 layout_mode = 2
 text = "Options"
 
-[node name="SaveExit" parent="Menu" unique_id=364353945 instance=ExtResource("2_yonvy")]
+[node name="Return" parent="Menu" unique_id=364353945 instance=ExtResource("2_yonvy")]
 layout_mode = 2
-text = "Save & Exit"
+text = "Start Menu"
 
 [connection signal="pressed" from="Menu/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Menu/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="Menu/SaveExit" to="." method="_on_save_exit_pressed"]
+[connection signal="pressed" from="Menu/Return" to="." method="_on_return_pressed"]

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://xwuphdli8ef5"]
 
-[ext_resource type="FontFile" uid="uid://ch855c0bwj6q1" path="res://assets/fonts/Essentle4.otf" id="1_ge4yc"]
 [ext_resource type="Theme" uid="uid://ctb0dkdag81lm" path="res://assets/UI/slider_theme.tres" id="1_tp5pi"]
 [ext_resource type="Script" uid="uid://bf7dwlsyye7i4" path="res://scripts/UI/generic_slider.gd" id="1_vnbtx"]
+[ext_resource type="PackedScene" uid="uid://dp6y03260kx6s" path="res://scenes/UI/generic_label.tscn" id="2_tp5pi"]
 
 [node name="Slider" type="VBoxContainer" unique_id=814400050]
 anchors_preset = -1
@@ -15,16 +15,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vnbtx")
 
-[node name="Label" type="Label" parent="." unique_id=974874580]
+[node name="Label" parent="." unique_id=1818590793 instance=ExtResource("2_tp5pi")]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("1_ge4yc")
-theme_override_font_sizes/font_size = 20
-text = "TEST"
 
 [node name="Slider" type="HSlider" parent="." unique_id=261048102]
 layout_mode = 2
 theme = ExtResource("1_tp5pi")
 value = 50.0
 
+[connection signal="drag_ended" from="Slider" to="." method="_on_slider_drag_ended"]
+[connection signal="drag_started" from="Slider" to="." method="_on_slider_drag_started"]
+[connection signal="focus_entered" from="Slider" to="." method="_on_slider_focus_entered"]
+[connection signal="focus_exited" from="Slider" to="." method="_on_slider_focus_exited"]
 [connection signal="value_changed" from="Slider" to="." method="_on_slider_value_changed"]

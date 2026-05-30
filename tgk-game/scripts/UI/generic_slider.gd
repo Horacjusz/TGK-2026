@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends UI_PIECE
 @onready var label: Label = $Label
 @onready var slider: HSlider = $Slider
 
@@ -13,6 +13,7 @@ const CLICKS = [
 ]
 
 var _silent = false
+var _dragging = false
 
 signal value_changed(value)
 
@@ -23,6 +24,7 @@ func set_value(new_value) :
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	super._ready()
 	label.text = text
 	pass # Replace with function body.
 
@@ -31,16 +33,37 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
 func _on_slider_value_changed(new_value: float) -> void:
 	#print("Valu changed to ", new_value)
 	self.value = new_value
 	value_changed.emit(self.value)
 	if not _silent :
-		Globals.audio.play_sound(
-			self,
-			CLICKS[randi_range(0, CLICKS.size() - 1)],
-			50 # half of the max volume
-		)
+		if Globals.audio != null :
+			Globals.audio.play_sound(
+				self,
+				CLICKS[randi_range(0, CLICKS.size() - 1)],
+				50 # half of the max volume
+			)
 	
+	pass # Replace with function body.
+
+func _on_slider_drag_started() -> void:
+	slider.grab_focus()
+	Globals.menu.mouse_lock(self)
+	pass # Replace with function body.
+
+
+func _on_slider_drag_ended(value_changed: bool) -> void:
+	Globals.menu.mouse_unlock(self)
+	slider.release_focus()
+	pass # Replace with function body.
+
+
+func _on_slider_focus_entered() -> void:
+	print("Entered ", self)
+	pass # Replace with function body.
+
+
+func _on_slider_focus_exited() -> void:
+	print("Exited ", self)
 	pass # Replace with function body.

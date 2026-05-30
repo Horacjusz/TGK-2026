@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cw73q1gmkcni6" path="res://scripts/UI/options_menu.gd" id="1_xgdkv"]
 [ext_resource type="Script" uid="uid://ql5rx5jagkmf" path="res://scripts/UI/audio.gd" id="2_nf7d7"]
-[ext_resource type="FontFile" uid="uid://ch855c0bwj6q1" path="res://assets/fonts/Essentle4.otf" id="3_2txy7"]
+[ext_resource type="PackedScene" uid="uid://dp6y03260kx6s" path="res://scenes/UI/generic_label.tscn" id="3_2txy7"]
 [ext_resource type="PackedScene" uid="uid://kjpkvt3rg21k" path="res://scenes/UI/generic_button.tscn" id="3_m70mf"]
 [ext_resource type="PackedScene" uid="uid://xwuphdli8ef5" path="res://scenes/UI/generic_slider.tscn" id="3_nf7d7"]
 
@@ -32,10 +32,8 @@ layout_mode = 2
 theme_override_constants/separation = 16
 script = ExtResource("2_nf7d7")
 
-[node name="Label" type="Label" parent="Menu/Audio" unique_id=1449092838]
+[node name="Label" parent="Menu/Audio" unique_id=1818590793 instance=ExtResource("3_2txy7")]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_2txy7")
 theme_override_font_sizes/font_size = 40
 text = "Audio"
 

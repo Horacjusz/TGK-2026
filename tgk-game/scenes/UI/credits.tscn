@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bymdd8grj472m"]
 
 [ext_resource type="Script" uid="uid://b2td5ildwxngx" path="res://scripts/UI/credits.gd" id="1_228wp"]
+[ext_resource type="FontFile" uid="uid://ch855c0bwj6q1" path="res://assets/fonts/Essentle4.otf" id="2_21wcu"]
 [ext_resource type="PackedScene" uid="uid://kjpkvt3rg21k" path="res://scenes/UI/generic_button.tscn" id="2_228wp"]
 
 [node name="Credits" type="Control" unique_id=949003110]
@@ -25,6 +26,16 @@ offset_right = 19.999992
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CreditsLabel" type="RichTextLabel" parent="Credits" unique_id=25104860]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_21wcu")
+theme_override_fonts/bold_font = ExtResource("2_21wcu")
+theme_override_fonts/bold_italics_font = ExtResource("2_21wcu")
+theme_override_fonts/italics_font = ExtResource("2_21wcu")
+theme_override_fonts/mono_font = ExtResource("2_21wcu")
+bbcode_enabled = true
+fit_content = true
 
 [node name="Return" parent="Credits" unique_id=2061334766 instance=ExtResource("2_228wp")]
 layout_mode = 2
