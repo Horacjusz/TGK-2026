@@ -24,13 +24,13 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="NewGame" parent="Menu" unique_id=1626772678 instance=ExtResource("3_201h0")]
-layout_mode = 2
-text = "New Game"
-
 [node name="Continue" parent="Menu" unique_id=2061334766 instance=ExtResource("3_201h0")]
 layout_mode = 2
 text = "Continue"
+
+[node name="NewGame" parent="Menu" unique_id=1626772678 instance=ExtResource("3_201h0")]
+layout_mode = 2
+text = "New Game"
 
 [node name="Options" parent="Menu" unique_id=2012062800 instance=ExtResource("3_201h0")]
 layout_mode = 2
@@ -44,8 +44,8 @@ text = "Credits"
 layout_mode = 2
 text = "Exit"
 
-[connection signal="pressed" from="Menu/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Menu/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="Menu/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="Menu/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Menu/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="Menu/Exit" to="." method="_on_exit_pressed"]

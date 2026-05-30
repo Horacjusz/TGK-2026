@@ -1,4 +1,5 @@
 extends UI
+@onready var continue_button: TextureButton = $Menu/Continue
 
 @onready var main_menu: Control = $"../MainMenu"
 @onready var options_menu: Control = $"../OptionsMenu"
@@ -11,6 +12,8 @@ func turn_on() :
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if not SaveManager.save_file_exists() :
+		continue_button.hide()
 	pass # Replace with function body.
 
 
