@@ -1,28 +1,89 @@
 extends Node2D
 
 
-@onready var reload_level_timer: Timer = %ReloadLevelTimer
-# in future replace with Level interface
-@export var active_level: Node2D
-@onready var camera: Camera2D = %Camera2D
+var level: Level
 
-# Called when the node enters the scene tree for the first time.
+@onready var player: Player = %Player
+@onready var camera: PlayerCamera = %Camera2D
+@onready var level_container: Node = %LevelContainer
+@onready var reload_level_timer: Timer = %ReloadLevelTimer
+
+
 func _ready() -> void:
+	add_to_group(SaveManager.SAVABLE_GROUP)
+
+
+func load_level(level_path: String) -> void:
+	if level:
+		if level_path == level.scene_file_path:
+			return
+		level.queue_free()
+
+	var scene := load(level_path) as PackedScene
+
+	if scene == null:
+		push_error("Failed to load level: %s" % level_path)
+		return
+
+	level = scene.instantiate() as Level
+	level_container.add_child(level)
+
 	_setup_level()
 
+
 func _setup_level() -> void:
-	var tilemap = active_level.get_background_tilemap()
+	var tilemap = level.get_background_tilemap()
 	camera.setup_camera_limits(tilemap)
+
 
 func pause_game() :
 	self.process_mode = Node.PROCESS_MODE_DISABLED
 
+
 func resume_game() :
 	self.process_mode = Node.PROCESS_MODE_INHERIT
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+
+func get_save_id() -> String:
+	return "main"
+
+
+func save_state(reset: bool = false) -> Dictionary:
+	if reset:
+		return {
+			"level_path": "res://scenes/levels/level_1.tscn" as String,
+			"checkpoint_id": "start" as String,
+		}
+		
+	return {
+		"level_path": level.scene_file_path,
+		"checkpoint_id": level.current_checkpoint_id,
+	}
+
+
+func load_state(data: Dictionary) -> void:
+	# TODO: Handle missing data
+	var level_path = data.get("level_path")
+	var checkpoint_id = data.get("checkpoint_id")
+	
+	load_level(level_path)
+	
+	level.set_checkpoint(checkpoint_id)
+	_spawn_player_at_checkpoint(checkpoint_id)
+
+
+func _spawn_player_at_checkpoint(checkpoint_id: String) -> void:
+	var checkpoint := level.get_checkpoint(checkpoint_id)
+
+	if checkpoint == null:
+		push_warning("Checkpoint not found: %s" % checkpoint_id)
+		return
+
+	player.global_position = checkpoint.global_position
+	camera.move_to_player()
+
+	if player.has_method("set_facing_direction"):
+		player.set_facing_direction(checkpoint.direction)
 
 
 func _on_player_died() -> void:

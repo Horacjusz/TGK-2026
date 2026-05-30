@@ -22,6 +22,7 @@ var selected_clanker_type: String = "clanker"
 var cooldown_timers: Dictionary[String, Timer] = {}
 
 func _ready() -> void:
+	add_to_group(SaveManager.SAVABLE_GROUP)
 	# for developing purposes
 	clankers_data.unlock_all(["clanker", "light_clanker", "defender_clanker"])
 	for clanker_name in clankers_data.clankers_available:
@@ -134,3 +135,34 @@ func _on_clanker_died() -> void:
 		cooldown_timers[spawned_clanker_type].wait_time,
 		cooldown_timers[spawned_clanker_type].time_left,
 	)
+
+
+func get_save_id() -> String:
+	return "player_clanker_manager"
+
+
+func save_state(reset: bool = false) -> Dictionary:
+	if reset:
+		return {
+			"unlocked_clankers": ["clanker"] as Array[String],
+			"selected_clanker": "clanker" as String
+		}
+		
+	return {
+		"unlocked_clankers": clankers_data.clankers_available,
+		"selected_clanker": selected_clanker_type
+	}
+
+
+func load_state(data: Dictionary) -> void:
+	# TODO: Handle missing data
+	var unlocked_clankers = data.get("unlocked_clankers")
+	var selected_clanker = data.get("selected_clanker")
+	
+	clankers_data.unlock_all(unlocked_clankers)
+	
+	for clanker_name in clankers_data.clankers_available:
+		_register_clanker_timer(clanker_name)
+	
+	selected_clanker_type = selected_clanker
+	GlobalSignalBus.clanker_changed.emit(selected_clanker_type)

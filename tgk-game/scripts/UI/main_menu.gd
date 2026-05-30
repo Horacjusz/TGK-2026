@@ -14,6 +14,8 @@ func _process(delta: float) -> void:
 
 func _on_start_pressed() -> void:
 	Globals.resume_game()
+	SaveManager.save_game(true)
+	SaveManager.load_game()
 	pass # Replace with function body.
 
 

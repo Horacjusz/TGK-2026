@@ -68,6 +68,7 @@ script = ExtResource("1_41gti")
 
 [node name="TutorialPopup" type="Control" parent="." unique_id=710091465]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -141,6 +142,7 @@ text = "[E] Next"
 
 [node name="InteractHUD" type="Control" parent="." unique_id=471391724]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 1
 anchors_preset = 15
@@ -211,6 +213,7 @@ vertical_alignment = 1
 
 [node name="ClankerHUD" type="Control" parent="." unique_id=1079642741]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
