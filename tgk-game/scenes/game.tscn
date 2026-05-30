@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cfbmpjgsgx10l"]
 
-[ext_resource type="Script" uid="uid://bvdyhyi0mni0w" path="res://scenes/game.gd" id="1_lnu2h"]
+[ext_resource type="Script" uid="uid://bvdyhyi0mni0w" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://dhjly1gut4mfj" path="res://scenes/main.tscn" id="1_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://die5kyg2f6ncu" path="res://scenes/UI/menu.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://0bkav56pbx85" path="res://scenes/UI/hud.tscn" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://b6xx3af0qq3um" path="res://scenes/audio_manager.tscn" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://die5kyg2f6ncu" path="res://scenes/UI/menu.tscn" id="5_iywne"]
 
 [node name="Game" type="Control" unique_id=14838684]
 layout_mode = 3
@@ -40,7 +40,7 @@ layer = 6
 
 [node name="HUD" parent="UI" unique_id=788717441 instance=ExtResource("3_iywne")]
 
-[node name="Menu" parent="UI" unique_id=604384628 instance=ExtResource("2_lnu2h")]
+[node name="Menu" parent="UI" unique_id=909682191 instance=ExtResource("5_iywne")]
 
 [node name="AudioManager" parent="UI" unique_id=680991268 instance=ExtResource("4_lbhrr")]
 process_mode = 3

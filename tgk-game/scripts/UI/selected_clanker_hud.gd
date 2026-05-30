@@ -3,8 +3,8 @@ extends Control
 
 var CLANKER_ICONS: Dictionary = {
 	"clanker": preload("res://assets/UI/clanker_icon.tres"),
-	"defender_clanker": preload("res://assets/ui/clanker_def_icon.tres"),
-	"light_clanker": preload("res://assets/ui/clanker_light_icon.tres")
+	"defender_clanker": preload("res://assets/UI/clanker_def_icon.tres"),
+	"light_clanker": preload("res://assets/UI/clanker_light_icon.tres")
 }
 
 var selected_clanker_type: String = "clanker"

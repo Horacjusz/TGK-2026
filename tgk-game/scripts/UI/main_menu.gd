@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_start_pressed() -> void:
+func _on_resume_pressed() -> void:
 	Globals.resume_game()
 	SaveManager.save_game(true)
 	SaveManager.load_game()
@@ -20,19 +20,12 @@ func _on_start_pressed() -> void:
 
 
 func _on_options_pressed() -> void:
-	print("Options pressed")
 	options_menu.parent_menu = self
-	get_owner().set_menu(options_menu)
+	get_owner().change_menu(options_menu)
 	pass # Replace with function body.
 
 
-func _on_credits_pressed() -> void:
-	credits_menu.parent_menu = self
-	get_owner().set_menu(credits_menu)
-	pass # Replace with function body.
-
-
-func _on_return_pressed() -> void:
+func _on_save_exit_pressed() -> void:
 	if parent_menu == null :
 		Globals.resume_game()
 		return
