@@ -19,10 +19,11 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_new_game_pressed() -> void:
+	SaveManager.save_game(true)
 	_on_continue_pressed()
-	pass # Replace with function body.
 
 func _on_continue_pressed() -> void:
+	SaveManager.load_game()
 	self.entry_image.hide()
 	main_menu.parent_menu = self
 	get_owner().set_menu(main_menu)
