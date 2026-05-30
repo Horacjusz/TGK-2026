@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://dwd7ckbaa5sh3" path="res://scripts/main.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://bvxk1c0fnl4a" path="res://scenes/player.tscn" id="2_sugp2"]
-[ext_resource type="Script" path="res://scripts/camera_2d.gd" id="4_jyhfs"]
-[ext_resource type="PackedScene" uid="uid://dfxb5djrcr63c" path="res://scenes/levels/level_1.tscn" id="5_tefeu"]
+[ext_resource type="Script" uid="uid://bhbkae6wkfu7u" path="res://scripts/camera_2d.gd" id="4_jyhfs"]
 
-[node name="Main" type="Node2D" unique_id=1749019626 node_paths=PackedStringArray("active_level")]
+[node name="Main" type="Node2D" unique_id=1749019626]
 script = ExtResource("1_o5qli")
-active_level = NodePath("Level1")
 
-[node name="Level1" parent="." unique_id=1056308524 instance=ExtResource("5_tefeu")]
+[node name="LevelContainer" type="Node" parent="." unique_id=758784407]
+unique_name_in_owner = true
 
 [node name="Player" parent="." unique_id=723345871 instance=ExtResource("2_sugp2")]
+unique_name_in_owner = true
 position = Vector2(85, -269)
 
 [node name="ReloadLevelTimer" type="Timer" parent="." unique_id=1333278215]

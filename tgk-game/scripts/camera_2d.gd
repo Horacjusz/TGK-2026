@@ -1,4 +1,6 @@
 extends Camera2D
+class_name PlayerCamera
+
 
 @export_category("Follow Player")
 @export var player: Player
@@ -8,11 +10,17 @@ extends Camera2D
 
 
 func _physics_process(delta: float) -> void:
+	move_to_player(delta, smoothing_enable)
+	
+
+
+func move_to_player(delta: float = 0.0, smooth: bool = false) -> void:
 	var target: Vector2 = player.get_camera_target()
-	if smoothing_enable:
+	if smooth:
 		target = global_position.lerp(target, (11 - smoothing_distance) * delta)
 		target =(target * zoom).floor() / zoom
 	global_position = target
+
 
 func setup_camera_limits(tilemap: TileMapLayer) -> void:
 	if not tilemap:
