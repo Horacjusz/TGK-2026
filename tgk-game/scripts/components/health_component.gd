@@ -6,6 +6,7 @@ signal health_changed(current_health: int)
 signal died
 
 @export var max_health: int = 1
+
 @onready var current_health: int = max_health:
 	set(value):
 		current_health = clamp(value, 0, max_health)
