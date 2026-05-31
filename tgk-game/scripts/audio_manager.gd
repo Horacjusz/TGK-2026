@@ -11,19 +11,19 @@ const audio_player_scene = preload("res://scenes/UI/audio_player.tscn")
 @onready var owned_audio_players: Node = $OwnedAudioPlayers
 
 
-var master_volume: float = 100.0:
+var master_volume: float = 50.0:
 	set(value):
 		master_volume = clamp(value, 0.0, 100.0)
 		_set_bus_volume(MASTER_BUS, master_volume)
 
 
-var music_volume: float = 100.0:
+var music_volume: float = 50.0:
 	set(value):
 		music_volume = clamp(value, 0.0, 100.0)
 		_set_bus_volume(MUSIC_BUS, music_volume)
 
 
-var sfx_volume: float = 100.0:
+var sfx_volume: float = 50.0:
 	set(value):
 		sfx_volume = clamp(value, 0.0, 100.0)
 		_set_bus_volume(SFX_BUS, sfx_volume)

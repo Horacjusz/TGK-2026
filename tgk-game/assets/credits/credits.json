@@ -1,0 +1,38 @@
+{
+	"title": "Credits",
+	"sections": [
+		{
+			"name": "Programming",
+			"color": "#9ad8ff",
+			"people": [
+				"Stanisław Barycki",
+				"Eryk Olejarz",
+				"Paweł Prus"
+			]
+		},
+		{
+			"name": "Art",
+			"color": "#d7a6ff",
+			"people": [
+				"Stanisław Barycki",
+				"Eryk Olejarz",
+				"Paweł Prus",
+				"Assets guy"
+			]
+		},
+		{
+			"name": "Music",
+			"color": "#ffe29a",
+			"people": [
+				"TBD"
+			]
+		},
+		{
+			"name": "Special Thanks",
+			"color": "#a8ffb0",
+			"people": [
+				"White Monster"
+			]
+		}
+	]
+}

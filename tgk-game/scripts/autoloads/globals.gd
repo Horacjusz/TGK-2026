@@ -13,7 +13,6 @@ func pause_game(show_menu = true) :
 	get_tree().paused = PAUSED
 	if show_menu :
 		menu.display()
-	
 
 func resume_game() :
 	menu.retract()

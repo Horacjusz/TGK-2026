@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://dwp8em2mpcqv4"]
+
+[ext_resource type="FontFile" uid="uid://bnv1yf6id4ea6" path="res://assets/fonts/unifont-small.png" id="1_kaap8"]
+
+[resource]
+Label/font_sizes/font_size = 40
+Label/fonts/font = ExtResource("1_kaap8")

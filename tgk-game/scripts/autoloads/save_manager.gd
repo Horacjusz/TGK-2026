@@ -12,6 +12,8 @@ const SAVE_VERSION := 1
 func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(SAVE_DIR)
 
+func save_file_exists() -> bool:
+	return FileAccess.file_exists(SAVE_FILE)
 
 func save_game(new_game: bool = false) -> bool:
 	var save := {
@@ -49,7 +51,6 @@ func save_game(new_game: bool = false) -> bool:
 	
 	game_saved.emit()
 	return true
-
 
 func load_game() -> bool:
 	var data: Dictionary = {}

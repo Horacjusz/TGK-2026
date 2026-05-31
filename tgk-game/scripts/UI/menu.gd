@@ -6,24 +6,27 @@ extends Control
 @onready var buttons: Control = $Buttons
 @onready var menus_level: ReferenceRect = $Buttons/ReferenceRect/ReferenceRect
 @onready var main_menu: Control = $Buttons/ReferenceRect/ReferenceRect/MainMenu
+@onready var hover_blocker: HoverBlocker = $HoverBlocker
 
 signal animation_breakpoint
 
 const gradient_offsets = [0.0, 0.4, 0.7]
+const animation_speedup = 3
 
 var current_menu
 
 var music = null
+var menu_action_id = 0
 
 func _animation_breakpoint() :
 	animation_player.pause()
 	animation_breakpoint.emit()
 
-func set_menu(new_menu) :
+func set_menu(new_menu, menu_show = true) :
 	self.current_menu = new_menu
-	print("Menu set to ", new_menu)
 	hide_menus()
-	self.current_menu.show()
+	if menu_show :
+		self.current_menu.turn_on()
 
 func change_menu(new_menu) :
 	animation_player.play("toggle_menu")
@@ -42,7 +45,7 @@ func hide_menus() :
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	animation_player.speed_scale = 4
+	animation_player.speed_scale = animation_speedup
 	set_menu(start_menu)
 	pass # Replace with function body.
 
@@ -61,18 +64,19 @@ func setup_ui() :
 func _process(delta : float) -> void:
 	if Input.is_action_just_pressed("pause") :
 		if current_menu == main_menu :
-			print("Pressed esc")
 			toggle_pause()
 
 
 func toggle_pause() :
-	current_menu = main_menu
+	set_menu(main_menu)
 	if Globals.PAUSED :
 		Globals.resume_game()
 	else :
 		Globals.pause_game()
 
 func display() :
+	menu_action_id += 1
+	var action_id = menu_action_id
 	Config.load_settings()
 	setup_ui()
 	show()
@@ -94,7 +98,16 @@ func display() :
 
 func retract() :
 	if not self.visible : return
+	menu_action_id += 1
+	var action_id = menu_action_id
 	music.set_volume(0, Globals.MENU_MUSIC_FADE_TIME)
 	animation_player.play('disappear')
 	await animation_player.animation_finished
-	hide()
+	if action_id == menu_action_id :
+		hide()
+
+func mouse_lock(control) :
+	hover_blocker.lock(control)
+	
+func mouse_unlock(control) :
+	hover_blocker.unlock(control)
