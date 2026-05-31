@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://thsf1wcalp4c" path="res://assets/UI/button.png" id="1_020ut"]
 [ext_resource type="Script" uid="uid://o226bh73fevf" path="res://scripts/UI/generic_button.gd" id="1_bi87h"]
 [ext_resource type="Texture2D" uid="uid://b1r6cviyatb12" path="res://assets/UI/button_hover.png" id="2_hepnj"]
-[ext_resource type="PackedScene" uid="uid://dp6y03260kx6s" path="res://scenes/UI/generic_label.tscn" id="5_hepnj"]
+[ext_resource type="Theme" uid="uid://dwp8em2mpcqv4" path="res://assets/fonts/font_theme.tres" id="4_020ut"]
 
 [node name="Button" type="TextureButton" unique_id=2061334766]
 custom_minimum_size = Vector2(158, 32)
@@ -23,16 +23,18 @@ texture_hover = ExtResource("2_hepnj")
 stretch_mode = 5
 script = ExtResource("1_bi87h")
 
-[node name="Label" parent="." unique_id=1818590793 instance=ExtResource("5_hepnj")]
+[node name="Label" type="Label" parent="." unique_id=634249067]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 7.0
-offset_right = 0.0
-offset_bottom = 0.0
+offset_top = 6.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 40
+theme = ExtResource("4_020ut")
+theme_override_font_sizes/font_size = 70
+text = "Button"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

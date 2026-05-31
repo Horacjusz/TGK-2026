@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://ctb0dkdag81lm" path="res://assets/UI/slider_theme.tres" id="1_tp5pi"]
 [ext_resource type="Script" uid="uid://bf7dwlsyye7i4" path="res://scripts/UI/generic_slider.gd" id="1_vnbtx"]
-[ext_resource type="PackedScene" uid="uid://dp6y03260kx6s" path="res://scenes/UI/generic_label.tscn" id="2_tp5pi"]
+[ext_resource type="Theme" uid="uid://dwp8em2mpcqv4" path="res://assets/fonts/font_theme.tres" id="2_tp5pi"]
 
 [node name="Slider" type="VBoxContainer" unique_id=814400050]
 anchors_preset = -1
@@ -15,8 +15,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vnbtx")
 
-[node name="Label" parent="." unique_id=1818590793 instance=ExtResource("2_tp5pi")]
+[node name="Label" type="Label" parent="." unique_id=1442553413]
 layout_mode = 2
+theme = ExtResource("2_tp5pi")
+theme_override_font_sizes/font_size = 40
+text = "Button"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Slider" type="HSlider" parent="." unique_id=261048102]
 layout_mode = 2
