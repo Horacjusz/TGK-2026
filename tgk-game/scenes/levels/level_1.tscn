@@ -5,10 +5,20 @@
 [ext_resource type="TileSet" uid="uid://pu1u5si5uivx" path="res://assets/tile_sets/level_body_fill_tile_set.tres" id="2_s8va5"]
 [ext_resource type="TileSet" uid="uid://cp6srmqux26vl" path="res://assets/tile_sets/Crystal_Cave_tile_set.tres" id="3_dga24"]
 [ext_resource type="TileSet" uid="uid://0gy8vpcvwlty" path="res://assets/tile_sets/other_Decorations_tile_set.tres" id="6_oc4kc"]
-[ext_resource type="Script" uid="uid://dvdmiqug2h1mf" path="res://scripts/levels/checkpoint.gd" id="7_dga24"]
+[ext_resource type="PackedScene" uid="uid://dom3t4222s2h6" path="res://scenes/levels/checkpoint.tscn" id="7_dga24"]
 [ext_resource type="TileSet" uid="uid://bh1cl37waief1" path="res://assets/tile_sets/Grass_tile_set.tres" id="7_dnkej"]
 [ext_resource type="PackedScene" uid="uid://ddslmphbub2rv" path="res://scenes/levels/tutorials/tutorial.tscn" id="7_oc4kc"]
+[ext_resource type="Script" uid="uid://ybdpyjm3hm4g" path="res://scripts/components/projectile_container.gd" id="8_excbq"]
 [ext_resource type="Resource" uid="uid://btgchdq4jenss" path="res://assets/tutorials/tutorial_jump_1.tres" id="8_s8va5"]
+[ext_resource type="PackedScene" uid="uid://berxid4k2s0pa" path="res://scenes/projectile_trap.tscn" id="10_qxy0u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qxy0u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dga24"]
+size = Vector2(74, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxy0u"]
+size = Vector2(26, 16)
 
 [sub_resource type="Environment" id="Environment_s8va5"]
 background_mode = 3
@@ -76,11 +86,31 @@ tile_set = ExtResource("1_oc4kc")
 
 [node name="Checkpoints" type="Node" parent="." unique_id=1577967038]
 
-[node name="Checkpoint" type="Node2D" parent="Checkpoints" unique_id=455616811]
-position = Vector2(70, -75)
-script = ExtResource("7_dga24")
-id = "start"
-metadata/_custom_type_script = "uid://dvdmiqug2h1mf"
+[node name="Checkpoint0" parent="Checkpoints" unique_id=1281981399 instance=ExtResource("7_dga24")]
+position = Vector2(69, -71)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/Checkpoint0" unique_id=1925360768]
+shape = SubResource("CircleShape2D_qxy0u")
+
+[node name="Checkpoint1" parent="Checkpoints" unique_id=1734717636 instance=ExtResource("7_dga24")]
+position = Vector2(69, -12)
+id = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/Checkpoint1" unique_id=1994993680]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_dga24")
+
+[node name="Checkpoint2" parent="Checkpoints" unique_id=1132475537 instance=ExtResource("7_dga24")]
+position = Vector2(780, -108)
+id = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/Checkpoint2" unique_id=41315310]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_qxy0u")
+
+[node name="ProjectileContainer" type="Node" parent="." unique_id=547320534]
+script = ExtResource("8_excbq")
+metadata/_custom_type_script = "uid://ybdpyjm3hm4g"
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=924061336]
 top_level = true
@@ -95,3 +125,7 @@ environment = SubResource("Environment_s8va5")
 [node name="TutorialJump" parent="Tutorials" unique_id=65102079 instance=ExtResource("7_oc4kc")]
 position = Vector2(484, -11)
 tutorial = ExtResource("8_s8va5")
+
+[node name="ProjectileTrap" parent="." unique_id=1316327780 instance=ExtResource("10_qxy0u")]
+position = Vector2(144, -32)
+scale = Vector2(-1, 1)

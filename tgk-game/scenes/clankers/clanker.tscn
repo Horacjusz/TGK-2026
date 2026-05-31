@@ -69,7 +69,7 @@ states/idle/position = Vector2(378.5, 98.5)
 states/run/node = SubResource("AnimationNodeAnimation_4k3mq")
 states/run/position = Vector2(716, 104)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_t7yle"), "idle", "Airborne", SubResource("AnimationNodeStateMachineTransition_vadkn"), "Airborne", "idle", SubResource("AnimationNodeStateMachineTransition_8u27d"), "idle", "run", SubResource("AnimationNodeStateMachineTransition_bmscy"), "run", "idle", SubResource("AnimationNodeStateMachineTransition_fypc2"), "run", "Airborne", SubResource("AnimationNodeStateMachineTransition_0juto"), "Airborne", "run", SubResource("AnimationNodeStateMachineTransition_akl6t")]
-graph_offset = Vector2(52, -58)
+graph_offset = Vector2(40, -162)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vadkn"]
 animation = &"despawn"

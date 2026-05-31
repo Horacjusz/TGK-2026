@@ -10,6 +10,7 @@ var level: Level
 
 
 func _ready() -> void:
+	GlobalSignalBus.player_died.connect(_on_player_died)
 	add_to_group(SaveManager.SAVABLE_GROUP)
 
 
@@ -52,12 +53,12 @@ func save_state(reset: bool = false) -> Dictionary:
 	if reset:
 		return {
 			"level_path": "res://scenes/levels/level_1.tscn" as String,
-			"checkpoint_id": "start" as String,
+			"checkpoint_id": 0 as int,
 		}
 		
 	return {
 		"level_path": level.scene_file_path,
-		"checkpoint_id": level.current_checkpoint_id,
+		"checkpoint_id": level.current_checkpoint.id,
 	}
 
 
@@ -68,22 +69,18 @@ func load_state(data: Dictionary) -> void:
 	
 	load_level(level_path)
 	
-	level.set_checkpoint(checkpoint_id)
-	_spawn_player_at_checkpoint(checkpoint_id)
+	level.set_checkpoint_by_id(checkpoint_id)
+	_spawn_player_at_checkpoint()
 
 
-func _spawn_player_at_checkpoint(checkpoint_id: String) -> void:
-	var checkpoint := level.get_checkpoint(checkpoint_id)
-
-	if checkpoint == null:
-		push_warning("Checkpoint not found: %s" % checkpoint_id)
-		return
+func _spawn_player_at_checkpoint() -> void:
+	var checkpoint := level.current_checkpoint
 
 	player.global_position = checkpoint.global_position
 	camera.move_to_player()
 
-	if player.has_method("set_facing_direction"):
-		player.set_facing_direction(checkpoint.direction)
+	#if player.has_method("set_facing_direction"):
+		#player.set_facing_direction(checkpoint.direction)
 
 
 func _on_player_died() -> void:
@@ -93,4 +90,4 @@ func _on_player_died() -> void:
 
 func _on_reload_level_timer_timeout() -> void:
 	Engine.time_scale = 1.0
-	get_tree().reload_current_scene()
+	SaveManager.load_game()

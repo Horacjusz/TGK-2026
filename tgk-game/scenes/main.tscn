@@ -12,7 +12,6 @@ unique_name_in_owner = true
 
 [node name="Player" parent="." unique_id=723345871 instance=ExtResource("2_sugp2")]
 unique_name_in_owner = true
-position = Vector2(85, -269)
 
 [node name="ReloadLevelTimer" type="Timer" parent="." unique_id=1333278215]
 unique_name_in_owner = true
@@ -29,5 +28,4 @@ script = ExtResource("4_jyhfs")
 player = NodePath("../Player")
 smoothing_enable = true
 
-[connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="timeout" from="ReloadLevelTimer" to="." method="_on_reload_level_timer_timeout"]
