@@ -31,8 +31,7 @@ func _physics_process(delta: float) -> void:
 	clanker_manager_component.handle_clanker_input(
 		input_component.clanker_pressed, 
 		spawn_ray.is_colliding(),
-		input_component.reset_clanker_pressed,
-		input_component.selected_slot
+		input_component.reset_clanker_pressed
 	)
 	
 	if is_controlling_clanker:
