@@ -145,8 +145,8 @@ func get_save_id() -> String:
 func save_state(reset: bool = false) -> Dictionary:
 	if reset:
 		return {
-			"unlocked_clankers": ["clanker"] as Array[String],
-			"selected_clanker": "clanker" as String
+			"unlocked_clankers": [] as Array[String],
+			"selected_clanker": "" as String
 		}
 		
 	return {
