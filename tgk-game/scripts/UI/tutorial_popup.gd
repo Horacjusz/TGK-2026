@@ -85,7 +85,6 @@ func _handle_interact() -> void:
 		text_tween.kill()
 		tutorial_content.visible_ratio = 1.0
 		return
-
 	if current_tutorial and current_tutorial.next_tutorial:
 		set_tutorial(current_tutorial.next_tutorial)
 	else:

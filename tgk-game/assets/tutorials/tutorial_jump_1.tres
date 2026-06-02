@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://btgchdq4jenss"]
+
+[ext_resource type="Resource" uid="uid://cs0eeqhqd360l" path="res://assets/tutorials/tutorial_jump_2.tres" id="1_rud1n"]
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_tu26u"]
+
+[resource]
+script = ExtResource("1_tu26u")
+title = "Jump Tutorial (1)"
+content = "Press [SPACE] to jump."
+next_tutorial = ExtResource("1_rud1n")
+metadata/_custom_type_script = "uid://chimpjf356v7t"

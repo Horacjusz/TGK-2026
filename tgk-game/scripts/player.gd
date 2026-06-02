@@ -2,10 +2,11 @@ class_name Player
 extends CharacterBody2D
 
 
-signal died
-
+var is_hurt: bool = false
+var is_dead: bool = false
 
 @onready var animation_tree: AnimationTree = %AnimationTree
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var collision_shape: CollisionShape2D = %CollisionShape2D
 @onready var input_component: InputComponent = %InputComponent
 @onready var movement_component: MovementComponent = %MovementComponent
@@ -14,27 +15,46 @@ signal died
 @onready var health_component: HealthComponent = %HealthComponent
 @onready var clanker_manager_component: ClankerManagerComponent = %ClankerManagerComponent
 @onready var spawn_ray: RayCast2D = %RayCast2D
+@onready var hurt_box: HurtBox = %HurtBox
+@onready var interactor: Interactor = %Interactor
+@onready var hurt_timer: Timer = %HurtTimer
 
 var is_controlling_clanker: bool = false
 
 
+func _ready() -> void:
+	add_to_group(SaveManager.SAVABLE_GROUP)
+	animation_tree.active = true
+
+
 func _on_clanker_control_started() -> void:
 	is_controlling_clanker = true
+	interactor.set_can_interact(false)
+
 
 func _on_clanker_control_ended() -> void:
 	is_controlling_clanker = false
+	interactor.set_can_interact(true)
+
 
 func _physics_process(delta: float) -> void:
 	input_component.update()
-	spawn_ray.force_raycast_update()
 	gravity_component.handle_gravity(delta)
 	clanker_manager_component.handle_clanker_input(
 		input_component.clanker_pressed, 
 		spawn_ray.is_colliding(),
 		input_component.reset_clanker_pressed
 	)
+	spawn_ray.force_raycast_update()
 	
-	if is_controlling_clanker:
+	if not is_dead:
+		clanker_manager_component.handle_clanker_input(
+			input_component.clanker_pressed, 
+			spawn_ray.is_colliding(),
+			input_component.reset_clanker_pressed,
+		)
+	
+	if is_dead or is_controlling_clanker:
 		movement_component.handle_movement(0, delta)
 	else:
 		movement_component.handle_movement(input_component.move_axis, delta)
@@ -49,13 +69,49 @@ func get_camera_target() -> Vector2:
 		return clanker_manager_component.current_clanker.global_position
 	return global_position
 
+
 func die() -> void:
-	collision_shape.set_deferred("disabled", true) # Use set_deferred for physics
-	died.emit()
+	is_dead = true
+	GlobalSignalBus.player_died.emit()
+
+
+func get_save_id() -> String:
+	return "player"
+
+
+func save_state(reset: bool = false) -> Dictionary:
+	if reset:
+		return {
+			"health": health_component.max_health,
+		}
+		
+	return {
+		"health": health_component.current_health,
+	}
+
+
+func load_state(data: Dictionary) -> void:
+	# TODO: Handle missing data
+	var health = data.get("health")
+	is_dead = false
+	health_component.current_health = health
+	hurt_box.set_enabled(true)
 
 
 func _on_hurt_box_received_damage(amount) -> void:
+	if is_hurt:
+		return
+	
+	is_hurt = true
+	hurt_box.set_enabled(false)
 	health_component.damage(amount)
+	hurt_timer.start()
+
+
+func _on_hurt_timer_timeout() -> void:
+	is_hurt = false
+	if not is_dead:
+		hurt_box.set_enabled(true)
 
 
 func _on_health_component_health_changed(current_health: int) -> void:

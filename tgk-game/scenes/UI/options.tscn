@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://df43kcb421e7u"]
+
+[ext_resource type="Script" uid="uid://cw73q1gmkcni6" path="res://scripts/UI/options_menu.gd" id="1_xgdkv"]
+[ext_resource type="Script" uid="uid://ql5rx5jagkmf" path="res://scripts/UI/audio.gd" id="2_nf7d7"]
+[ext_resource type="Theme" uid="uid://dwp8em2mpcqv4" path="res://assets/fonts/font_theme.tres" id="3_2txy7"]
+[ext_resource type="PackedScene" uid="uid://kjpkvt3rg21k" path="res://scenes/UI/generic_button.tscn" id="3_m70mf"]
+[ext_resource type="PackedScene" uid="uid://xwuphdli8ef5" path="res://scenes/UI/generic_slider.tscn" id="3_nf7d7"]
+
+[node name="OptionsMenu" type="Control" unique_id=694180540]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xgdkv")
+
+[node name="Menu" type="VBoxContainer" parent="." unique_id=8529734]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -31.5
+offset_bottom = 31.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Audio" type="VBoxContainer" parent="Menu" unique_id=1597886617]
+layout_mode = 2
+theme_override_constants/separation = 16
+script = ExtResource("2_nf7d7")
+
+[node name="Label" type="Label" parent="Menu/Audio" unique_id=1264638682]
+layout_mode = 2
+theme = ExtResource("3_2txy7")
+theme_override_font_sizes/font_size = 70
+text = "Audio"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Master" parent="Menu/Audio" unique_id=814400050 instance=ExtResource("3_nf7d7")]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="Music" parent="Menu/Audio" unique_id=1676915254 instance=ExtResource("3_nf7d7")]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="SFX" parent="Menu/Audio" unique_id=1564360440 instance=ExtResource("3_nf7d7")]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="Return" parent="Menu" unique_id=2061334766 instance=ExtResource("3_m70mf")]
+layout_mode = 2
+text = "Return"
+
+[connection signal="pressed" from="Menu/Return" to="." method="_on_return_pressed"]

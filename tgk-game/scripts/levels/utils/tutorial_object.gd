@@ -6,7 +6,6 @@ signal tutorial_end
 @export_category("Content")
 @export_multiline var text: String = ""
 @export var next_tutorial: TutorialObject
-@export var trigger: InteractiveObject2D
 
 @export_category("Setup")
 @onready var tutorial_prompt: Node2D = %TutorialPrompt
@@ -30,11 +29,11 @@ func show_tutorial() -> void:
 	is_active = true
 	tutorial_prompt.visible = true
 	
-func _on_player_exited() -> void:
-	hide_tutorial()
-	if next_tutorial == null:
-		return
-	next_tutorial._on_player_exited()
+#func _on_player_exited() -> void:
+	#hide_tutorial()
+	#if next_tutorial == null:
+		#return
+	#next_tutorial._on_player_exited()
 func hide_tutorial() -> void:
 	is_active = false
 	tutorial_prompt.visible = false
@@ -42,4 +41,7 @@ func hide_tutorial() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if is_active and event.is_action_pressed("interact"):
 		next()
-	
+
+
+func _on_interactable_interacted() -> void:
+	show_tutorial()

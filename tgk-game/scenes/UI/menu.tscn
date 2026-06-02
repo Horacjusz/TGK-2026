@@ -1,0 +1,205 @@
+[gd_scene format=3 uid="uid://die5kyg2f6ncu"]
+
+[ext_resource type="Script" uid="uid://wtpmxhsrlf15" path="res://scripts/UI/menu.gd" id="1_u81ku"]
+[ext_resource type="Texture2D" uid="uid://cy4row7dw12hm" path="res://assets/UI/basic_background.png" id="2_2tfbb"]
+[ext_resource type="PackedScene" uid="uid://3dnfvtwasq7t" path="res://scenes/UI/start_menu.tscn" id="3_78n2u"]
+[ext_resource type="PackedScene" uid="uid://c41joevsiqll5" path="res://scenes/UI/main_menu.tscn" id="4_svcqa"]
+[ext_resource type="PackedScene" uid="uid://df43kcb421e7u" path="res://scenes/UI/options.tscn" id="5_ofy2k"]
+[ext_resource type="PackedScene" uid="uid://bymdd8grj472m" path="res://scenes/UI/credits.tscn" id="6_ypw4e"]
+[ext_resource type="Script" uid="uid://bnwjtmnlqoo1f" path="res://scripts/UI/hover_blocker.gd" id="7_svcqa"]
+
+[sub_resource type="Gradient" id="Gradient_2tfbb"]
+offsets = PackedFloat32Array(0, 0.40361446, 0.6626506)
+colors = PackedColorArray(0, 0, 0, 0.7490196, 0, 0, 0, 0.7490196, 0, 0, 0, 1)
+metadata/_snap_count = 17
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2un8v"]
+gradient = SubResource("Gradient_2tfbb")
+
+[sub_resource type="Animation" id="Animation_78n2u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Buttons:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_svcqa"]
+resource_name = "appear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ofy2k"]
+resource_name = "disappear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ypw4e"]
+resource_name = "toggle_menu"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_animation_breakpoint"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Buttons:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ofy2k"]
+_data = {
+&"RESET": SubResource("Animation_78n2u"),
+&"appear": SubResource("Animation_svcqa"),
+&"disappear": SubResource("Animation_ofy2k"),
+&"toggle_menu": SubResource("Animation_ypw4e")
+}
+
+[node name="Menu" type="Control" unique_id=909682191]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u81ku")
+
+[node name="Background" type="Control" parent="." unique_id=1088113146]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EntryImage" type="TextureRect" parent="Background" unique_id=1704412902]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_2tfbb")
+expand_mode = 1
+
+[node name="Gradient" type="TextureRect" parent="Background" unique_id=1772991341]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_2un8v")
+
+[node name="Buttons" type="Control" parent="." unique_id=532086660]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Buttons" unique_id=722817570]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Buttons/ReferenceRect" unique_id=1856363826]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartMenu" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=1769964224 instance=ExtResource("3_78n2u")]
+layout_mode = 1
+
+[node name="MainMenu" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=1843713868 instance=ExtResource("4_svcqa")]
+visible = false
+layout_mode = 1
+
+[node name="OptionsMenu" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=694180540 instance=ExtResource("5_ofy2k")]
+visible = false
+layout_mode = 1
+
+[node name="Credits" parent="Buttons/ReferenceRect/ReferenceRect" unique_id=949003110 instance=ExtResource("6_ypw4e")]
+visible = false
+layout_mode = 1
+
+[node name="HoverBlocker" type="Control" parent="." unique_id=2048974085]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_svcqa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1458278778]
+libraries/ = SubResource("AnimationLibrary_ofy2k")

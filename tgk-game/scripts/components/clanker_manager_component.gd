@@ -22,6 +22,7 @@ var selected_clanker_type: String = "clanker"
 var cooldown_timers: Dictionary[String, Timer] = {}
 
 func _ready() -> void:
+	add_to_group(SaveManager.SAVABLE_GROUP)
 	for clanker_name in clankers_data.clankers_available:
 		_register_clanker_timer(clanker_name)
 	GlobalSignalBus.clanker_change_requested.connect(_on_clanker_change_requested)
@@ -32,11 +33,14 @@ func _ready() -> void:
 func _register_clanker_timer(clanker_name: String) -> void:
 	if clanker_name in cooldown_timers:
 		return
+	
 	var timer = Timer.new()
 	timer.one_shot = true
 	timer.wait_time = clankers_data.clankers_cooldown_durations.get(clanker_name, 3.0)
-	add_child(timer)
+	timer.timeout.connect(_on_cooldown_timer_timeout.bind(clanker_name))
 	cooldown_timers[clanker_name] = timer
+	add_child(timer)
+
 
 func unlock_clanker(clanker_name: String) -> void:
 	clankers_data.unlock(clanker_name)
@@ -118,7 +122,48 @@ func _on_control_return_timer_timeout() -> void:
 	control_ended.emit()
 
 
+func _on_cooldown_timer_timeout(type: String) -> void:
+	GlobalSignalBus.clanker_cooldown_changed.emit(type, false)
+
+
 func _on_clanker_died() -> void:
 	control_timer.stop()
 	control_return_timer.start()
 	cooldown_timers[spawned_clanker_type].start()
+	GlobalSignalBus.clanker_cooldown_changed.emit(
+		spawned_clanker_type,
+		true,
+		cooldown_timers[spawned_clanker_type].wait_time,
+		cooldown_timers[spawned_clanker_type].time_left,
+	)
+
+
+func get_save_id() -> String:
+	return "player_clanker_manager"
+
+
+func save_state(reset: bool = false) -> Dictionary:
+	if reset:
+		return {
+			"unlocked_clankers": ["clanker"] as Array[String],
+			"selected_clanker": "clanker" as String
+		}
+		
+	return {
+		"unlocked_clankers": clankers_data.clankers_available,
+		"selected_clanker": selected_clanker_type
+	}
+
+
+func load_state(data: Dictionary) -> void:
+	# TODO: Handle missing data
+	var unlocked_clankers = data.get("unlocked_clankers")
+	var selected_clanker = data.get("selected_clanker")
+	
+	clankers_data.unlock_all(unlocked_clankers)
+	
+	for clanker_name in clankers_data.clankers_available:
+		_register_clanker_timer(clanker_name)
+	
+	selected_clanker_type = selected_clanker
+	GlobalSignalBus.clanker_changed.emit(selected_clanker_type)

@@ -12,7 +12,6 @@ var is_clanker_hud_visible: bool = false
 @onready var interact_label: Label = %InteractLabel
 
 
-
 func _ready() -> void:
 	GlobalSignalBus.interaction_hud_shown.connect(_on_interaction_hud_shown)
 	GlobalSignalBus.interaction_hud_hidden.connect(_on_interaction_hud_hidden)

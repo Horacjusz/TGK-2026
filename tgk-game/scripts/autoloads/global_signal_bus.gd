@@ -1,6 +1,8 @@
 extends Node
 
 
+signal player_died()
+
 signal input_disabled_changed(is_disabled: bool)
 
 signal interaction_hud_shown(text: String)

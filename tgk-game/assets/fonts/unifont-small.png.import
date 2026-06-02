@@ -1,0 +1,25 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://bnv1yf6id4ea6"
+path="res://.godot/imported/unifont-small.png-f3220d28d467e1bf1ca585c6a4d8586d.fontdata"
+
+[deps]
+
+source_file="res://assets/fonts/unifont-small.png"
+dest_files=["res://.godot/imported/unifont-small.png-f3220d28d467e1bf1ca585c6a4d8586d.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("0-384")
+kerning_pairs=PackedStringArray()
+columns=64
+rows=6
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+ascent=0
+descent=0
+fallbacks=[]
+compress=true
+scaling_mode=2

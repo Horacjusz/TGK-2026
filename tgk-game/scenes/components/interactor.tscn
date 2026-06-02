@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bew6sm7vao27u"]
+
+[ext_resource type="Script" uid="uid://daaypfkwc61tp" path="res://scripts/components/interactor.gd" id="1_mtt7r"]
+
+[node name="Interactor" type="Area2D" unique_id=1912861964]
+collision_layer = 0
+collision_mask = 128
+script = ExtResource("1_mtt7r")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

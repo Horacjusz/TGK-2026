@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://b58kwtwmo6hvp"]
 
 [ext_resource type="PackedScene" uid="uid://b7rfmxm0gua51" path="res://scenes/levels/utils/tutorial_object.tscn" id="2_kxgtv"]
-[ext_resource type="PackedScene" uid="uid://0plprq34hh5f" path="res://scenes/levels/utils/interactive_object.tscn" id="2_msren"]
+[ext_resource type="PackedScene" uid="uid://0plprq34hh5f" path="res://scenes/components/interactable.tscn" id="2_msren"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_krs54"]
 
 [node name="Tutorial_1" type="Node2D" unique_id=554015823]
 
 [node name="IneractiveObject2D" parent="." unique_id=875527561 instance=ExtResource("2_msren")]
-can_reinteract = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IneractiveObject2D" unique_id=1884444603]
+shape = SubResource("CircleShape2D_krs54")
 
 [node name="TutorialStep" parent="." unique_id=1810793651 node_paths=PackedStringArray("next_tutorial", "trigger") instance=ExtResource("2_kxgtv")]
 text = "Step 1 "
