@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://0bkav56pbx85" path="res://scenes/UI/hud.tscn" id="3_iywne"]
 [ext_resource type="PackedScene" uid="uid://b6xx3af0qq3um" path="res://scenes/audio_manager.tscn" id="4_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://die5kyg2f6ncu" path="res://scenes/UI/menu.tscn" id="5_iywne"]
+[ext_resource type="PackedScene" uid="uid://blw01sattg03w" path="res://scenes/UI/loading_screen.tscn" id="5_p57ef"]
 
 [node name="Game" type="Control" unique_id=14838684]
 layout_mode = 3
@@ -41,6 +42,8 @@ layer = 6
 [node name="HUD" parent="UI" unique_id=788717441 instance=ExtResource("3_iywne")]
 
 [node name="Menu" parent="UI" unique_id=909682191 instance=ExtResource("5_iywne")]
+
+[node name="LoadingScreen" parent="UI" unique_id=1969188830 instance=ExtResource("5_p57ef")]
 
 [node name="AudioManager" parent="UI" unique_id=680991268 instance=ExtResource("4_lbhrr")]
 process_mode = 3

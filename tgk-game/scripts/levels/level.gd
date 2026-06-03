@@ -25,7 +25,14 @@ func set_checkpoint_by_id(checkpoint_id: int) -> void:
 	push_warning("Checkpoint not found: %s" % checkpoint_id)
 
 
+func get_checkpoint_by_id(checkpoint_id: int) -> Checkpoint:
+	for node in get_tree().get_nodes_in_group("checkpoints"):
+		if node is Checkpoint and node.id == checkpoint_id:
+			return node
+	return null
+
+
 func _on_checkpoint_entered(checkpoint: Checkpoint):
-	if checkpoint.id > current_checkpoint.id:
+	if not current_checkpoint or checkpoint.id > current_checkpoint.id:
 		current_checkpoint = checkpoint
 		SaveManager.save_game()
