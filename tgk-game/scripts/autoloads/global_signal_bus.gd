@@ -3,6 +3,8 @@ extends Node
 
 signal player_died()
 
+signal level_transition_requested(level_path: String, checkpoint_id: int)
+
 signal input_disabled_changed(is_disabled: bool)
 
 signal interaction_hud_shown(text: String)
@@ -10,6 +12,9 @@ signal interaction_hud_hidden()
 
 signal tutorial_shown(tutorial: TutorialData)
 signal tutorial_hidden()
+
+signal loading_screen_shown(duration: float)
+signal loading_screen_hidden(duration: float)
 
 signal clanker_change_requested(type: String)
 signal clanker_changed(type: String)

@@ -9,7 +9,7 @@ signal checkpoint_entered(checkpoint: Checkpoint)
 
 
 func _ready() -> void:
-	add_to_group("checkpoints")	
+	add_to_group("checkpoints")
 
 
 func _on_body_entered(body: Node2D) -> void:

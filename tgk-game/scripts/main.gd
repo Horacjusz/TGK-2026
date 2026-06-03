@@ -1,6 +1,8 @@
 extends Node2D
 
 
+const LEVEL_TRANSITION_DURATION := 0.2
+
 var level: Level
 
 @onready var player: Player = %Player
@@ -11,6 +13,9 @@ var level: Level
 
 func _ready() -> void:
 	GlobalSignalBus.player_died.connect(_on_player_died)
+	GlobalSignalBus.level_transition_requested.connect(
+		_on_level_transition_requested
+	)
 	add_to_group(SaveManager.SAVABLE_GROUP)
 
 
@@ -18,6 +23,7 @@ func load_level(level_path: String) -> void:
 	if level:
 		if level_path == level.scene_file_path:
 			return
+		level_container.remove_child(level)
 		level.queue_free()
 
 	var scene := load(level_path) as PackedScene
@@ -35,14 +41,6 @@ func load_level(level_path: String) -> void:
 func _setup_level() -> void:
 	var tilemap = level.get_background_tilemap()
 	camera.setup_camera_limits(tilemap)
-
-
-func pause_game() :
-	self.process_mode = Node.PROCESS_MODE_DISABLED
-
-
-func resume_game() :
-	self.process_mode = Node.PROCESS_MODE_INHERIT
 
 
 func get_save_id() -> String:
@@ -70,13 +68,11 @@ func load_state(data: Dictionary) -> void:
 	load_level(level_path)
 	
 	level.set_checkpoint_by_id(checkpoint_id)
-	_spawn_player_at_checkpoint()
+	_teleport_player(level.current_checkpoint.global_position)
 
 
-func _spawn_player_at_checkpoint() -> void:
-	var checkpoint := level.current_checkpoint
-
-	player.global_position = checkpoint.global_position
+func _teleport_player(position: Vector2) -> void:
+	player.global_position = position
 	camera.move_to_player()
 
 	#if player.has_method("set_facing_direction"):
@@ -91,3 +87,33 @@ func _on_player_died() -> void:
 func _on_reload_level_timer_timeout() -> void:
 	Engine.time_scale = 1.0
 	SaveManager.load_game()
+
+
+func _on_level_transition_requested(
+	level_path: String,
+	target_checkpoint_id: int
+) -> void:
+	_level_transition.call_deferred(level_path, target_checkpoint_id)
+
+
+func _level_transition(level_path: String, target_checkpoint_id: int) -> void:
+	Globals.pause_game(false)
+	GlobalSignalBus.loading_screen_shown.emit(LEVEL_TRANSITION_DURATION)
+	
+	await get_tree().create_timer(LEVEL_TRANSITION_DURATION).timeout
+	
+	load_level(level_path)
+	
+	var target_checkpoint = level.get_checkpoint_by_id(target_checkpoint_id)
+	if target_checkpoint:
+		_teleport_player(target_checkpoint.global_position)
+	else:
+		push_error("Target checkpoint %s not found!" % target_checkpoint_id)
+		
+	await get_tree().physics_frame
+	
+	GlobalSignalBus.loading_screen_hidden.emit(LEVEL_TRANSITION_DURATION)
+	
+	await get_tree().create_timer(LEVEL_TRANSITION_DURATION).timeout
+	
+	Globals.resume_game()
