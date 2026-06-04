@@ -13,4 +13,7 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	checkpoint_entered.emit(self)
+	if body is Player:
+		if body.is_dead:
+			return
+		checkpoint_entered.emit(self)

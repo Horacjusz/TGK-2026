@@ -28,3 +28,11 @@ func spawn_projectile(
 	projectile_container.add_child(projectile)
 	
 	return projectile
+
+
+func clear_projectiles() -> void:
+	if not projectile_container:
+		return
+		
+	for child in projectile_container.get_children():
+		child.queue_free()

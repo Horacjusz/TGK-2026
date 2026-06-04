@@ -65,6 +65,8 @@ func load_state(data: Dictionary) -> void:
 	var level_path = data.get("level_path")
 	var checkpoint_id = data.get("checkpoint_id")
 	
+	ProjectileManager.clear_projectiles()
+	
 	load_level(level_path)
 	
 	level.set_checkpoint_by_id(checkpoint_id)
@@ -81,12 +83,14 @@ func _teleport_player(position: Vector2) -> void:
 
 func _on_player_died() -> void:
 	Engine.time_scale = 0.5
+	GlobalSignalBus.loading_screen_shown.emit(0.3)
 	reload_level_timer.start()
 
 
 func _on_reload_level_timer_timeout() -> void:
 	Engine.time_scale = 1.0
 	SaveManager.load_game()
+	GlobalSignalBus.loading_screen_hidden.emit(0.1)
 
 
 func _on_level_transition_requested(

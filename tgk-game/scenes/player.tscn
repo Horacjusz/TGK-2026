@@ -87,7 +87,7 @@ advance_expression = "!is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4r5pv"]
 advance_mode = 2
-advance_expression = "!is_hurt and is_dead and is_on_floor()"
+advance_expression = "!is_hurt and is_dead"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_60mlk"]
 advance_mode = 2
@@ -111,7 +111,7 @@ advance_expression = "!is_hurt and !is_dead and is_on_floor() and velocity.x"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fulsm"]
 advance_mode = 2
-advance_expression = "!is_hurt and not is_on_floor()"
+advance_expression = "!is_hurt and !is_dead and not is_on_floor()"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ke2ow"]
 advance_mode = 2
@@ -172,7 +172,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"die"]
+"values": [&"hit"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -181,10 +181,10 @@ tracks/1/path = NodePath("Model/AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_3v2ag"]

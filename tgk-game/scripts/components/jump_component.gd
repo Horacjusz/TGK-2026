@@ -66,3 +66,15 @@ func _jump() -> void:
 	is_jumping = true
 	jump_buffer_timer.stop()
 	coyote_timer.stop()
+
+
+func reset() -> void:
+	is_jumping = false
+	is_going_up = false
+	last_frame_on_floor = body.is_on_floor() if body else true
+	
+	if jump_buffer_timer and not jump_buffer_timer.is_stopped():
+		jump_buffer_timer.stop()
+		
+	if coyote_timer and not coyote_timer.is_stopped():
+		coyote_timer.stop()

@@ -70,8 +70,6 @@ func load_game() -> bool:
 			return false
 		
 		data = save.get("data", {})
-		
-	print("Game loading with dict: ", data)
 	
 	for node in get_tree().get_nodes_in_group(SAVABLE_GROUP):
 		if (

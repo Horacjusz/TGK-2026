@@ -91,6 +91,10 @@ func load_state(data: Dictionary) -> void:
 	is_dead = false
 	health_component.current_health = health
 	hurt_box.set_enabled(true)
+	
+	velocity = Vector2.ZERO
+	input_component.reset()
+	jump_component.reset()
 
 
 func _on_hurt_box_received_damage(amount) -> void:
