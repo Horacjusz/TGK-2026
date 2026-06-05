@@ -24,6 +24,7 @@ var is_controlling_clanker: bool = false
 
 func _ready() -> void:
 	add_to_group(SaveManager.SAVABLE_GROUP)
+	clanker_manager_component.unlock_clanker("clanker")
 	animation_tree.active = true
 
 

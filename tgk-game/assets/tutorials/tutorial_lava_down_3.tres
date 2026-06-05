@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://d2qo6556w0txd"]
+
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_3xfac"]
+
+[resource]
+script = ExtResource("1_3xfac")
+content = "Jump up and avoid falling down. :)"
+metadata/_custom_type_script = "uid://chimpjf356v7t"
