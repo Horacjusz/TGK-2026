@@ -4,6 +4,8 @@ const HIT_SOUND_PATH = "res://assets/sounds/slammer/hit.mp3"
 const START_SOUND_PATH = "res://assets/sounds/slammer/start_click.mp3"
 const FRONT_PROBE_SKIN := 1.0
 const FRONT_PROBE_BACKSTEP := 0.5
+const SLAMMER_BODY_GROUP := "slammer_bodies"
+const RIDER_TOP_TOLERANCE := 2.0
 
 
 enum SlammerState {
@@ -28,7 +30,8 @@ enum SlammerState {
 @export var initial_delay := 0.0
 
 @onready var body: RigidBody2D = $Body
-@onready var hit_box: HitBox = $Body/HitBox
+@onready var head_hit_box: HitBox = $Body/HitBoxes/Head
+@onready var tail_hit_box: HitBox = $Body/HitBoxes/Tail
 @onready var body_collision_shape: CollisionShape2D = $Body/CollisionShape2D
 @onready var trigger_areas: Array[Area2D] = _find_trigger_areas()
 
@@ -45,6 +48,8 @@ var _has_pending_loop_slam := false
 var can_slam := true
 
 func _ready() -> void:
+	body.add_to_group(SLAMMER_BODY_GROUP)
+	_ignore_existing_light_clankers()
 	_start_position = body.position
 	_slam_direction = local_slam_direction.normalized()
 	if _slam_direction.is_zero_approx():
@@ -59,8 +64,9 @@ func _ready() -> void:
 	body.contact_monitor = true
 	body.max_contacts_reported = max(body.max_contacts_reported, 4)
 	body.linear_velocity = Vector2.ZERO
-	_disconnect_hit_box_auto_damage()
-	_set_hit_box_active(false)
+	_disconnect_hit_box_auto_damage(head_hit_box)
+	_disconnect_hit_box_auto_damage(tail_hit_box)
+	_set_hit_boxes_active(false)
 	_cooldown_timer = Timer.new()
 	_cooldown_timer.one_shot = true
 	_cooldown_timer.timeout.connect(_on_slam_cooldown_timeout)
@@ -85,7 +91,7 @@ func slam() -> void:
 
 	can_slam = false
 	_is_loop_armed = true
-	_set_hit_box_active(false)
+	_set_hit_boxes_active(false)
 
 	if _cooldown_timer != null:
 		_cooldown_timer.start(maxf(attack_speed, 0.001))
@@ -105,7 +111,7 @@ func finish_slam() -> void:
 
 
 func on_hit() -> void:
-	_damage_using_hitbox()
+	_damage_using_hitbox(head_hit_box)
 	_start_return()
 
 
@@ -113,7 +119,7 @@ func on_slam_finish() -> void:
 	_state = SlammerState.IDLE
 	body.position = _start_position
 	body.linear_velocity = Vector2.ZERO
-	_set_hit_box_active(false)
+	_set_hit_boxes_active(false)
 
 	if slam_loop:
 		_schedule_next_loop_slam()
@@ -124,11 +130,11 @@ func _physics_process(delta: float) -> void:
 		SlammerState.SLAMMING:
 			var motion: Vector2 = _get_slam_motion(delta)
 			if _is_world_blocking_slam(motion):
-				print(self, " world blocked")
 				on_hit()
 				return
 
 			_move_body_along_slam(motion)
+			_carry_horizontal_riders(motion)
 			if _push_overlapping_character_bodies(motion):
 				on_hit()
 			elif _get_extension() >= _resolved_slam_distance:
@@ -137,6 +143,7 @@ func _physics_process(delta: float) -> void:
 
 		SlammerState.RETURNING:
 			_move_body_along_return(delta)
+			_damage_using_hitbox(tail_hit_box, false, false)
 			if _get_extension() <= 0.0:
 				on_slam_finish()
 
@@ -270,6 +277,8 @@ func _get_front_probe_offsets() -> Array[Vector2]:
 func _is_front_blocking_collider(collider: Node) -> bool:
 	if collider == null:
 		return false
+	if _is_light_clanker(collider):
+		return false
 	if collider is CharacterBody2D:
 		return false
 
@@ -279,7 +288,8 @@ func _is_front_blocking_collider(collider: Node) -> bool:
 func _start_return() -> void:
 	_state = SlammerState.RETURNING
 	body.linear_velocity = Vector2.ZERO
-	_set_hit_box_active(false)
+	_set_hit_boxes_active(false)
+	_set_hit_box_active(tail_hit_box, true)
 	
 	Globals.audio.play_sound_at(
 		self,
@@ -293,16 +303,23 @@ func _move_body_along_return(delta: float) -> void:
 		_get_extension() - _return_speed * delta,
 		0.0
 	)
+	var previous_global_position := body.global_position
 	body.position = _start_position + _slam_direction * extension
+	_carry_horizontal_riders(body.global_position - previous_global_position)
 
 
 func _to_global_velocity(local_velocity: Vector2) -> Vector2:
 	return global_transform.basis_xform(local_velocity)
 
 
-func _set_hit_box_active(active: bool) -> void:
-	hit_box.visible = active
-	hit_box.monitoring = active
+func _set_hit_boxes_active(active: bool) -> void:
+	_set_hit_box_active(head_hit_box, active)
+	_set_hit_box_active(tail_hit_box, active)
+
+
+func _set_hit_box_active(source_hit_box: HitBox, active: bool) -> void:
+	source_hit_box.visible = active
+	source_hit_box.monitoring = active
 
 
 func _get_body_height() -> float:
@@ -383,7 +400,7 @@ func _find_trigger_areas() -> Array[Area2D]:
 
 func _collect_trigger_areas(node: Node, result: Array[Area2D]) -> void:
 	for child in node.get_children():
-		if child == hit_box:
+		if child == head_hit_box or child == tail_hit_box:
 			continue
 		if child is Area2D and _is_trigger_area(child):
 			result.append(child)
@@ -412,6 +429,9 @@ func _has_non_trigger_area_overlap(trigger_area: Area2D) -> bool:
 
 
 func _is_ignored_trigger_body(overlapping_body: Node2D) -> bool:
+	if _is_light_clanker(overlapping_body):
+		return true
+
 	return _belongs_to_slammer(overlapping_body)
 
 
@@ -419,6 +439,8 @@ func _is_ignored_trigger_area(area: Area2D) -> bool:
 	if area in trigger_areas:
 		return true
 	if _is_trigger_area(area):
+		return true
+	if _is_light_clanker(area):
 		return true
 
 	return _belongs_to_slammer(area)
@@ -439,10 +461,10 @@ func _belongs_to_slammer(node: Node) -> bool:
 	return false
 
 
-func _disconnect_hit_box_auto_damage() -> void:
-	var auto_damage_callable := Callable(hit_box, "_on_area_entered")
-	if hit_box.area_entered.is_connected(auto_damage_callable):
-		hit_box.area_entered.disconnect(auto_damage_callable)
+func _disconnect_hit_box_auto_damage(source_hit_box: HitBox) -> void:
+	var auto_damage_callable := Callable(source_hit_box, "_on_area_entered")
+	if source_hit_box.area_entered.is_connected(auto_damage_callable):
+		source_hit_box.area_entered.disconnect(auto_damage_callable)
 
 
 func _push_overlapping_character_bodies(motion: Vector2) -> bool:
@@ -450,6 +472,11 @@ func _push_overlapping_character_bodies(motion: Vector2) -> bool:
 		return false
 
 	for character_body in _get_overlapping_character_bodies():
+		if _is_light_clanker(character_body):
+			continue
+		if _is_character_standing_on_horizontal_slammer(character_body):
+			continue
+
 		if not _is_node_in_front_of_slammer(character_body):
 			continue
 
@@ -460,7 +487,7 @@ func _push_overlapping_character_bodies(motion: Vector2) -> bool:
 		var actual_motion: Vector2 = character_body.global_position - previous_position
 
 		if collision != null or actual_motion.distance_squared_to(motion) > 0.01:
-			_damage_character_body(character_body)
+			_damage_character_body(character_body, head_hit_box)
 			return true
 
 	return false
@@ -470,6 +497,8 @@ func _get_overlapping_character_bodies() -> Array[CharacterBody2D]:
 	var result: Array[CharacterBody2D] = []
 
 	for colliding_body in body.get_colliding_bodies():
+		if _is_light_clanker(colliding_body):
+			continue
 		if colliding_body is CharacterBody2D and colliding_body not in result:
 			result.append(colliding_body)
 
@@ -483,32 +512,149 @@ func _is_node_in_front_of_slammer(node: Node2D) -> bool:
 	return distance_from_front >= -FRONT_PROBE_SKIN
 
 
-func _damage_using_hitbox() -> void:
+func _carry_horizontal_riders(motion: Vector2) -> void:
+	if motion.is_zero_approx() or not _is_horizontal_motion(motion):
+		return
+
+	for character_body in _get_overlapping_character_bodies():
+		if not _is_character_standing_on_horizontal_slammer(character_body):
+			continue
+
+		character_body.add_collision_exception_with(body)
+		character_body.move_and_collide(motion)
+		character_body.remove_collision_exception_with(body)
+
+
+func _is_horizontal_motion(motion: Vector2) -> bool:
+	return absf(motion.x) > absf(motion.y)
+
+
+func _is_character_standing_on_horizontal_slammer(character_body: CharacterBody2D) -> bool:
+	if not _is_horizontal_motion(_to_global_velocity(_slam_direction)):
+		return false
+	if not character_body.is_on_floor():
+		return false
+
+	var slammer_top_y := _get_slammer_global_top_y()
+	var character_bottom_y := _get_character_global_bottom_y(character_body)
+	return character_bottom_y <= slammer_top_y + RIDER_TOP_TOLERANCE
+
+
+func _get_slammer_global_top_y() -> float:
+	if not body_collision_shape or not body_collision_shape.shape:
+		return body.global_position.y
+
+	var rect_shape := body_collision_shape.shape as RectangleShape2D
+	if rect_shape:
+		return body_collision_shape.global_position.y - rect_shape.size.y * 0.5 * absf(body_collision_shape.global_scale.y)
+
+	var capsule_shape := body_collision_shape.shape as CapsuleShape2D
+	if capsule_shape:
+		return body_collision_shape.global_position.y - capsule_shape.height * 0.5 * absf(body_collision_shape.global_scale.y)
+
+	return body.global_position.y
+
+
+func _get_character_global_bottom_y(character_body: CharacterBody2D) -> float:
+	var collision_shape := _find_collision_shape(character_body)
+	if collision_shape == null or collision_shape.shape == null:
+		return character_body.global_position.y
+
+	var rect_shape := collision_shape.shape as RectangleShape2D
+	if rect_shape:
+		return collision_shape.global_position.y + rect_shape.size.y * 0.5 * absf(collision_shape.global_scale.y)
+
+	var capsule_shape := collision_shape.shape as CapsuleShape2D
+	if capsule_shape:
+		return collision_shape.global_position.y + capsule_shape.height * 0.5 * absf(collision_shape.global_scale.y)
+
+	var circle_shape := collision_shape.shape as CircleShape2D
+	if circle_shape:
+		return collision_shape.global_position.y + circle_shape.radius * absf(collision_shape.global_scale.y)
+
+	return character_body.global_position.y
+
+
+func _find_collision_shape(node: Node) -> CollisionShape2D:
+	if node is CollisionShape2D:
+		return node
+
+	for child in node.get_children():
+		var collision_shape := _find_collision_shape(child)
+		if collision_shape != null:
+			return collision_shape
+
+	return null
+
+
+func _damage_using_hitbox(
+	source_hit_box: HitBox,
+	include_colliding_bodies := true,
+	manage_hit_box_active := true
+) -> void:
 	if not enable_damage:
 		return
 
-	_set_hit_box_active(true)
-	print("Starting damaging")
+	if manage_hit_box_active:
+		_set_hit_box_active(source_hit_box, true)
 
-	print(hit_box.get_overlapping_areas())
+	for hurt_box in _get_hurt_boxes_inside_hitbox(source_hit_box):
+		_damage_hurt_box(hurt_box, source_hit_box)
+			
+	if include_colliding_bodies:
+		for character_body in _get_overlapping_character_bodies():
+			_damage_character_body(character_body, source_hit_box)
 
-	for area in hit_box.get_overlapping_areas():
-		if area is HurtBox:
-			_damage_hurt_box(area as HurtBox)
-
-	print(_get_overlapping_character_bodies())
-
-	for character_body in _get_overlapping_character_bodies():
-		_damage_character_body(character_body)
-
-	_set_hit_box_active(false)
+	if manage_hit_box_active:
+		_set_hit_box_active(source_hit_box, false)
 
 
-func _damage_character_body(character_body: CharacterBody2D) -> void:
+func _get_hurt_boxes_inside_hitbox(source_hit_box: HitBox) -> Array[HurtBox]:
+	var result: Array[HurtBox] = []
+	var space_state := source_hit_box.get_world_2d().direct_space_state
+
+	for collision_shape in _get_hitbox_collision_shapes(source_hit_box):
+		if collision_shape.disabled or collision_shape.shape == null:
+			continue
+
+		var query := PhysicsShapeQueryParameters2D.new()
+		query.shape = collision_shape.shape
+		query.transform = collision_shape.global_transform
+		query.collision_mask = source_hit_box.collision_mask
+		query.collide_with_areas = true
+		query.collide_with_bodies = false
+		query.exclude = [source_hit_box.get_rid()]
+
+		for hit in space_state.intersect_shape(query):
+			var area := hit.get("collider") as Area2D
+			if area == null or _is_light_clanker(area):
+				continue
+			if area is HurtBox and area not in result:
+				result.append(area)
+
+	return result
+
+
+func _get_hitbox_collision_shapes(node: Node) -> Array[CollisionShape2D]:
+	var result: Array[CollisionShape2D] = []
+
+	for child in node.get_children():
+		if child is CollisionShape2D:
+			result.append(child)
+		else:
+			result.append_array(_get_hitbox_collision_shapes(child))
+
+	return result
+
+
+func _damage_character_body(character_body: CharacterBody2D, source_hit_box: HitBox) -> void:
+	if _is_light_clanker(character_body):
+		return
+
 	for child in character_body.get_children():
 		var hurt_box := _find_hurt_box(child)
 		if hurt_box != null:
-			_damage_hurt_box(hurt_box)
+			_damage_hurt_box(hurt_box, source_hit_box)
 
 
 func _find_hurt_box(node: Node) -> HurtBox:
@@ -523,5 +669,27 @@ func _find_hurt_box(node: Node) -> HurtBox:
 	return null
 
 
-func _damage_hurt_box(hurt_box: HurtBox) -> void:
-	hurt_box.take_damage(hit_box.damage)
+func _damage_hurt_box(hurt_box: HurtBox, source_hit_box: HitBox) -> void:
+	if _is_light_clanker(hurt_box):
+		return
+
+	hurt_box.take_damage(source_hit_box.damage)
+
+
+func _is_light_clanker(node: Node) -> bool:
+	var current_node := node
+
+	while current_node != null:
+		if current_node is LightClanker:
+			return true
+
+		current_node = current_node.get_parent()
+
+	return false
+
+
+func _ignore_existing_light_clankers() -> void:
+	for node in get_tree().get_nodes_in_group(LightClanker.IGNORE_SLAMMER_BODY_GROUP):
+		if node is PhysicsBody2D:
+			body.add_collision_exception_with(node)
+			node.add_collision_exception_with(body)

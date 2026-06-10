@@ -17,12 +17,12 @@ region = Rect2(32, 60, 8, 29)
 atlas = ExtResource("3_uloma")
 region = Rect2(91, 19, 18, 5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xgxa"]
+size = Vector2(8, 32)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uloma"]
 radius = 2.0
 height = 8.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xgxa"]
-size = Vector2(8, 32)
 
 [node name="Slammer" type="Node2D" unique_id=1313570088]
 script = ExtResource("1_vbfs2")
@@ -45,13 +45,23 @@ rotation = 3.1415927
 scale = Vector2(0.44413486, 0.2697146)
 texture = SubResource("AtlasTexture_j75nh")
 
-[node name="HitBox" parent="Body" unique_id=768078710 instance=ExtResource("4_uloma")]
-collision_layer = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBox" unique_id=267771099]
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_uloma")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=879240222]
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_0xgxa")
+
+[node name="HitBoxes" type="Node2D" parent="Body" unique_id=223961214]
+
+[node name="Head" parent="Body/HitBoxes" unique_id=768078710 instance=ExtResource("4_uloma")]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBoxes/Head" unique_id=267771099]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_uloma")
+
+[node name="Tail" parent="Body/HitBoxes" unique_id=235704043 instance=ExtResource("4_uloma")]
+position = Vector2(0, -32)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBoxes/Tail" unique_id=1152290497]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_uloma")

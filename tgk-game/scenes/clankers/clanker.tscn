@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ciiousl5pp38q"]
 
-[ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clanker.gd" id="1_3m55q"]
+[ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clankers/clanker.gd" id="1_3m55q"]
 [ext_resource type="Script" uid="uid://b0ufljnbbkkvt" path="res://scripts/components/hurt_box.gd" id="2_beile"]
 [ext_resource type="Texture2D" uid="uid://dmiru35cb4orr" path="res://assets/clanker/clanker_despawn.png" id="3_7v60u"]
 [ext_resource type="Texture2D" uid="uid://c8t0hrdce7k0p" path="res://assets/clanker/clanker_jump.png" id="4_beile"]
