@@ -187,7 +187,7 @@ func play_sound_at(
 	loop_count: int = 1,
 	smooth_start: bool = false,
 	smooth_loop: bool = false,
-	smooth_factor: float = 0.05
+	smooth_factor: float = 0.0
 ) -> AudioPlayer:
 	return _create_audio_player(
 		parent,
@@ -223,14 +223,13 @@ func _create_audio_player(
 		push_warning("AudioManager: audio_player_scene does not instantiate AudioPlayer.")
 		return null
 
-	var actual_parent = parent
-
-	if actual_parent == null:
-		actual_parent = owned_audio_players
+	var actual_parent = _get_audio_player_parent(parent, position)
 
 	actual_parent.add_child(audio_player)
+	print("Audio player is child of ", actual_parent)
 
 	audio_player.set_bus(bus_name)
+	print("Bus set up to ", bus_name)
 	
 	audio_player.play(
 		actual_parent,
@@ -245,6 +244,16 @@ func _create_audio_player(
 
 
 	return audio_player
+
+
+func _get_audio_player_parent(parent: Node, position) -> Node:
+	if position != null and parent != null and parent.is_inside_tree():
+		return parent.get_viewport()
+
+	if parent != null:
+		return parent
+
+	return owned_audio_players
 
 
 func _set_bus_volume(bus_name: String, value: float) -> void:

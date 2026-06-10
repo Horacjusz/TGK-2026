@@ -28,4 +28,6 @@ script = ExtResource("4_jyhfs")
 player = NodePath("../Player")
 smoothing_enable = true
 
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D"]
+
 [connection signal="timeout" from="ReloadLevelTimer" to="." method="_on_reload_level_timer_timeout"]

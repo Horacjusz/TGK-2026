@@ -5,10 +5,12 @@ class_name DarknessZone
 
 
 const MAX_LIGHTS := 16
+const MAX_ZONE_POINTS := 64
 const DARKNESS_SHADER := preload("res://shaders/components/darkness_zone.gdshader")
 
 @export var darkness_color := Color.BLACK
 @export var darkness_z_index := 1000
+@export_range(0.0, 256.0, 1.0) var fade_distance := 8.0
 @export var light_radius_fallback := 96.0
 @export var light_radius_multiplier := 1.0
 @export_range(0.0, 0.95, 0.01) var inner_radius_ratio := 0.15
@@ -58,11 +60,13 @@ func update_darkness() -> void:
 		light_strengths.append(0.0)
 
 	shader_material.set_shader_parameter("darkness_color", darkness_color)
+	shader_material.set_shader_parameter("fade_distance", fade_distance)
 	shader_material.set_shader_parameter("inner_radius_ratio", inner_radius_ratio)
 	shader_material.set_shader_parameter("light_count", light_count)
 	shader_material.set_shader_parameter("light_positions", light_positions)
 	shader_material.set_shader_parameter("light_radii", light_radii)
 	shader_material.set_shader_parameter("light_strengths", light_strengths)
+	_update_zone_shape_shader_parameters()
 
 
 func _setup_shader() -> void:
@@ -72,6 +76,24 @@ func _setup_shader() -> void:
 	shader_material = ShaderMaterial.new()
 	shader_material.shader = DARKNESS_SHADER
 	material = shader_material
+	_update_zone_shape_shader_parameters()
+
+
+func _update_zone_shape_shader_parameters() -> void:
+	if shader_material == null:
+		return
+
+	var zone_points := PackedVector2Array()
+	var point_count: int = mini(polygon.size(), MAX_ZONE_POINTS)
+
+	for i in point_count:
+		zone_points.append(polygon[i])
+
+	while zone_points.size() < MAX_ZONE_POINTS:
+		zone_points.append(Vector2.ZERO)
+
+	shader_material.set_shader_parameter("zone_point_count", point_count)
+	shader_material.set_shader_parameter("zone_points", zone_points)
 
 
 func _get_local_lights() -> Array[Light2D]:
