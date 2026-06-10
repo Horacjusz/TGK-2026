@@ -50,6 +50,40 @@ float distance_to_zone_edge(vec2 p) {
 	return min_distance;
 }
 
+bool is_inside_zone(vec2 p) {
+	if (zone_point_count < 3) {
+		return true;
+	}
+
+	bool inside = false;
+	int j = zone_point_count - 1;
+
+	for (int i = 0; i < MAX_ZONE_POINTS; i++) {
+		if (i >= zone_point_count) {
+			break;
+		}
+
+		vec2 pi = zone_points[i];
+		vec2 pj = zone_points[j];
+		bool crosses = ((pi.y > p.y) != (pj.y > p.y));
+
+		if (crosses) {
+			float denominator = pj.y - pi.y;
+			if (abs(denominator) < 0.0001) {
+				denominator = 0.0001;
+			}
+			float x_intersection = (pj.x - pi.x) * (p.y - pi.y) / denominator + pi.x;
+			if (p.x < x_intersection) {
+				inside = !inside;
+			}
+		}
+
+		j = i;
+	}
+
+	return inside;
+}
+
 void fragment() {
 	float visibility = 0.0;
 
@@ -65,9 +99,15 @@ void fragment() {
 		visibility = max(visibility, light_amount * light_strengths[i]);
 	}
 
-	float edge_alpha = 1.0;
-	if (fade_distance > 0.0) {
-		edge_alpha = smoothstep(0.0, fade_distance, distance_to_zone_edge(local_position));
+	float edge_distance = distance_to_zone_edge(local_position);
+	float edge_alpha = 0.0;
+
+	if (is_inside_zone(local_position)) {
+		edge_alpha = 1.0;
+		if (fade_distance > 0.0) {
+			float fade_amount = smoothstep(0.0, fade_distance, edge_distance);
+			edge_alpha = fade_amount * fade_amount * (3.0 - 2.0 * fade_amount);
+		}
 	}
 
 	float darkness_alpha = darkness_color.a * edge_alpha * (1.0 - clamp(visibility, 0.0, 1.0));

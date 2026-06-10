@@ -11,6 +11,9 @@ const DARKNESS_SHADER := preload("res://shaders/components/darkness_zone.gdshade
 @export var darkness_color := Color.BLACK
 @export var darkness_z_index := 1000
 @export_range(0.0, 256.0, 1.0) var fade_distance := 8.0
+@export var shader_render_rect := Rect2(-4096.0, -4096.0, 8192.0, 8192.0)
+@export var block_native_lights := false
+@export_flags_2d_render var native_light_occluder_mask := 1
 @export var light_radius_fallback := 96.0
 @export var light_radius_multiplier := 1.0
 @export_range(0.0, 0.95, 0.01) var inner_radius_ratio := 0.15
@@ -18,14 +21,18 @@ const DARKNESS_SHADER := preload("res://shaders/components/darkness_zone.gdshade
 @export var scan_root_path: NodePath
 
 var shader_material: ShaderMaterial
+var source_polygon := PackedVector2Array()
 
 
 func _ready() -> void:
-	light_occluder.occluder.polygon = self.polygon
+	source_polygon = polygon
+	light_occluder.occluder.polygon = source_polygon
+	light_occluder.occluder_light_mask = native_light_occluder_mask if block_native_lights else 0
 	
 	z_index = darkness_z_index
 	z_as_relative = false
 	color = Color.WHITE
+	polygon = _get_rect_polygon(shader_render_rect)
 	_setup_shader()
 	update_darkness()
 
@@ -84,16 +91,25 @@ func _update_zone_shape_shader_parameters() -> void:
 		return
 
 	var zone_points := PackedVector2Array()
-	var point_count: int = mini(polygon.size(), MAX_ZONE_POINTS)
+	var point_count: int = mini(source_polygon.size(), MAX_ZONE_POINTS)
 
 	for i in point_count:
-		zone_points.append(polygon[i])
+		zone_points.append(source_polygon[i])
 
 	while zone_points.size() < MAX_ZONE_POINTS:
 		zone_points.append(Vector2.ZERO)
 
 	shader_material.set_shader_parameter("zone_point_count", point_count)
 	shader_material.set_shader_parameter("zone_points", zone_points)
+
+
+func _get_rect_polygon(rect: Rect2) -> PackedVector2Array:
+	return PackedVector2Array([
+		rect.position,
+		rect.position + Vector2(rect.size.x, 0.0),
+		rect.position + rect.size,
+		rect.position + Vector2(0.0, rect.size.y),
+	])
 
 
 func _get_local_lights() -> Array[Light2D]:

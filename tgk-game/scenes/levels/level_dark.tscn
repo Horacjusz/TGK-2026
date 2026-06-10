@@ -140,7 +140,8 @@ tutorial = ExtResource("10_0vrfj")
 
 [node name="DarknessZone" parent="Lighting" unique_id=1992615223 instance=ExtResource("12_uy88o")]
 position = Vector2(245, -7)
-polygon = PackedVector2Array(122, -271, -21, -271, -21, 53, 122, 53)
+polygon = PackedVector2Array(-12, -695, -21, -271, -21, 379, 1019, 435, 1004, -684)
+fade_distance = 16.0
 
 [node name="KillZone" parent="." unique_id=717295406 instance=ExtResource("13_1jxlt")]
 position = Vector2(94, 57)

@@ -11,4 +11,5 @@ polygon = PackedVector2Array(7, -7, -7, -7, -7, 7, 7, 7)
 script = ExtResource("1_wi8qi")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=1641591927]
+occluder_light_mask = 0
 occluder = SubResource("OccluderPolygon2D_wi8qi")
