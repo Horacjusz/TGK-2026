@@ -593,6 +593,7 @@ func _damage_using_hitbox(
 	manage_hit_box_active := true
 ) -> void:
 	if not enable_damage:
+		print("damage not enabled, skipping")
 		return
 
 	if manage_hit_box_active:
