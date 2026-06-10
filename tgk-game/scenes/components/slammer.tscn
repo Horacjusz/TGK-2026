@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cakg2url6yjw3"]
+
+[ext_resource type="Script" uid="uid://vd5g0mp0gn63" path="res://scripts/components/slammer.gd" id="1_vbfs2"]
+[ext_resource type="Texture2D" uid="uid://bf3d8dq68f1b" path="res://assets/cavesofgallet/cavesofgallet_tiles.png" id="2_wuitj"]
+[ext_resource type="Texture2D" uid="uid://cn8xcrgefhsvi" path="res://assets/Tiny_Metroidvania/Tiles/Crystal_Cave_Tileset.png" id="3_uloma"]
+[ext_resource type="PackedScene" uid="uid://doe2np8gi5yku" path="res://scenes/components/hit_box.tscn" id="4_uloma"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xgxa"]
+atlas = ExtResource("2_wuitj")
+region = Rect2(40, 56, 5, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wuitj"]
+atlas = ExtResource("2_wuitj")
+region = Rect2(32, 60, 8, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j75nh"]
+atlas = ExtResource("3_uloma")
+region = Rect2(91, 19, 18, 5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uloma"]
+radius = 1.0
+height = 8.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xgxa"]
+size = Vector2(10, 30)
+
+[node name="Slammer" type="Node2D" unique_id=1313570088]
+script = ExtResource("1_vbfs2")
+
+[node name="Body" type="RigidBody2D" parent="." unique_id=1936049408]
+
+[node name="Background" type="Sprite2D" parent="Body" unique_id=1488825296]
+position = Vector2(-3.5762787e-07, -15)
+scale = Vector2(1.9999999, 3.75)
+texture = SubResource("AtlasTexture_0xgxa")
+
+[node name="Texture" type="Sprite2D" parent="Body" unique_id=646001262]
+position = Vector2(0, -14.5)
+texture = SubResource("AtlasTexture_wuitj")
+
+[node name="Head" type="Sprite2D" parent="Body" unique_id=1991079279]
+position = Vector2(-0.0075454363, 0.98807955)
+rotation = 3.1415927
+scale = Vector2(0.554812, 0.3944346)
+texture = SubResource("AtlasTexture_j75nh")
+
+[node name="HitBox" parent="Body" unique_id=768078710 instance=ExtResource("4_uloma")]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/HitBox" unique_id=267771099]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_uloma")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=879240222]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_0xgxa")
