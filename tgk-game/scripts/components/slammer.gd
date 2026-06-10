@@ -2,6 +2,8 @@ extends Node2D
 
 const HIT_SOUND_PATH = "res://assets/sounds/slammer/hit.mp3"
 const START_SOUND_PATH = "res://assets/sounds/slammer/start_click.mp3"
+const FRONT_PROBE_SKIN := 1.0
+const FRONT_PROBE_BACKSTEP := 0.5
 
 
 enum SlammerState {
@@ -23,7 +25,8 @@ enum SlammerState {
 		upward_part = clampf(value, 0.0, 1.0)
 		_clamp_timing_parts()
 		_recalculate_motion()
-		
+@export var initial_delay := 0.0
+
 @onready var body: RigidBody2D = $Body
 @onready var hit_box: HitBox = $Body/HitBox
 @onready var body_collision_shape: CollisionShape2D = $Body/CollisionShape2D
@@ -36,10 +39,10 @@ var _slam_direction := Vector2.DOWN
 var _resolved_slam_distance := 0.0
 var _slam_speed := 0.0
 var _return_speed := 0.0
-var _slam_started_at := 0.0
-var _loop_timer: Timer = null
+var _cooldown_timer: Timer = null
 var _is_loop_armed := false
-
+var _has_pending_loop_slam := false
+var can_slam := true
 
 func _ready() -> void:
 	_start_position = body.position
@@ -58,10 +61,10 @@ func _ready() -> void:
 	body.linear_velocity = Vector2.ZERO
 	_disconnect_hit_box_auto_damage()
 	_set_hit_box_active(false)
-	_loop_timer = Timer.new()
-	_loop_timer.one_shot = true
-	_loop_timer.timeout.connect(slam)
-	add_child(_loop_timer)
+	_cooldown_timer = Timer.new()
+	_cooldown_timer.one_shot = true
+	_cooldown_timer.timeout.connect(_on_slam_cooldown_timeout)
+	add_child(_cooldown_timer)
 
 	if not trigger_areas.is_empty():
 		for trigger_area in trigger_areas:
@@ -71,19 +74,21 @@ func _ready() -> void:
 		call_deferred("_check_initial_trigger_overlap")
 	
 	if slam_loop and trigger_areas.is_empty():
-		slam()
+		_schedule_initial_loop_slam()
 
 
 func slam() -> void:
 	if _state != SlammerState.IDLE:
 		return
+	if not can_slam:
+		return
 
-	if _loop_timer != null:
-		_loop_timer.stop()
-
+	can_slam = false
 	_is_loop_armed = true
-	_slam_started_at = Time.get_ticks_msec() / 1000.0
 	_set_hit_box_active(false)
+
+	if _cooldown_timer != null:
+		_cooldown_timer.start(maxf(attack_speed, 0.001))
 
 	_state = SlammerState.SLAMMING
 	body.linear_velocity = Vector2.ZERO
@@ -134,6 +139,8 @@ func _physics_process(delta: float) -> void:
 			if _get_extension() <= 0.0:
 				on_slam_finish()
 
+	_process_pending_loop_slam()
+
 
 func _process(_delta: float) -> void:
 	pass
@@ -158,6 +165,8 @@ func _try_start_from_trigger() -> void:
 		return
 
 	if slam_loop and _is_loop_armed:
+		return
+	if not can_slam:
 		return
 	
 	slam()
@@ -196,15 +205,72 @@ func _is_world_blocking_slam(motion: Vector2) -> bool:
 	if motion.is_zero_approx():
 		return false
 
-	var collision := body.move_and_collide(motion, true)
-	if collision == null:
+	return _is_front_blocked(motion)
+
+
+func _is_front_blocked(motion: Vector2) -> bool:
+	var motion_direction := motion.normalized()
+	if motion_direction.is_zero_approx():
 		return false
 
-	var collider := collision.get_collider()
+	var space_state := body.get_world_2d().direct_space_state
+	var exclude: Array[RID] = [body.get_rid()]
+
+	for local_offset in _get_front_probe_offsets():
+		var start: Vector2 = body.to_global(local_offset) - motion_direction * FRONT_PROBE_BACKSTEP
+		var end: Vector2 = start + motion + motion_direction * FRONT_PROBE_SKIN
+		var query := PhysicsRayQueryParameters2D.create(
+			start,
+			end,
+			body.collision_mask,
+			exclude
+		)
+		query.collide_with_areas = false
+		query.collide_with_bodies = true
+		query.hit_from_inside = true
+
+		var hit := space_state.intersect_ray(query)
+		if hit.is_empty():
+			continue
+
+		var collider := hit.get("collider") as Node
+		if _is_front_blocking_collider(collider):
+			return true
+
+	return false
+
+
+func _get_front_probe_offsets() -> Array[Vector2]:
+	var shape_position := body_collision_shape.position
+	var slam_direction := _slam_direction.normalized()
+	var side_direction := Vector2(-slam_direction.y, slam_direction.x)
+	var half_depth := 15.0
+	var half_width := 4.0
+
+	if body_collision_shape.shape is RectangleShape2D:
+		var rect_shape := body_collision_shape.shape as RectangleShape2D
+		half_depth = abs(rect_shape.size.dot(slam_direction.abs())) * 0.5
+		half_width = abs(rect_shape.size.dot(side_direction.abs())) * 0.5
+	elif body_collision_shape.shape is CapsuleShape2D:
+		var capsule_shape := body_collision_shape.shape as CapsuleShape2D
+		half_depth = capsule_shape.height * 0.5
+		half_width = capsule_shape.radius
+
+	var front_center := shape_position + slam_direction * half_depth
+	var side_probe_offset: float = maxf(half_width - FRONT_PROBE_SKIN, 0.0)
+
+	return [
+		front_center,
+		front_center + side_direction * side_probe_offset,
+		front_center - side_direction * side_probe_offset,
+	]
+
+
+func _is_front_blocking_collider(collider: Node) -> bool:
+	if collider == null:
+		return false
 	if collider is CharacterBody2D:
 		return false
-	if _belongs_to_slammer(collider as Node):
-		return _is_collision_in_movement_path(collision, motion)
 
 	return true
 
@@ -251,6 +317,10 @@ func _get_body_height() -> float:
 	return 30.0
 
 
+func _get_body_half_depth() -> float:
+	return _get_body_height() * 0.5
+
+
 func _recalculate_motion() -> void:
 	if _resolved_slam_distance <= 0.0:
 		return
@@ -274,14 +344,34 @@ func _schedule_next_loop_slam() -> void:
 	if not trigger_areas.is_empty() and not _is_loop_armed:
 		return
 
-	var elapsed_since_slam_started: float = Time.get_ticks_msec() / 1000.0 - _slam_started_at
-	var delay: float = maxf(attack_speed - elapsed_since_slam_started, 0.0)
+	_has_pending_loop_slam = true
 
-	if delay <= 0.0:
-		slam()
+
+func _schedule_initial_loop_slam() -> void:
+	_has_pending_loop_slam = true
+
+	if initial_delay <= 0.0:
 		return
 
-	_loop_timer.start(delay)
+	can_slam = false
+	if _cooldown_timer != null:
+		_cooldown_timer.start(initial_delay)
+
+
+func _process_pending_loop_slam() -> void:
+	if not _has_pending_loop_slam:
+		return
+	if _state != SlammerState.IDLE:
+		return
+	if not can_slam:
+		return
+
+	_has_pending_loop_slam = false
+	slam()
+
+
+func _on_slam_cooldown_timeout() -> void:
+	can_slam = true
 
 
 func _find_trigger_areas() -> Array[Area2D]:
@@ -348,14 +438,6 @@ func _belongs_to_slammer(node: Node) -> bool:
 	return false
 
 
-func _is_collision_in_movement_path(collision: KinematicCollision2D, motion: Vector2) -> bool:
-	var motion_direction := motion.normalized()
-	if motion_direction.is_zero_approx():
-		return false
-
-	return collision.get_normal().dot(motion_direction) < -0.5
-
-
 func _disconnect_hit_box_auto_damage() -> void:
 	var auto_damage_callable := Callable(hit_box, "_on_area_entered")
 	if hit_box.area_entered.is_connected(auto_damage_callable):
@@ -367,6 +449,9 @@ func _push_overlapping_character_bodies(motion: Vector2) -> bool:
 		return false
 
 	for character_body in _get_overlapping_character_bodies():
+		if not _is_node_in_front_of_slammer(character_body):
+			continue
+
 		var previous_position: Vector2 = character_body.global_position
 		character_body.add_collision_exception_with(body)
 		var collision := character_body.move_and_collide(motion)
@@ -388,6 +473,13 @@ func _get_overlapping_character_bodies() -> Array[CharacterBody2D]:
 			result.append(colliding_body)
 
 	return result
+
+
+func _is_node_in_front_of_slammer(node: Node2D) -> bool:
+	var local_position := body.to_local(node.global_position)
+	var front_center := body_collision_shape.position + _slam_direction.normalized() * _get_body_half_depth()
+	var distance_from_front := (local_position - front_center).dot(_slam_direction.normalized())
+	return distance_from_front >= -FRONT_PROBE_SKIN
 
 
 func _damage_using_hitbox() -> void:
