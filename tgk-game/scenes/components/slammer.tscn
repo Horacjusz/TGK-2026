@@ -22,10 +22,7 @@ radius = 1.0
 height = 8.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xgxa"]
-size = Vector2(8, 30)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_uloma"]
-radius = 2.236068
+size = Vector2(8, 32)
 
 [node name="Slammer" type="Node2D" unique_id=1313570088]
 script = ExtResource("1_vbfs2")
@@ -33,13 +30,13 @@ script = ExtResource("1_vbfs2")
 [node name="Body" type="RigidBody2D" parent="." unique_id=1936049408]
 
 [node name="Background" type="Sprite2D" parent="Body" unique_id=1488825296]
-position = Vector2(-3.874302e-07, -15)
-scale = Vector2(1.6, 3.75)
+position = Vector2(-3.874302e-07, -16)
+scale = Vector2(1.6, 4)
 texture = SubResource("AtlasTexture_0xgxa")
 
 [node name="Texture" type="Sprite2D" parent="Body" unique_id=646001262]
-position = Vector2(2.3841858e-07, -14.5)
-scale = Vector2(0.75000006, 1)
+position = Vector2(2.3841858e-07, -15.5)
+scale = Vector2(0.75000006, 1.0689656)
 texture = SubResource("AtlasTexture_wuitj")
 
 [node name="Head" type="Sprite2D" parent="Body" unique_id=1991079279]
@@ -56,11 +53,5 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_uloma")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body" unique_id=879240222]
-position = Vector2(0, -15)
+position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_0xgxa")
-
-[node name="Area2D" type="Area2D" parent="." unique_id=333804795]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1743128555]
-position = Vector2(0, 4)
-shape = SubResource("CircleShape2D_uloma")

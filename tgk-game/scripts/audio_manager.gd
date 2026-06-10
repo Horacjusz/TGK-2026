@@ -226,10 +226,8 @@ func _create_audio_player(
 	var actual_parent = _get_audio_player_parent(parent, position)
 
 	actual_parent.add_child(audio_player)
-	print("Audio player is child of ", actual_parent)
 
 	audio_player.set_bus(bus_name)
-	print("Bus set up to ", bus_name)
 	
 	audio_player.play(
 		actual_parent,

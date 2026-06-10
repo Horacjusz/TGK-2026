@@ -74,8 +74,6 @@ func _play(
 	is_stopping = false
 
 	var stream = load(sound_path) as AudioStream
-	
-	print(stream)
 
 	if stream == null:
 		push_warning("AudioPlayer: Could not load sound: " + sound_path)
@@ -100,8 +98,6 @@ func _play(
 	active_player.volume_db = _volume_to_db(
 		0.0 if new_smooth_start else base_volume
 	)
-	
-	print(active_player.volume_db)
 
 	active_player.play()
 

@@ -8,3 +8,4 @@ script = ExtResource("1_xthtb")
 [node name="GlobalPlayer" type="AudioStreamPlayer" parent="." unique_id=1312282626]
 
 [node name="SpatialPlayer" type="AudioStreamPlayer2D" parent="." unique_id=811378616]
+max_distance = 167.0
