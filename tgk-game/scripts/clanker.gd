@@ -16,7 +16,7 @@ signal died
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var input_playback: InputPlayback = %InputPlayback
 @onready var input_recorder: InputRecorder = %InputRecorder
-#@onready var health_component: HealthComponent = %HealthComponent
+@onready var health_component: HealthComponent = %HealthComponent
 @onready var platform_collision_shape: CollisionShape2D = $Platform/CollisionShape2D
 
 const AIRBORN_PATH: String = "parameters/Moving/Airborne/blend_position"

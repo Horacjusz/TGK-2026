@@ -18,7 +18,7 @@ atlas = ExtResource("3_uloma")
 region = Rect2(91, 19, 18, 5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uloma"]
-radius = 1.0
+radius = 2.0
 height = 8.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xgxa"]

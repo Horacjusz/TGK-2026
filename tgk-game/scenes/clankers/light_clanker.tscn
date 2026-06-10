@@ -431,7 +431,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i8jn6"]
-size = Vector2(6, 6.5)
+size = Vector2(8, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t3xdd"]
 size = Vector2(8, 7)
@@ -851,11 +851,10 @@ active = false
 libraries/ = SubResource("AnimationLibrary_6g8ds")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1120267766]
-position = Vector2(0, 0.75)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_i8jn6")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=892700795]
-visible = false
 script = ExtResource("2_ucnrp")
 metadata/_custom_type_script = "uid://b0ufljnbbkkvt"
 

@@ -124,6 +124,7 @@ func _physics_process(delta: float) -> void:
 		SlammerState.SLAMMING:
 			var motion: Vector2 = _get_slam_motion(delta)
 			if _is_world_blocking_slam(motion):
+				print(self, " world blocked")
 				on_hit()
 				return
 
@@ -487,10 +488,15 @@ func _damage_using_hitbox() -> void:
 		return
 
 	_set_hit_box_active(true)
+	print("Starting damaging")
+
+	print(hit_box.get_overlapping_areas())
 
 	for area in hit_box.get_overlapping_areas():
 		if area is HurtBox:
 			_damage_hurt_box(area as HurtBox)
+
+	print(_get_overlapping_character_bodies())
 
 	for character_body in _get_overlapping_character_bodies():
 		_damage_character_body(character_body)
