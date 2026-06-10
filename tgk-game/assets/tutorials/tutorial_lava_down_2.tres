@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://c7ekm7jbtv1gn"]
+
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_vg70f"]
+[ext_resource type="Resource" uid="uid://d2qo6556w0txd" path="res://assets/tutorials/tutorial_lava_down_3.tres" id="1_wt42a"]
+
+[resource]
+script = ExtResource("1_vg70f")
+content = "That is so sad......
+ I'll give you one hint to cheer you up"
+next_tutorial = ExtResource("1_wt42a")
+metadata/_custom_type_script = "uid://chimpjf356v7t"
