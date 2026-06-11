@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://dgcqme01ppaw4"]
+
+[ext_resource type="Resource" uid="uid://4nkok6xadmle" path="res://assets/tutorials/tutorial_level_1_clanker_4.tres" id="1_nb5rh"]
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_oah5d"]
+
+[resource]
+script = ExtResource("1_oah5d")
+title = "Tutorial Clanker 3"
+content = "I can help you jump higher and farther when you ride on my back"
+animation_name = "idle"
+wait_for_animation = false
+next_tutorial = ExtResource("1_nb5rh")
+metadata/_custom_type_script = "uid://chimpjf356v7t"

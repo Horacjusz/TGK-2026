@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://bmxx75ync5div"]
+
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_b16fe"]
+
+[resource]
+script = ExtResource("1_b16fe")
+content = "You have 5 seconds to control the Clanker and set its route. Press [F] again to end control faster, or press [R] at any time to reset the Clanker. Be careful the Clanker has a cooldown!"
+wait_for_animation = false
+metadata/_custom_type_script = "uid://chimpjf356v7t"
