@@ -6,7 +6,10 @@
 [resource]
 script = ExtResource("1_0iydi")
 title = "Tutorial Clanker (2)"
-content = "Hello, I'm Johnny. I was turned to stone by a big black scorpion. Can you help me rescue my friends and KILL MY SWORN ENEMY?!!!!!!!!!!!!!!"
+content = "Hi, My name is...
+WHAT, WHERE IS MY BODY??
+Did I die?? T_T
+It must've been a looog time..."
 animation_name = "default"
 next_tutorial = ExtResource("1_ulv7o")
 metadata/_custom_type_script = "uid://chimpjf356v7t"

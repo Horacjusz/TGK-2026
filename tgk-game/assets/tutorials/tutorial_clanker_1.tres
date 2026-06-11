@@ -5,8 +5,8 @@
 
 [resource]
 script = ExtResource("1_riq3c")
-title = "Tutorial Clanker (1)"
+title = "Tutorial Clanker (2)"
 content = "It looks as though someone is trapped within the stone........."
 next_tutorial = ExtResource("1_7oild")
-unlock_clanker = "clanker"
+unlock_clanker = "light_clanker"
 metadata/_custom_type_script = "uid://chimpjf356v7t"
