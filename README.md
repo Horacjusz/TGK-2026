@@ -1,28 +1,51 @@
 # Mito-mania
 
-## Gatunek
+Mito-mania to liniowa platformówka logiczno-zręcznościowa, w której kluczem do sukcesu jest współpraca z krabo-podobnymi towarzyszami. Gracz wciela się w postać, która przemierza kolejne poziomy, odnajduje kolejne kraby, a następnie wykorzystuje ich unikalne właściwości do pokonywania przeszkód, unikania pułapek i rozwiązywania zagadek środowiskowych.
 
-Platformówka
+- **Gatunek**: Platformówka, 2D
+- **Inspiracje**: Ogień i woda, Ori and the blind forest, Bounce Tale
 
-## Inspiracje
+TODO: Zrzuty ekranu
 
-Ogień i woda, Ori and the blind forest, Castlevania, Bounce Tale
+## Użyte narzędzia i platforma
+
+- **Silnik gry**: Godot 4.6
+- **Język skryptowy**: GDScript
+- **Platformy docelowe**:
+  - Web (wersja przeglądarkowa na portalu itch.io)
+  - Desktop (systemy Windows, Linux oraz macOS)
 
 ## Mechanika
 
-Gracz wciela się w postać, która potrafi przywołać tymczasowego towarzysza (np. pomocnika, projekcję, drona lub magiczny byt).
+Świat gry jest przedstawiony w przestrzeni dwuwymiarowej (2D) z widokiem z boku (side-scroller). Gra ma charakter całkowicie liniowy – gracz pokonuje z góry zdefiniowaną sekwencję zamkniętych, ograniczonych poziomów. Każdy etap testuje inne zastosowanie odblokowanych towarzyszy.
 
-Gracz może wyznaczać trasę ruchu towarzysza, która zostaje odtworzona w pętli. Jest ona jednak ograniczona czasowo. Podczas ruchu towarzysz staje się fizycznym elementem świata gry, co pozwala wykorzystywać go na wiele sposobów, np.:
-- jako platformę umożliwiającą dotarcie do trudno dostępnych miejsc,
-- jako osłonę przed przeciwnikami lub pociskami,
-- do aktywacji płyt naciskowych itp.
+Kamera podąża za głównym bohaterem lub krabim towarzyszem, w zależności od tego, którą postać kontroluje aktualnie gracz.
 
-Odtwarzanie ścieżki można w dowolnym momencie aktywować, zatrzymywać lub spowalniać, co daje graczowi czas na podejmowanie decyzji. Istnieje także możliwość wyznaczenia nowej trasy.
+Gracz przywołuje wybranego kraba klawiszem F i steruje nim, nagrywając jego trasę. Po upływie czasu (lub ponownym wciśnięciu F) kontrola wraca do gracza, a krab automatycznie odtwarza zapisaną ścieżkę w nieskończonej pętli. Krab staje się fizycznym obiektem służącym jako platforma, tarcza blokująca pociski lub źródło światła (w zależności od wybranego typu towarzysza).
 
-## Pomysły na poziomy
+Gracz ma jedno życie – ginie natychmiast po wpadnięciu w przepaść, przeszkodę lub pocisk. Śmierć automatycznie wczytuje ostatni punkt kontrolny (checkpoint), który działa również jako automatyczny zapis stanu gry (autosave).
 
-Każdy kolejny poziom powinien przedstawiać nową mechanikę, jednocześnie korzystając z poprzednich (z nielicznymi wyjątkami jednorazowych mechanik).
+### Sterowanie
 
-1. Poziom wprowadzający. Podstawowe mechaniki zręcznościowo-platformowe, odbijanie się od towarzysza itp.
-2. Poziom z przeciwnikami. Latające pociski, pułapki.
-3. Ciemny poziom. Towarzysz jest jedynym źródłem światła. Jednorazowa mechanika.
+- **WSAD**: Ruch postacią (graczem lub krabem).
+- **Spacja**: Skok.
+- **E**: Interakcja z otoczeniem (przyciski, dźwignie, portale kończące poziom).
+- **1, 2, 3**: Wybór odblokowanego Clankera.
+- **F**: Przywołanie kraba i przejęcie nad nim kontroli. Ponowne wciśnięcie F szybciej kończy nagrywanie trasy.
+- **R**: Reset i usunięcie kraba ze świata gry.
+
+## Użyte assety
+
+Większość grafiki w projekcie pochodzi z zewnętrznych źródeł dostępnych w sieci. Część assetów została stworzona lub zmodyfikowana własnoręcznie przez zespół.
+
+- **Zewnętrzne paczki**
+  - Tiny Metroidvania oraz Tiny Metroidvania – Coral Reef by kenmi → https://kenmi-art.itch.io/metroidvania
+  - Caves of Gallet by kaizarnike → https://kaizarnike.itch.io/caves-of-gallet-2
+- **Stworzone własnoręcznie**
+  - Kraby i ich animacje — Stanisław Barycki
+  - UI — Paweł Pruss
+  - Dekoracje i pułapki — przygotowane/dopasowane przez zespół
+
+## Wykorzystanie AI
+
+Sztuczna inteligencja została wykorzystana wyłącznie jako wsparcie techniczne przy programowaniu. Nie używano AI do żadnej kreatywnej części projektu.
