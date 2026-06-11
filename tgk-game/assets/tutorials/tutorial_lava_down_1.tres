@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://b8wpqg1emfqj3"]
+
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_db1cx"]
+[ext_resource type="Resource" uid="uid://c7ekm7jbtv1gn" path="res://assets/tutorials/tutorial_lava_down_2.tres" id="1_hv8xs"]
+
+[resource]
+script = ExtResource("1_db1cx")
+title = "tutorial_lava_down_1"
+content = "Oh nooooo..........
+You fall all the way down here"
+wait_for_animation = false
+next_tutorial = ExtResource("1_hv8xs")
+metadata/_custom_type_script = "uid://chimpjf356v7t"

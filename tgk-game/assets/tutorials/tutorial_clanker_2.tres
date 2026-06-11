@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://dnnjqveqqn8u3"]
+
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_0iydi"]
+[ext_resource type="Resource" uid="uid://kgylr5gfvxpt" path="res://assets/tutorials/tutorial_clanker_3.tres" id="1_ulv7o"]
+
+[resource]
+script = ExtResource("1_0iydi")
+title = "Tutorial Clanker (2)"
+content = "Hello, I'm Johnny. I was turned to stone by a big black scorpion. Can you help me rescue my friends and KILL MY SWORN ENEMY?!!!!!!!!!!!!!!"
+animation_name = "default"
+next_tutorial = ExtResource("1_ulv7o")
+metadata/_custom_type_script = "uid://chimpjf356v7t"

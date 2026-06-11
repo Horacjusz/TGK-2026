@@ -23,11 +23,10 @@ var cooldown_timers: Dictionary[String, Timer] = {}
 
 func _ready() -> void:
 	add_to_group(SaveManager.SAVABLE_GROUP)
-	# for developing purposes
-	clankers_data.unlock_all(["clanker", "light_clanker", "defender_clanker"])
 	for clanker_name in clankers_data.clankers_available:
 		_register_clanker_timer(clanker_name)
 	GlobalSignalBus.clanker_change_requested.connect(_on_clanker_change_requested)
+	GlobalSignalBus.clanker_unlock_requested.connect(unlock_clanker)
 	GlobalSignalBus.clanker_changed.emit(selected_clanker_type)
 
 
@@ -46,16 +45,17 @@ func _register_clanker_timer(clanker_name: String) -> void:
 func unlock_clanker(clanker_name: String) -> void:
 	clankers_data.unlock(clanker_name)
 	_register_clanker_timer(clanker_name)
+	GlobalSignalBus.clanker_unlocked.emit(clanker_name)
 
 func handle_clanker_input(
-	wants_spawn: bool, 
+	wants_spawn: bool,
 	ray_is_coliding: bool,
 	wants_reset: bool,
-	#selected_slot: String
 ) -> void:
 	var can_spawn = (
 		!ray_is_coliding
 		and actor.is_on_floor()
+		and cooldown_timers.has(selected_clanker_type)
 		and cooldown_timers[selected_clanker_type].time_left <= 0
 		and clankers_data.is_unlocked(selected_clanker_type)
 	)
@@ -66,10 +66,8 @@ func handle_clanker_input(
 	# Logic for Resetting/Despawning
 	if wants_reset and current_clanker and is_instance_valid(current_clanker):
 		if is_controlling_clanker:
-			# Was controlling clanker — despawn with cooldown
 			current_clanker.die()
 		else:
-			# Not controlling — just despawn instantly
 			despawn_clanker()
 
 func spawn_clanker() -> void:
@@ -97,17 +95,20 @@ func despawn_clanker() -> void:
 	current_clanker = null
 
 
-func _on_clanker_change_requested(type: String):
+func _on_clanker_change_requested(type: String) -> void:
 	if type != selected_clanker_type:
+		if not clankers_data.is_unlocked(type):
+			return
 		selected_clanker_type = type
 		var cooldown_timer = cooldown_timers.get(type)
 		GlobalSignalBus.clanker_changed.emit(type)
-		GlobalSignalBus.clanker_cooldown_changed.emit(
-			type,
-			!cooldown_timer.is_stopped(),
-			cooldown_timer.wait_time,
-			cooldown_timer.time_left,
-		)
+		if cooldown_timer:
+			GlobalSignalBus.clanker_cooldown_changed.emit(
+				type,
+				!cooldown_timer.is_stopped(),
+				cooldown_timer.wait_time,
+				cooldown_timer.time_left,
+			)
 
 
 func _on_control_timer_timeout() -> void:
@@ -144,8 +145,8 @@ func get_save_id() -> String:
 func save_state(reset: bool = false) -> Dictionary:
 	if reset:
 		return {
-			"unlocked_clankers": ["clanker"] as Array[String],
-			"selected_clanker": "clanker" as String
+			"unlocked_clankers": [] as Array[String],
+			"selected_clanker": "" as String
 		}
 		
 	return {

@@ -24,6 +24,7 @@ var is_controlling_clanker: bool = false
 
 func _ready() -> void:
 	add_to_group(SaveManager.SAVABLE_GROUP)
+	#clanker_manager_component.unlock_clanker("clanker")
 	animation_tree.active = true
 
 
@@ -40,6 +41,11 @@ func _on_clanker_control_ended() -> void:
 func _physics_process(delta: float) -> void:
 	input_component.update()
 	gravity_component.handle_gravity(delta)
+	clanker_manager_component.handle_clanker_input(
+		input_component.clanker_pressed, 
+		spawn_ray.is_colliding(),
+		input_component.reset_clanker_pressed
+	)
 	spawn_ray.force_raycast_update()
 	
 	if not is_dead:
