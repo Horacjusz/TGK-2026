@@ -359,7 +359,6 @@ tutorial_sprite = NodePath("AnimatedSprite2D2")
 sprite_frames = SubResource("SpriteFrames_lro3w")
 
 [node name="Lighting" type="Node2D" parent="." unique_id=2039332932]
-visible = false
 
 [node name="DarknessZone" parent="Lighting" unique_id=1992615223 instance=ExtResource("12_uy88o")]
 position = Vector2(251, -7)
