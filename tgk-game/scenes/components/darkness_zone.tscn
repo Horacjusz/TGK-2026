@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b2b7kawwyd0k0"]
+
+[ext_resource type="Script" uid="uid://dfnp7opv8c6g" path="res://scripts/components/darkness_zone.gd" id="1_wi8qi"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wi8qi"]
+polygon = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="DarknessZone" type="Polygon2D" unique_id=167524900]
+color = Color(0, 0, 0, 0.4745098)
+polygon = PackedVector2Array(7, -7, -7, -7, -7, 7, 7, 7)
+script = ExtResource("1_wi8qi")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=1641591927]
+occluder_light_mask = 0
+occluder = SubResource("OccluderPolygon2D_wi8qi")

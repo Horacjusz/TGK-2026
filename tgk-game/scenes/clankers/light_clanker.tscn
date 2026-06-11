@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dsshqbsi0vvpv"]
 
-[ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clanker.gd" id="1_j1wut"]
+[ext_resource type="Script" uid="uid://dipkqntspv1o3" path="res://scripts/clankers/light_clanker.gd" id="2_g8x02"]
 [ext_resource type="Texture2D" uid="uid://chnnb7csfu60j" path="res://assets/clanker_light/clanker_light_despawn.png" id="2_t3urn"]
 [ext_resource type="Script" uid="uid://b0ufljnbbkkvt" path="res://scripts/components/hurt_box.gd" id="2_ucnrp"]
 [ext_resource type="Texture2D" uid="uid://brdhnkusedqou" path="res://assets/clanker_light/clanker_light_idle_short.png" id="3_blwsr"]
@@ -824,8 +824,8 @@ animations = [{
 }]
 
 [sub_resource type="Gradient" id="Gradient_ayi0a"]
-offsets = PackedFloat32Array(0.08663366, 0.10891089, 0.69554454)
-colors = PackedColorArray(0, 0, 0, 1, 0.99607843, 0.8, 0.2784314, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.7108434)
+colors = PackedColorArray(0.99607843, 0.8, 0.2784314, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0510v"]
 gradient = SubResource("Gradient_ayi0a")
@@ -833,8 +833,9 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="LightClanker" type="CharacterBody2D" unique_id=1677849010 node_paths=PackedStringArray("fly_component")]
-collision_layer = 4
-script = ExtResource("1_j1wut")
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("2_g8x02")
 collision_layer_index = 4
 fly_component = NodePath("FlyComponent")
 
@@ -851,14 +852,26 @@ active = false
 libraries/ = SubResource("AnimationLibrary_6g8ds")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1120267766]
-position = Vector2(0, 1)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_i8jn6")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=892700795]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("2_ucnrp")
 metadata/_custom_type_script = "uid://b0ufljnbbkkvt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=528301857]
+shape = SubResource("RectangleShape2D_t3xdd")
+
+[node name="Platform" type="AnimatableBody2D" parent="." unique_id=1994176422]
+collision_layer = 0
+collision_mask = 0
+sync_to_physics = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform" unique_id=1858071354]
 shape = SubResource("RectangleShape2D_t3xdd")
 
 [node name="Model" type="Node2D" parent="." unique_id=1918780081]

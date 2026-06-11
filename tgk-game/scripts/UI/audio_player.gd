@@ -93,7 +93,8 @@ func _play(
 	else:
 		active_player = spatial_player
 		spatial_player.global_position = position
-
+		
+	
 	active_player.volume_db = _volume_to_db(
 		0.0 if new_smooth_start else base_volume
 	)

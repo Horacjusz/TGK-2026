@@ -1,12 +1,19 @@
 extends Camera2D
 class_name PlayerCamera
 
+@onready var audio_listener: AudioListener2D = $AudioListener2D
+
 
 @export_category("Follow Player")
 @export var player: Player
 @export_category("Camera Smoothing")
 @export var smoothing_enable: bool
 @export_range(1, 10) var smoothing_distance: int = 8
+
+
+func _ready() -> void:
+	make_current()
+	audio_listener.make_current()
 
 
 func _physics_process(delta: float) -> void:

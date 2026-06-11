@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ciiousl5pp38q"]
 
-[ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clanker.gd" id="1_3m55q"]
+[ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clankers/clanker.gd" id="1_3m55q"]
 [ext_resource type="Script" uid="uid://b0ufljnbbkkvt" path="res://scripts/components/hurt_box.gd" id="2_beile"]
 [ext_resource type="Texture2D" uid="uid://dmiru35cb4orr" path="res://assets/clanker/clanker_despawn.png" id="3_7v60u"]
 [ext_resource type="Texture2D" uid="uid://c8t0hrdce7k0p" path="res://assets/clanker/clanker_jump.png" id="4_beile"]
@@ -369,10 +369,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_beile"]
-size = Vector2(12, 5)
+size = Vector2(12, 5.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ynna"]
-size = Vector2(12, 5)
+size = Vector2(12, 5.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0g1f"]
 size = Vector2(12, 5)
@@ -715,8 +715,7 @@ parameters/Moving/Airborne/blend_position = 0.0
 libraries/ = SubResource("AnimationLibrary_bl8qr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1443958217]
-visible = false
-position = Vector2(0, 2)
+position = Vector2(0, 1.75)
 shape = SubResource("RectangleShape2D_beile")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=649030836]
@@ -724,8 +723,7 @@ script = ExtResource("2_beile")
 metadata/_custom_type_script = "uid://b0ufljnbbkkvt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=959113642]
-visible = false
-position = Vector2(0, 2)
+position = Vector2(0, 1.75)
 shape = SubResource("RectangleShape2D_1ynna")
 
 [node name="Platform" type="AnimatableBody2D" parent="." unique_id=241223301]

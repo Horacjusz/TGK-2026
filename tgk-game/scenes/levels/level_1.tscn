@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ddslmphbub2rv" path="res://scenes/levels/tutorials/tutorial.tscn" id="7_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://6hccbckc2gjb" path="res://scenes/levels/tutorials/tutorial_clanker_1.tscn" id="9_iav0o"]
 [ext_resource type="Resource" uid="uid://btgchdq4jenss" path="res://assets/tutorials/tutorial_jump_1.tres" id="9_wtwp4"]
-[ext_resource type="Resource" uid="uid://bd6ju1f1imq5n" path="res://assets/tutorials/tutorial_clanker_1.tres" id="10_excbq"]
+[ext_resource type="Resource" uid="uid://bkxs5aywre1q2" path="res://assets/tutorials/tutorial_level_1_clanker_1.tres" id="10_excbq"]
 [ext_resource type="Texture2D" uid="uid://3h1lhh2thots" path="res://assets/clanker/clanker_stone.png" id="10_qxy0u"]
 [ext_resource type="Texture2D" uid="uid://bps76eqiiosv" path="res://assets/clanker/clanker_idle.png" id="12_dnkej"]
 [ext_resource type="Texture2D" uid="uid://dmiru35cb4orr" path="res://assets/clanker/clanker_despawn.png" id="12_mm8aj"]

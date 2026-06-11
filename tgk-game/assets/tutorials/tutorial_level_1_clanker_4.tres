@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://4nkok6xadmle"]
+
+[ext_resource type="Resource" uid="uid://bmxx75ync5div" path="res://assets/tutorials/tutorial_level_1_clanker_5.tres" id="1_1m8bb"]
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_csgmj"]
+
+[resource]
+script = ExtResource("1_csgmj")
+content = "Press [1] to select this Clanker, then press [F] to spawn it and take control."
+animation_name = "despawn"
+hide_sprite = true
+next_tutorial = ExtResource("1_1m8bb")
+metadata/_custom_type_script = "uid://chimpjf356v7t"

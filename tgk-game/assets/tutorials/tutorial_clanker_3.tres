@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_rtmey")
 title = "Tutorial Clanker 3"
-content = "I can help you jump higher and farther when you ride on my back"
+content = "Because now I am a ghost, I can fly, I am invulnerable and I glow in the dark. Let me light up Your way."
 animation_name = "idle"
 wait_for_animation = false
 next_tutorial = ExtResource("1_favi2")

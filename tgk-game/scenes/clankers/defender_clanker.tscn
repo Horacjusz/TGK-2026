@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d33mpg05yacgl"]
 
-[ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clanker.gd" id="1_vfs6m"]
+[ext_resource type="Script" uid="uid://bgyvccr8odnf3" path="res://scripts/clankers/clanker.gd" id="1_vfs6m"]
 [ext_resource type="Texture2D" uid="uid://duymnf2ffkyut" path="res://assets/clanker_defender/clanker_deff_despawn.png" id="2_2m60w"]
 [ext_resource type="Script" uid="uid://b0ufljnbbkkvt" path="res://scripts/components/hurt_box.gd" id="2_isfh2"]
 [ext_resource type="Texture2D" uid="uid://0r5nwcs0osg5" path="res://assets/clanker_defender/clanker_deff_death.png" id="3_2m60w"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://kob5qb7mcmeu" path="res://assets/clanker_defender/clanker_def_jump.png" id="5_kohh4"]
 [ext_resource type="Texture2D" uid="uid://dfiq8ewwxk625" path="res://assets/clanker_defender/clanker_deff_run_2.png" id="6_o7qso"]
 [ext_resource type="Script" uid="uid://cdrifmcfrt234" path="res://scripts/components/gravity_component.gd" id="7_2ryvv"]
-[ext_resource type="Script" path="res://scripts/components/movement_component.gd" id="8_gtt3n"]
+[ext_resource type="Script" uid="uid://yr041ldm08k" path="res://scripts/components/movement_component.gd" id="8_gtt3n"]
 [ext_resource type="Script" uid="uid://blxv03fvxeqw8" path="res://scripts/inputs/input_component.gd" id="9_isgxq"]
 [ext_resource type="Script" uid="uid://bwl4hjmmab071" path="res://scripts/inputs/input_playback.gd" id="10_hvcj3"]
 [ext_resource type="PackedScene" uid="uid://bbd0eb32swyee" path="res://scenes/components/jump_component.tscn" id="11_2pyje"]

@@ -464,7 +464,7 @@ animations = [{
 }]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fjrip"]
-polygon = PackedVector2Array(-1, -3, 1, -3, 1, -3, 2, -2, 2, 2, 1, 4, -1, 4, -2, 4, -2, -2, -1, -3)
+polygon = PackedVector2Array(-1, -3, 1, -3, 2, -2, 2, -2, 2, 2, 1, 4, -1, 4, -2, 4, -2, -2, -2, -2)
 
 [node name="Player" type="CharacterBody2D" unique_id=723345871]
 collision_layer = 2
@@ -502,9 +502,11 @@ libraries/ = SubResource("AnimationLibrary_y4r1p")
 
 [node name="Model" type="Node2D" parent="." unique_id=1274543403]
 unique_name_in_owner = true
+z_index = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Model" unique_id=1636804668]
 unique_name_in_owner = true
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_dqkch")
 animation = &"idle"
 
@@ -542,6 +544,7 @@ actor = NodePath("..")
 movement_component = NodePath("../MovementComponent")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=301777337]
+z_index = -1
 occluder = SubResource("OccluderPolygon2D_fjrip")
 
 [node name="HurtTimer" type="Timer" parent="." unique_id=942300602]
