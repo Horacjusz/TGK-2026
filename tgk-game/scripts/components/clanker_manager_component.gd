@@ -45,6 +45,8 @@ func _register_clanker_timer(clanker_name: String) -> void:
 func unlock_clanker(clanker_name: String) -> void:
 	clankers_data.unlock(clanker_name)
 	_register_clanker_timer(clanker_name)
+	selected_clanker_type = clanker_name
+	GlobalSignalBus.clanker_changed.emit(clanker_name)
 	GlobalSignalBus.clanker_unlocked.emit(clanker_name)
 
 func handle_clanker_input(
@@ -52,6 +54,10 @@ func handle_clanker_input(
 	ray_is_coliding: bool,
 	wants_reset: bool,
 ) -> void:
+	if wants_spawn and is_controlling_clanker and control_timer.time_left > 0:
+		end_control_phase()
+		return
+	
 	var can_spawn = (
 		!ray_is_coliding
 		and actor.is_on_floor()
@@ -95,6 +101,16 @@ func despawn_clanker() -> void:
 	current_clanker = null
 
 
+func end_control_phase() -> void:
+	if control_timer.time_left > 0:
+		control_timer.stop()
+		
+	if current_clanker and is_instance_valid(current_clanker):
+		current_clanker.disable_control()
+		
+	control_return_timer.start()
+
+
 func _on_clanker_change_requested(type: String) -> void:
 	if type != selected_clanker_type:
 		if not clankers_data.is_unlocked(type):
@@ -112,9 +128,7 @@ func _on_clanker_change_requested(type: String) -> void:
 
 
 func _on_control_timer_timeout() -> void:
-	if current_clanker and is_instance_valid(current_clanker):
-		current_clanker.disable_control()
-	control_return_timer.start()
+	end_control_phase()
 
 
 func _on_control_return_timer_timeout() -> void:
