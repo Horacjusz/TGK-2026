@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://boa4kwvcmc1sy"]
+
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_4ldgp"]
+[ext_resource type="Resource" uid="uid://byquaexnabhrp" path="res://assets/tutorials/tutorial_level_2_clanker_4.tres" id="1_i5d2k"]
+
+[resource]
+script = ExtResource("1_4ldgp")
+title = "Tutorial Clanker (2)"
+content = "I can shield you from the spells they left behind."
+next_tutorial = ExtResource("1_i5d2k")
+metadata/_custom_type_script = "uid://chimpjf356v7t"
