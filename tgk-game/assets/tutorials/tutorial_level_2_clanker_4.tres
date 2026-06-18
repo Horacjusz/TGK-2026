@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://byquaexnabhrp"]
+
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_0k85h"]
+
+[resource]
+script = ExtResource("1_0k85h")
+title = "Tutorial Clanker (4)"
+content = "Press [2] to select this Clanker, then press [F] to spawn it and take control."
+animation_name = "despawn"
+metadata/_custom_type_script = "uid://chimpjf356v7t"

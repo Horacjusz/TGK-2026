@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://dhwphk0qgp1xt"]
+
+[ext_resource type="Resource" uid="uid://boa4kwvcmc1sy" path="res://assets/tutorials/tutorial_level_2_clanker_3.tres" id="1_e8ost"]
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_vud5o"]
+
+[resource]
+script = ExtResource("1_vud5o")
+title = "Tutorial Clanker (2)"
+content = "I was turned to stone by the frog wizards. "
+animation_name = "default"
+next_tutorial = ExtResource("1_e8ost")
+metadata/_custom_type_script = "uid://chimpjf356v7t"

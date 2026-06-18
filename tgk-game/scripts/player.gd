@@ -68,6 +68,7 @@ func get_camera_target() -> Vector2:
 
 func die() -> void:
 	is_dead = true
+	clanker_manager_component.despawn_clanker()
 	GlobalSignalBus.player_died.emit()
 
 

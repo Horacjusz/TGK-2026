@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cqre3ql783stm" path="res://scripts/arrow.gd" id="1_c8fcr"]
 [ext_resource type="Script" uid="uid://cy0elgafwwect" path="res://scripts/components/hit_box.gd" id="2_q3m7n"]
-[ext_resource type="Texture2D" uid="uid://cmp0nsutqh74w" path="res://assets/Tiny_Metroidvania/Tiles/Other_Decorations.png" id="2_softn"]
+[ext_resource type="Texture2D" uid="uid://c6ithx7qcbhrv" path="res://assets/frog-statue.png" id="2_q8ifc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6q2a6"]
-atlas = ExtResource("2_softn")
-region = Rect2(39, 98, 1, 1)
+atlas = ExtResource("2_q8ifc")
+region = Rect2(3, 1, 1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_softn"]
 size = Vector2(1, 1)

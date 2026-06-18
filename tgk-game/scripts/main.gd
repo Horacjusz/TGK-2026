@@ -53,11 +53,6 @@ func save_state(reset: bool = false) -> Dictionary:
 			"level_path": "res://scenes/levels/level_1.tscn" as String,
 			"checkpoint_id": 0 as int,
 		}
-		# TEMPORARY CHANGE - CHANGE BACK IF I FORGOR PLEASE
-		#return {
-			#"level_path": "res://scenes/levels/level_dark.tscn" as String,
-			#"checkpoint_id": 0 as int,
-		#}
 		
 	return {
 		"level_path": level.scene_file_path,

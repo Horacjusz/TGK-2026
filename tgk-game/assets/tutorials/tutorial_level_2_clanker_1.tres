@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://cpcga254wgviv"]
+
+[ext_resource type="Resource" uid="uid://dhwphk0qgp1xt" path="res://assets/tutorials/tutorial_level_2_clanker_2.tres" id="1_kacn2"]
+[ext_resource type="Script" uid="uid://chimpjf356v7t" path="res://scripts/tutorial_data.gd" id="1_vk5a6"]
+
+[resource]
+script = ExtResource("1_vk5a6")
+title = "Tutorial Clanker (1)"
+content = "It looks like something is trapped within the stone..."
+next_tutorial = ExtResource("1_kacn2")
+unlock_clanker = "defender_clanker"
+metadata/_custom_type_script = "uid://chimpjf356v7t"
