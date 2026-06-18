@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bps76eqiiosv" path="res://assets/clanker/clanker_idle.png" id="12_dnkej"]
 [ext_resource type="Texture2D" uid="uid://dmiru35cb4orr" path="res://assets/clanker/clanker_despawn.png" id="12_mm8aj"]
 [ext_resource type="Resource" uid="uid://b8wpqg1emfqj3" path="res://assets/tutorials/tutorial_lava_down_1.tres" id="15_iwr0g"]
+[ext_resource type="PackedScene" uid="uid://dpa7ivry7tegl" path="res://scenes/level_transition.tscn" id="17_bahl2"]
 
 [sub_resource type="Environment" id="Environment_s8va5"]
 background_mode = 3
@@ -183,6 +184,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_dnkej"]
 radius = 12.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bahl2"]
+size = Vector2(86, 20)
+
 [node name="Level1" type="Node2D" unique_id=1056308524 node_paths=PackedStringArray("background_tilemap")]
 script = ExtResource("1_s8va5")
 background_tilemap = NodePath("Background/Background_body")
@@ -302,3 +306,11 @@ position = Vector2(102, -12)
 visible = false
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_dnkej")
+
+[node name="LevelTransition" parent="." unique_id=443570851 instance=ExtResource("17_bahl2")]
+position = Vector2(589, -411)
+next_level_path = "uid://cqt2l6noe5nrd"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelTransition" unique_id=57996405]
+position = Vector2(-6, -1)
+shape = SubResource("RectangleShape2D_bahl2")
